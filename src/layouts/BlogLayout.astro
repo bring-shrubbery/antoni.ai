@@ -1,0 +1,74 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+import type { Stats } from 'pages/api/views/[id]';
+import readingTime from 'reading-time';
+
+import { format } from 'date-fns';
+
+import avatarSrc from '../images/antoni-avatar.jpg';
+
+const { content } = Astro.props;
+
+// For deserializing BigInt into JSON
+// @ts-ignore
+BigInt.prototype['toJSON'] = function () {
+  return this.toString();
+};
+
+// Views
+const statsResult = await fetch(
+  `http://localhost:3000/api/views/${content.slug}`,
+  {
+    method: 'POST',
+  }
+);
+const statsRaw = await statsResult.text();
+const stats = JSON.parse(statsRaw) as Stats;
+
+// Date
+const dateString = format(Date.parse(content.date), 'MMM do, yyyy');
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  image={content.thumbnail}
+  type="article"
+>
+  <article class="prose md:prose-xl prose-slate max-w-none">
+    <h1>{content.title}</h1>
+    <div id="tags"></div>
+    <div id="info" class="flex flex-row justify-between">
+      <div class="flex">
+        <div class="not-prose">
+          <img
+            src={avatarSrc}
+            alt="avatar"
+            width={28}
+            height={28}
+            class="rounded-full mt-1"
+          />
+        </div>
+        <a
+          href="https://github.com/bring-shrubbery"
+          rel="author"
+          class="mx-2 p-0 h-fit no-underline transition duration-500 ease-in-out hover:text-gray-500"
+          >Antoni Silvestrovič</a
+        >
+        {' • '}
+        <time class="ml-2" datetime={content.date}>{dateString}</time>
+      </div>
+
+      <div class="">
+        <span
+          >{Math.ceil(readingTime(content.astro.html).minutes)} minute read</span
+        >
+        {' • '}
+        <span>{stats.count} views</span>
+      </div>
+    </div>
+
+    <slot />
+  </article>
+</BaseLayout>

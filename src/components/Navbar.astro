@@ -1,0 +1,21 @@
+---
+const links = {
+  home: '/',
+  blog: '/blog',
+  projects: '/projects',
+  cv: 'https://read.cv/antoni',
+};
+---
+
+<header
+  class="px-4 mx-auto w-full max-w-4xl h-32 flex justify-between items-center text-2xl md:text-3xl"
+>
+  <a class="font-medium" href={links.home}>antoni.ai</a>
+
+  <div class="flex space-x-8 font-light">
+    <a href={links.home}>home</a>
+    <a href={links.blog}>blog</a>
+    <a href={links.projects}>projects</a>
+    <a href={links.cv}>cv</a>
+  </div>
+</header>
