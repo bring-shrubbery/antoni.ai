@@ -18,7 +18,7 @@ BigInt.prototype['toJSON'] = function () {
 
 // Views
 const statsResult = await fetch(
-  `http://localhost:3000/api/views/${content.slug}`,
+  `${process.env.HOSTNAME}/api/views/${content.slug}`,
   {
     method: 'POST',
   }
