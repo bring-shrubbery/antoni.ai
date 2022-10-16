@@ -1,0 +1,83 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PillCard from "../components/PillCard.astro";
+import Card from "../components/Card";
+import Starfield from "../components/Starfield.astro";
+---
+
+<Layout title="antoni.ai" description="ma site lmao">
+  <Starfield />
+  <main class="relative container mx-auto max-w-[600px] py-32">
+    <PillCard
+      title="Hey! I'm Antoni."
+      description="I am a Software Engineer based in Vilnius, Lithuania. I focus on TypeScript, React & Next.js.\nI'm also having fun with Go & Rust."
+      image="/antoni-avatar.jpg"
+    />
+    <ul role="list" class="py-12 pt-14 w-full flex gap-10">
+      <Card
+        client:load
+        primary={{
+          title: "Resume",
+          description:
+            "A formal list of things I've done and jobs I worked at.",
+          cta: {
+            type: "link",
+            label: "view resume",
+            href: "https://read.cv/antoni",
+          },
+        }}
+        info={{
+          title: "Also try ssh!",
+          description: "Access my resume, as well as other stuff through ssh.",
+          cta: {
+            type: "shell",
+            command: "ssh antoni.ai",
+          },
+        }}
+      />
+      <Card
+        client:load
+        primary={{
+          title: "Github",
+          description: "My open-source projects are located here.",
+          cta: {
+            type: "link",
+            label: "visit github",
+            href: "https://github.com/bring-shrubbery",
+          },
+        }}
+      />
+    </ul>
+
+    <h2 class="w-full pt-3 text-center text-md font-bold text-white">
+      My Projects
+    </h2>
+
+    <ul role="list" class="py-12 w-full flex gap-10 flex-wrap">
+      <Card
+        client:load
+        primary={{
+          title: "Quassum",
+          description: "The company where I do   my highest quality work.",
+          cta: {
+            type: "link",
+            label: "quassum.com",
+            href: "https://quassum.com/",
+          },
+        }}
+      />
+      <Card
+        client:load
+        primary={{
+          title: "Sticker Hunt",
+          description: "Sticker-focused treasure    hunt social network.",
+          cta: {
+            type: "link",
+            label: "stickerhunt.org",
+            href: "https://stickerhunt.org",
+          },
+        }}
+      />
+    </ul>
+  </main>
+</Layout>
