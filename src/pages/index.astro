@@ -7,19 +7,20 @@ import Starfield from "../components/Starfield.astro";
 
 <Layout title="antoni.ai" description="ma site lmao">
   <Starfield />
-  <main class="relative container mx-auto max-w-[600px] py-32">
+  <main class="relative mx-auto w-[280px] md:w-[600px] py-32">
     <PillCard
       title="Hey! I'm Antoni."
       description="I am a Software Engineer based in Vilnius, Lithuania. I focus on TypeScript, React & Next.js.\nI'm also having fun with Go & Rust."
       image="/antoni-avatar.jpg"
     />
-    <ul role="list" class="py-12 pt-14 w-full flex gap-10">
+    <ul role="list" class="py-12 pt-14 w-full flex gap-10 flex-wrap">
       <Card
         client:load
         primary={{
           title: "Resume",
           description:
             "A formal list of things I've done and jobs I worked at.",
+          icon: "address-card",
           cta: {
             type: "link",
             label: "view resume",
@@ -29,6 +30,7 @@ import Starfield from "../components/Starfield.astro";
         info={{
           title: "Also try ssh!",
           description: "Access my resume, as well as other stuff through ssh.",
+          icon: "address-card",
           cta: {
             type: "shell",
             command: "ssh antoni.ai",
@@ -40,6 +42,7 @@ import Starfield from "../components/Starfield.astro";
         primary={{
           title: "Github",
           description: "My open-source projects are located here.",
+          icon: "github",
           cta: {
             type: "link",
             label: "visit github",
@@ -59,6 +62,7 @@ import Starfield from "../components/Starfield.astro";
         primary={{
           title: "Quassum",
           description: "The company where I do   my highest quality work.",
+          icon: "quassum",
           cta: {
             type: "link",
             label: "quassum.com",
@@ -71,6 +75,7 @@ import Starfield from "../components/Starfield.astro";
         primary={{
           title: "Sticker Hunt",
           description: "Sticker-focused treasure    hunt social network.",
+          icon: "sticker-hunt",
           cta: {
             type: "link",
             label: "stickerhunt.org",

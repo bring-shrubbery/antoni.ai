@@ -1,18 +1,12 @@
 import type { Component } from "solid-js";
+import { Icon } from "./Icon";
 
-import infoIcon from "../assets/info-icon.svg";
-import closeIcon from "../assets/close-icon.svg";
-
-export const CardInfoButton: Component<{ clicked: () => boolean }> = ({
-  clicked,
-}) => {
-  return (
-    <img
-      class=""
-      src={clicked() ? closeIcon : infoIcon}
-      alt={clicked() ? "Close" : "Info"}
-      width={clicked() ? 24 : 20}
-      height={clicked() ? 24 : 20}
-    />
-  );
+export const CardInfoButton: Component<{ clicked: () => boolean }> = (
+  props
+) => {
+  if (props.clicked()) {
+    return <Icon icon="close" w={24} h={24} />;
+  } else {
+    return <Icon icon="info" w={20} h={20} />;
+  }
 };

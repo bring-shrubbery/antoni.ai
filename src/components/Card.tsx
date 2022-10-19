@@ -5,22 +5,18 @@ import { CTA } from "./CTA";
 
 import { CardInfoButton } from "./CardInfoButton";
 import { Component, createEffect, createSignal, Ref } from "solid-js";
+import { Icon, IconType } from "./Icon";
 
 export interface CardInfo {
   title: string;
   description: string;
-  icon?: Element;
+  icon?: IconType;
   cta: CTALinkType | CTAShellType;
 }
 
 export interface Props {
   primary: CardInfo;
   info?: CardInfo;
-}
-
-interface Coordinates {
-  x: number;
-  y: number;
 }
 
 const Card: Component<Props> = ({ primary, info }) => {
@@ -32,9 +28,9 @@ const Card: Component<Props> = ({ primary, info }) => {
   return (
     <li class="w-[280px] h-[170px] shadow-default relative overflow-hidden">
       <div class="pl-7 pr-5 py-5 absolute inset-0 bg-primary">
-        <div class="w-full flex gap-4 items-center">
-          {primary.icon}
-          <h2 class="text-xl font-bold">{primary.title}</h2>
+        <div class="w-full flex gap-3 items-center">
+          {primary.icon && <Icon icon={primary.icon} />}
+          <h3 class="text-xl font-bold">{primary.title}</h3>
         </div>
         <p class="mt-2 mb-3 leading-tight tracking-wide">
           {primary.description}
@@ -60,9 +56,9 @@ const Card: Component<Props> = ({ primary, info }) => {
             <CardInfoButton clicked={clicked} />
           </span>
           <div class="relative w-full h-full pl-7 pr-5 py-5">
-            <div class="w-full flex gap-4 items-center">
-              {info.icon}
-              <h2 class="text-xl font-bold">{info.title}</h2>
+            <div class="w-full flex gap-3 items-center">
+              {info.icon && <Icon icon={info.icon} />}
+              <h3 class="text-xl font-bold">{info.title}</h3>
             </div>
             <p class="mt-2 mb-3 leading-tight tracking-wide">
               {info.description}

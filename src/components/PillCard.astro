@@ -8,7 +8,9 @@ interface Props {
 const { title, description, image } = Astro.props;
 ---
 
-<div class="flex gap-8 bg-primary rounded-full p-10 pr-8 shadow-default">
+<div
+  class="p-10 pr-8 w-full flex flex-col md:flex-row items-center gap-8 bg-primary rounded-[48px] md:rounded-full shadow-default"
+>
   <img
     class="w-32 h-32 rounded-full border-alternate border-8"
     src={image}
