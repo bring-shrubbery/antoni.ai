@@ -26,7 +26,10 @@ const Card: Component<Props> = ({ primary, info }) => {
   };
 
   return (
-    <li class="w-[280px] h-[170px] shadow-default relative overflow-hidden">
+    <div
+      role="group"
+      class="w-[280px] h-[170px] shadow-default relative overflow-hidden"
+    >
       <div class="pl-7 pr-5 py-5 absolute inset-0 bg-primary">
         <div class="w-full flex gap-3 items-center">
           {primary.icon && <Icon icon={primary.icon} />}
@@ -67,7 +70,7 @@ const Card: Component<Props> = ({ primary, info }) => {
           </div>
         </div>
       )}
-    </li>
+    </div>
   );
 };
 

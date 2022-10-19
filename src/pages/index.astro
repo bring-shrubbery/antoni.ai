@@ -15,7 +15,7 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
       description="I am a Software Engineer based in Vilnius, Lithuania. I focus on TypeScript, React & Next.js.\nI'm also having fun with Go & Rust."
       image={antoniAvatar}
     />
-    <ul role="list" class="py-12 pt-14 w-full flex gap-10 flex-wrap">
+    <div role="list" class="py-12 pt-14 w-full flex gap-10 flex-wrap">
       <Card
         client:load
         primary={{
@@ -52,13 +52,13 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
           },
         }}
       />
-    </ul>
+    </div>
 
     <h2 class="w-full pt-3 text-center text-md font-bold text-white">
       My Projects
     </h2>
 
-    <ul role="list" class="py-12 w-full flex gap-10 flex-wrap">
+    <div role="list" class="py-12 w-full flex gap-10 flex-wrap">
       <Card
         client:load
         primary={{
@@ -85,6 +85,6 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
           },
         }}
       />
-    </ul>
+    </div>
   </main>
 </Layout>
