@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://antoni.ai/sitemap-index.xml
