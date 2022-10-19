@@ -3,15 +3,17 @@ import Layout from "../layouts/Layout.astro";
 import PillCard from "../components/PillCard.astro";
 import Card from "../components/Card";
 import Starfield from "../components/Starfield.astro";
+
+import antoniAvatar from "../assets/antoni-avatar.jpg";
 ---
 
-<Layout title="antoni.ai" description="ma site lmao">
+<Layout title="Antoni Silvestrovič" description="ma site lmao">
   <Starfield />
   <main class="relative mx-auto w-[280px] md:w-[600px] py-32">
     <PillCard
       title="Hey! I'm Antoni."
       description="I am a Software Engineer based in Vilnius, Lithuania. I focus on TypeScript, React & Next.js.\nI'm also having fun with Go & Rust."
-      image="/antoni-avatar.jpg"
+      image={antoniAvatar}
     />
     <ul role="list" class="py-12 pt-14 w-full flex gap-10 flex-wrap">
       <Card

@@ -18,37 +18,37 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.site} />
+  </head>4
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-    />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-      media="print"
-      onload="this.media='all'"
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-      />
-    </noscript>
+  </noscript>
 
-    <!-- social media -->
-    <meta property="og:title" content={title} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={description} />
-    <!-- TODO: -->
-    <!-- <meta property="og:image" content={image} /> -->
-    <meta property="og:url" content={Astro.site} />
-    <meta name="twitter:card" content="summary_large_image" />
-  </head>
-  <body class="w-full text-default">
-    <slot />
-  </body>
+  <!-- social media -->
+  <meta property="og:title" content={title} />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content={description} />
+  <!-- TODO: -->
+  <!-- <meta property="og:image" content={image} /> -->
+  <meta property="og:url" content={Astro.site} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <slot />
 </html>

@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import { Image } from "@astrojs/image/components";
 
 export type IconType =
   | "address-card"
