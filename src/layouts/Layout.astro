@@ -10,7 +10,7 @@ const { title, description } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+<html lang="en" class="h-screen motion-safe:scroll-smooth" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -18,7 +18,7 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.site} />4
+    <link rel="canonical" href={Astro.site} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -49,8 +49,8 @@ const { title, description } = Astro.props;
     <meta property="og:url" content={Astro.site} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
-  
-  <body class="w-full">
+
+  <body class="w-full h-screen relative">
     <slot />
   </body>
 </html>

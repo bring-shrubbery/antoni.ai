@@ -17,9 +17,10 @@ export interface CardInfo {
 export interface Props {
   primary: CardInfo;
   info?: CardInfo;
+  rotateZdeg?: number;
 }
 
-const Card: Component<Props> = ({ primary, info }) => {
+const Card: Component<Props> = ({ primary, info, rotateZdeg = 0 }) => {
   const [clicked, setClicked] = createSignal(false);
   const toggle = () => {
     setClicked(!clicked());
@@ -29,6 +30,9 @@ const Card: Component<Props> = ({ primary, info }) => {
     <div
       role="group"
       class="w-[280px] h-[170px] shadow-default relative overflow-hidden"
+      style={{
+        transform: `rotate3d(0, 0, 1, ${rotateZdeg}deg)`,
+      }}
     >
       <div class="pl-7 pr-5 py-5 absolute inset-0 bg-primary">
         <div class="w-full flex gap-3 items-center">
