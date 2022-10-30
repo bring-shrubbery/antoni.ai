@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PillCard from "../components/PillCard.astro";
+import CardWithAlternativeView from "../components/CardWithAlternateView";
 import Card from "../components/Card";
 import Starfield from "../components/Starfield.astro";
 
 import antoniAvatar from "../assets/antoni-avatar.jpg";
+import { CTALink } from "../components/CTALink";
 ---
 
 <Layout title="Antoni Silvestrovič" description="ma site lmao">
@@ -22,7 +24,7 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
       <h2 class="h-0 opacity-0">Links</h2>
 
       <div class="py-12 pt-14 w-full flex gap-10 flex-wrap">
-        <Card
+        <CardWithAlternativeView
           client:load
           primary={{
             title: "Resume",
@@ -96,8 +98,7 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
           client:load
           primary={{
             title: "Quassum",
-            description:
-              "The service and product development company I created.",
+            description: "The product development company I created ☯",
             icon: "quassum",
             cta: {
               type: "link",
@@ -110,12 +111,82 @@ import antoniAvatar from "../assets/antoni-avatar.jpg";
           client:load
           primary={{
             title: "Sticker Hunt",
-            description: "Sticker-focused treasure    hunt social network.",
+            description: "Sticker-focused treasure    hunt social network 🎯",
             icon: "sticker-hunt",
             cta: {
               type: "link",
-              label: "stickerhunt.org",
-              href: "https://stickerhunt.org",
+              label: "stickerhunt.io",
+              href: "https://stickerhunt.io",
+            },
+          }}
+        />
+
+        <Card
+          client:load
+          size="lg"
+          primary={{
+            title: "use-cookie-consent",
+            description:
+              "The only hook you need to manage cookie consent in your JamStack website 🍪",
+            icon: "cookie-consent",
+            cta: {
+              type: "link",
+              label: "view on github",
+              href: "https://github.com/use-cookie-consent/use-cookie-consent",
+            },
+          }}
+        />
+        <Card
+          client:load
+          primary={{
+            title: "SwiftUI Tooltip",
+            description: "Swift package for easy & customisable tooltips 🪚",
+            cta: {
+              type: "link",
+              label: "visit github",
+              href: "https://github.com/quassum/SwiftUI-Tooltip",
+            },
+          }}
+        />
+        <Card
+          client:load
+          primary={{
+            title: "rythmic",
+            description: "Minimalistic, polyrhythmic metronome and tuner ♫",
+            icon: "rythmic",
+            cta: {
+              type: "link",
+              label: "visit app store",
+              href: "https://apps.apple.com/app/rythmic/id1515876711",
+            },
+          }}
+        />
+        <Card
+          client:load
+          size="xl"
+          primary={{
+            title: "SVG to SwiftUI Converter",
+            description:
+              "Paste or upload any SVG to convert it into a SwiftUI Shape struct. Work in progress 🦅",
+            icon: "svg-to-swiftui",
+            cta: {
+              type: "link",
+              label: "view on github",
+              href: "https://github.com/quassum/SVG-to-SwiftUI",
+            },
+          }}
+        />
+        <Card
+          client:load
+          size="xl"
+          primary={{
+            title: "Random Excuse Generator",
+            description:
+              "Try it out to get the reason for not attending that party you don't want to go to! 🥳",
+            cta: {
+              type: "link",
+              label: "view on github",
+              href: "https://github.com/bring-shrubbery/excuse-generator",
             },
           }}
         />

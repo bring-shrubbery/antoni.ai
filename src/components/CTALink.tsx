@@ -16,7 +16,7 @@ export const CTALink: Component<Props> = ({ data }) => {
       href={data.href}
       target="_blank"
       rel="noopener noreferrer"
-      class="block w-fit px-5 py-1.5 font-bold bg-secondary transition-shadow shadow-default-6 hover:shadow-default-4 text-primary ml-auto"
+      class="block w-fit px-5 py-1.5 font-bold bg-secondary transition-all shadow-default-4 hover:shadow-default-6 text-primary ml-auto"
     >
       {data.label}
     </a>

@@ -1,10 +1,8 @@
 import type { CTALinkType } from "./CTALink";
 import type { CTAShellType } from "./CTAShell";
-// import ResumeIcon from "./ResumeIcon.astro";
 import { CTA } from "./CTA";
 
-import { CardInfoButton } from "./CardInfoButton";
-import { Component, createEffect, createSignal, Ref } from "solid-js";
+import type { Component } from "solid-js";
 import { Icon, IconType } from "./Icon";
 
 export interface CardInfo {
@@ -14,27 +12,27 @@ export interface CardInfo {
   cta: CTALinkType | CTAShellType;
 }
 
+export type CardSize = "medium" | "2mid" | "lg" | "xl" | "full";
+
 export interface Props {
   primary: CardInfo;
-  info?: CardInfo;
-  rotateZdeg?: number;
+  size?: CardSize;
 }
 
-const Card: Component<Props> = ({ primary, info, rotateZdeg = 0 }) => {
-  const [clicked, setClicked] = createSignal(false);
-  const toggle = () => {
-    setClicked(!clicked());
-  };
+const CARD_SIZE_CLASSES: Record<CardSize, string> = {
+  medium: "w-[280px] min-h-[170px]",
+  "2mid": "w-[320px] min-h-[170px]",
+  lg: "w-[400px] min-h-[170px]",
+  xl: "w-[460px] min-h-[170px]",
+  full: "w-[600px] min-h-[170px]",
+};
+
+const Card: Component<Props> = (props) => {
+  const { primary, size = "medium" } = props;
 
   return (
-    <div
-      role="group"
-      class="w-[280px] h-[170px] shadow-default relative overflow-hidden"
-      style={{
-        transform: `rotate3d(0, 0, 1, ${rotateZdeg}deg)`,
-      }}
-    >
-      <div class="pl-7 pr-5 py-5 absolute inset-0 bg-primary">
+    <div class={`${CARD_SIZE_CLASSES[size]} shadow-default mx-auto`}>
+      <div class="py-6 px-6 bg-primary">
         <div class="w-full flex gap-3 items-center">
           {primary.icon && <Icon icon={primary.icon} />}
           <h3 class="text-xl font-bold">{primary.title}</h3>
@@ -44,36 +42,6 @@ const Card: Component<Props> = ({ primary, info, rotateZdeg = 0 }) => {
         </p>
         <CTA cta={primary.cta} />
       </div>
-      {info && (
-        <div
-          class={`absolute inset-0 bg-alternate  ${
-            clicked() ? "info-clicked" : "info-btn"
-          }`}
-          style={{
-            transition: "clip-path ease-in-out 0.25s",
-            "clip-path": clicked()
-              ? "circle(700px at 260px 20px)"
-              : "circle(28px at 260px 20px)",
-          }}
-        >
-          <span
-            class={`absolute w-16 h-16 -top-3 -right-3 rounded-full cursor-pointer z-50 transition-colors delay-200 flex items-center justify-center`}
-            onClick={toggle}
-          >
-            <CardInfoButton clicked={clicked} />
-          </span>
-          <div class="relative w-full h-full pl-7 pr-5 py-5">
-            <div class="w-full flex gap-3 items-center">
-              {info.icon && <Icon icon={info.icon} />}
-              <h3 class="text-xl font-bold">{info.title}</h3>
-            </div>
-            <p class="mt-2 mb-3 leading-tight tracking-wide">
-              {info.description}
-            </p>
-            <CTA cta={info.cta} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

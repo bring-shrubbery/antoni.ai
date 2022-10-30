@@ -5,4 +5,7 @@
   --color-shadow: #6a938b;
   --color-text: #444444;
   --color-text-inverted: #ffffff;
+
+  --border-primary: none;
+  --border-secondary: 8px solid var(--color-alternate);
 }
