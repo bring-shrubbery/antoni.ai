@@ -1,0 +1,684 @@
+{
+  "general": {
+    "profilePhoto": "/content/media/profilePhoto.jpg",
+    "username": "antoni",
+    "displayName": "Antoni Silvestrovič",
+    "profession": "Senior Reductionist",
+    "location": "Vilnius, Lithuania",
+    "pronouns": null,
+    "byline": "Senior Reductionist in Vilnius, Lithuania",
+    "website": "https://antoni.cv",
+    "websiteURL": "https://antoni.cv",
+    "about": "Software Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: Zustand, XState, Redux Toolkit\\\n\\- DBs: PostgreSQL, Planetscale, Redis\\\n\\- APIs: OpenAPI, tRPC or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy",
+    "status": {
+      "text": null,
+      "emoji": null,
+      "timestamp": null
+    },
+    "sectionOrder": [
+      "Contact",
+      "Work Experience",
+      "Education",
+      "Projects",
+      "Side Projects",
+      "Exhibitions",
+      "Speaking",
+      "Writing",
+      "Awards",
+      "Features",
+      "Volunteering",
+      "Certifications",
+      "Teams"
+    ]
+  },
+  "projects": [
+    {
+      "id": "pvwL6PtaFAoJHCEqV74W",
+      "year": "2023",
+      "heading": "SquircleJS at Quassum",
+      "url": "https://squircle.js.org/",
+      "collaborators": [],
+      "description": "I've always liked how iOS has corner smoothing on its homepage icons, but always missed that in the front-end. This project solves this problem, by adding a small bit of JavaScript to calculate the corner-smoothed version of the element that you want to use, making it easy to make any element in your frontend application use corner smoothing.",
+      "attachments": [],
+      "type": "project",
+      "title": "SquircleJS",
+      "company": "Quassum"
+    },
+    {
+      "id": "m500zGmx1mqtmAy3I2iV",
+      "year": "2022",
+      "heading": "Random Excuse Generator",
+      "url": "https://github.com/bring-shrubbery/excuse-generator",
+      "collaborators": [],
+      "description": "Inspired by a meme, I created this random excuse generator which generated an excuse for not attending something via 3 part structure. Try it out to get the reason for not attending that party you don't want to go to!",
+      "attachments": [
+        {
+          "type": "image",
+          "width": 1966,
+          "height": 1090,
+          "url": "/content/media/Random-Excuse-Generator.png"
+        }
+      ],
+      "type": "project",
+      "title": "Random Excuse Generator",
+      "company": ""
+    },
+    {
+      "id": "o3ddyEfWR51Nv6sxupnh",
+      "year": "2021",
+      "heading": "useCookieConsent",
+      "url": "https://github.com/use-cookie-consent/use-cookie-consent",
+      "collaborators": [],
+      "description": "React hook that simplifies management of GDPR consent for JavaScript/TypeScript developers. This is something that I needed myself, and from the attention it's getting I see that I'm not alone. It's still in development, but with v1 release, it will cover all possible developer needs, including support for Vue, Svelte, and others.",
+      "attachments": [
+        {
+          "type": "image",
+          "width": 1244,
+          "height": 768,
+          "url": "/content/media/useCookieConsent.png"
+        }
+      ],
+      "type": "project",
+      "title": "useCookieConsent",
+      "company": ""
+    },
+    {
+      "id": "59w9TtcUKUS3tNHwRl2I",
+      "year": "2020",
+      "heading": "SwiftUI Tooltip",
+      "url": "https://github.com/quassum/SwiftUI-Tooltip",
+      "collaborators": [],
+      "description": "This swift package allows adding a nice-looking tooltip to your SwiftUI app with one line of code. Can't come up with a simpler solution!",
+      "attachments": [
+        {
+          "type": "image",
+          "width": 2144,
+          "height": 1292,
+          "url": "/content/media/SwiftUI-Tooltip-1.png"
+        },
+        {
+          "type": "image",
+          "width": 435,
+          "height": 245,
+          "url": "/content/media/SwiftUI-Tooltip-2.jpg"
+        }
+      ],
+      "type": "project",
+      "title": "SwiftUI Tooltip",
+      "company": ""
+    },
+    {
+      "id": "BNeHo5XFZ73xf6nwrhD1",
+      "year": "2020",
+      "heading": "SVG to SwiftUI compiler at Quassum",
+      "url": "http://svg-to-swiftui.quassum.com",
+      "collaborators": [],
+      "description": "A compiler that transforms SVG code into SwiftUI Shape structure. It allows converting SVG icons to Swift code to display in a SwiftUI app.",
+      "attachments": [
+        {
+          "type": "image",
+          "width": 2534,
+          "height": 1606,
+          "url": "/content/media/SVG-to-SwiftUI-compiler-at-Quassum.jpg"
+        }
+      ],
+      "type": "project",
+      "title": "SVG to SwiftUI compiler",
+      "company": "Quassum"
+    },
+    {
+      "id": "cbXHwqZBstzOQyTXCEcL",
+      "year": "2020",
+      "heading": "rythmic",
+      "url": "https://apps.apple.com/app/rythmic/id1515876711",
+      "collaborators": [],
+      "description": "This app lets users create polyrhythms with ease while also functioning as a regular metronome. It features an integrated tuner for the user to have the only two things they need to practice.",
+      "attachments": [],
+      "type": "project",
+      "title": "rythmic",
+      "company": null
+    }
+  ],
+  "sideProjects": [
+    {
+      "id": "yajcFZtN4eE49RqMnJfk",
+      "year": "2023",
+      "heading": "Quassum",
+      "url": "https://quassum.com",
+      "collaborators": [],
+      "description": "A software development company I created for bigger projects.",
+      "attachments": [],
+      "type": "sideProject",
+      "title": "Quassum",
+      "company": ""
+    }
+  ],
+  "exhibitions": [],
+  "talks": [],
+  "writing": [],
+  "awards": [],
+  "features": [],
+  "workExperience": [
+    {
+      "id": "Ntvx8EqgSJYOHX71U4KF",
+      "year": "2024 — Now",
+      "heading": "Head of Frontend at CoinGate",
+      "url": "https://coingate.com",
+      "collaborators": [],
+      "description": "* Working at the intersection with CEO, CTO, POs, Designers and Backend Engineers to create and maintain features and products.\n\n* Leading a team of 5+ Frontend Engineers to build solid, maintainable and scalable monorepo codebase, which is probably the most complex project I've worked on.\n\n* Doing technical recruitment and interviewing.\n\n* Mentoring Engineers via Code Reviews, 1:1s and casual yapping.",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Head of Frontend",
+      "company": "CoinGate",
+      "location": "Vilnius, Lithuania"
+    },
+    {
+      "id": "j2u8poKB5nKJOVhTKxde",
+      "year": "2023 — 2024",
+      "heading": "Lead Frontend Engineer at Coingate",
+      "url": "https://coingate.com",
+      "collaborators": [],
+      "description": "* Leading Front-end development team of 2-3 engineers to build solid foundation for the whole product overhaul. Pretty much everything you see in your browser was built by us.\n* Built most of CoinGate Design System which is used throughout CoinGate products, in close collaboration with design team.\n* Hiring new developers and mentoring junior developers.\n* Ensuring we achieve the best user experience while not sacrificing developer experience.\n* Working with TypeScript, Next.js, Jest, Tailwind CSS, GraphQL, React (TanStack) Query, Zustand, XState, and much more...",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Lead Frontend Engineer",
+      "company": "Coingate",
+      "location": "Vilnius, Lithuania"
+    },
+    {
+      "id": "bo4dfIQX55tqfrDLZ4va",
+      "year": "2022 — 2023",
+      "heading": "Frontend Techlead at Sensmetry",
+      "url": "https://sensmetry.com",
+      "collaborators": [],
+      "description": "* Leading design and engineering work for all user-facing software.\n* Working with Next.js, Prisma, tRPC, Astro, TailwindCSS, PostgreSQL and much more...\n* Mentored C++ to become TypeScript engineers.\n* Designed and implemented a brand style and logo for the company.\n* Deploying products using Google Cloud Platform (GCP) and Kubernetes configurations.",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Frontend Techlead",
+      "company": "Sensmetry",
+      "location": "Vilnius"
+    },
+    {
+      "id": "BGOhbIPzFf9OQrk5qPak",
+      "year": "2021 — 2022",
+      "heading": "Senior Frontend Engineer at TeleSoftas",
+      "url": "https://telesoftas.com",
+      "collaborators": [],
+      "description": "Worked with multiple clients, developing different big projects, ranging from admin panels to e-commerce platforms. This is also where I've found most Frontend Engineer friends in a single company.\n\nI've also improved overall DX by pushing for better tooling. This includes, but is not limited to:\n\n* Switching MaterialUI to ChakraUI in one of the projects in under 1 month.\n\n* Convincing the whole FE team to shift from Redux to a hybrid approach with Zustand, React Context and Hooks.\n\n* Introducing React Query to the FE team and the projects I've worked on.",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Senior Frontend Engineer",
+      "company": "TeleSoftas",
+      "location": "Vilnius, Lithuania"
+    },
+    {
+      "id": "Swifn8KcEb6DriXrQGjb",
+      "year": "2021 — 2022",
+      "heading": "Part-Time DevOps Engineer at Sensmetry",
+      "url": "https://sensmetry.com/",
+      "collaborators": [],
+      "description": "* Working on infrastructure tasks ranging from Development to Deployment and Quality Assurance.\n\n* Creating deployment configurations for deploying AI models and reliability systems with Kubernetes / Helm.\n\n* Re-wrote company site into a JAM-stack frontend website with Next.js, TypeScript, TailwindCSS, and NetlifyCMS.\n\n* Tech used includes: Google Cloud Platform (GCP), Kubernetes, Docker, Nix, JavaScript/TypeScript, Next.js, TailwindCSS, NetlifyCMS.",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Part-Time DevOps Engineer",
+      "company": "Sensmetry",
+      "location": "Vilnius, Lithuania"
+    },
+    {
+      "id": "WEFWLenNLspb7sVQZal8",
+      "year": "2019 — 2020",
+      "heading": "Software Engineer at Innovattic",
+      "url": "https://www.innovattic.com/en/",
+      "collaborators": [],
+      "description": "* Worked with multiple clients on projects with React.js, Styled Components, Sass, AWS, Node.js, Unity 3D, and some other technologies.\n* Built and maintained numerous admin panels, dashboards, and user-facing websites.\n* Introduced Next.js, ChakraUI, and React-Query for faster frontend workflow and performance.\n* Created a deployment setup for Next.js on AWS for frontend projects.\n* Created Amazon Web Services (AWS) deployments for multiple new MVP projects.",
+      "attachments": [],
+      "type": "workExperience",
+      "title": "Software Engineer",
+      "company": "Innovattic",
+      "location": "Delft, Netherlands"
+    }
+  ],
+  "volunteering": [
+    {
+      "id": "bORDlb7eWXW4uzhRmVPH",
+      "year": "2020 — 2020",
+      "heading": "Co-Lecturer at Code First Girls",
+      "url": "https://codefirstgirls.arlo.co/w/courses/133-university-of-st-andrews-introduction-to-web-development",
+      "collaborators": [],
+      "description": "Hosted an introductory course to Web Development for students from other departments who want to get into coding.",
+      "attachments": [],
+      "type": "volunteering",
+      "title": "Co-Lecturer",
+      "organization": "Code First Girls",
+      "location": "St. Andrews"
+    },
+    {
+      "id": "yNVsFczjmjNWk6qD75JA",
+      "year": "2019 — 2019",
+      "heading": "Teaching Assistant at St. Andrews University",
+      "url": null,
+      "collaborators": [],
+      "description": "Volunteered to be a lab teaching assistant for a JavaScript course at the St. Andrews University.",
+      "attachments": [],
+      "type": "volunteering",
+      "title": "Teaching Assistant",
+      "organization": "St. Andrews University",
+      "location": "St. Andrews"
+    }
+  ],
+  "education": [
+    {
+      "id": "G0RUsiFm6Lrj6EUcfZvV",
+      "year": "2019 — 2020",
+      "heading": "MSc Artificial Intelligence at St. Andrews University",
+      "url": "https://www.st-andrews.ac.uk",
+      "collaborators": [],
+      "description": "After dabbling in simple neural network design I decided to join this course to learn more about AI in a more structured way. This experience taught me a lot about AI and made me able to research and create my own AI with the most suitable approach.",
+      "attachments": [],
+      "type": "education",
+      "degree": "MSc Artificial Intelligence",
+      "school": "St. Andrews University",
+      "location": "St. Andrews, UK"
+    },
+    {
+      "id": "dtZdMv7tYEBBhty7Nc53",
+      "year": "2016 — 2019",
+      "heading": "BEng Computer Science and Electronic Engineering at Liverpool University",
+      "url": "https://www.liverpool.ac.uk",
+      "collaborators": [],
+      "description": "Here I learned the full spectrum of how computers work - from designing my own silicon chip or making my own signal amplifier to data structures, game theory, neural networks, compiler architecture and a lot more.",
+      "attachments": [],
+      "type": "education",
+      "degree": "BEng Computer Science and Electronic Engineering",
+      "school": "Liverpool University",
+      "location": "Liverpool, UK"
+    },
+    {
+      "id": "coJ1d861vCYOyUHPEabO",
+      "year": "2012 — 2016",
+      "heading": "Vienožinskio Art School",
+      "url": "https://naujojivilnia.vienozinskis.lt",
+      "collaborators": [],
+      "description": "4-year art school study where I learned most of I know about sculpture, composition, painting, sketching, photography, design and art history.",
+      "attachments": [],
+      "type": "education",
+      "degree": null,
+      "school": "Vienožinskio Art School",
+      "location": "Vilnius"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "KHqm2ZDq5OwptsrWIe0o",
+      "year": "2022",
+      "heading": "Graph Developer - Associate from Apollo GraphQL",
+      "url": "https://www.apollographql.com/tutorials/certifications/12c0ee1c-c6a2-4896-9496-30f76ab67286",
+      "collaborators": [],
+      "description": "Credential ID 12c0ee1c-c6a2-4896-9496-30f76ab67286",
+      "attachments": [],
+      "type": "certification",
+      "name": "Graph Developer - Associate",
+      "organization": "Apollo GraphQL"
+    }
+  ],
+  "contact": [
+    {
+      "id": "mg0NvM43bxjQcFIKX3bA",
+      "platform": "Website",
+      "handle": "quassum.com",
+      "url": "http://quassum.com"
+    },
+    {
+      "id": "SpKnboEozW8bQkb7MDho",
+      "platform": "Email",
+      "handle": "antoni@quassum.com",
+      "url": "mailto:antoni@quassum.com"
+    },
+    {
+      "id": "mhfLW9cXuOCJkeeOm60u",
+      "platform": "LinkedIn",
+      "handle": "antoni-silvestrovic",
+      "url": "https://linkedin.com/in/antoni-silvestrovic"
+    },
+    {
+      "id": "BD8VG3wnAONOkjuL43OD",
+      "platform": "GitHub",
+      "handle": "bring-shrubbery",
+      "url": "https://github.com/bring-shrubbery"
+    }
+  ],
+  "allCollections": [
+    {
+      "name": "Contact",
+      "items": [
+        {
+          "id": "mg0NvM43bxjQcFIKX3bA",
+          "platform": "Website",
+          "handle": "quassum.com",
+          "url": "http://quassum.com"
+        },
+        {
+          "id": "SpKnboEozW8bQkb7MDho",
+          "platform": "Email",
+          "handle": "antoni@quassum.com",
+          "url": "mailto:antoni@quassum.com"
+        },
+        {
+          "id": "mhfLW9cXuOCJkeeOm60u",
+          "platform": "LinkedIn",
+          "handle": "antoni-silvestrovic",
+          "url": "https://linkedin.com/in/antoni-silvestrovic"
+        },
+        {
+          "id": "BD8VG3wnAONOkjuL43OD",
+          "platform": "GitHub",
+          "handle": "bring-shrubbery",
+          "url": "https://github.com/bring-shrubbery"
+        }
+      ]
+    },
+    {
+      "name": "Work Experience",
+      "items": [
+        {
+          "id": "Ntvx8EqgSJYOHX71U4KF",
+          "year": "2024 — Now",
+          "heading": "Head of Frontend at CoinGate",
+          "url": "https://coingate.com",
+          "collaborators": [],
+          "description": "* Working at the intersection with CEO, CTO, POs, Designers and Backend Engineers to create and maintain features and products.\n\n* Leading a team of 5+ Frontend Engineers to build solid, maintainable and scalable monorepo codebase, which is probably the most complex project I've worked on.\n\n* Doing technical recruitment and interviewing.\n\n* Mentoring Engineers via Code Reviews, 1:1s and casual yapping.",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Head of Frontend",
+          "company": "CoinGate",
+          "location": "Vilnius, Lithuania"
+        },
+        {
+          "id": "j2u8poKB5nKJOVhTKxde",
+          "year": "2023 — 2024",
+          "heading": "Lead Frontend Engineer at Coingate",
+          "url": "https://coingate.com",
+          "collaborators": [],
+          "description": "* Leading Front-end development team of 2-3 engineers to build solid foundation for the whole product overhaul. Pretty much everything you see in your browser was built by us.\n* Built most of CoinGate Design System which is used throughout CoinGate products, in close collaboration with design team.\n* Hiring new developers and mentoring junior developers.\n* Ensuring we achieve the best user experience while not sacrificing developer experience.\n* Working with TypeScript, Next.js, Jest, Tailwind CSS, GraphQL, React (TanStack) Query, Zustand, XState, and much more...",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Lead Frontend Engineer",
+          "company": "Coingate",
+          "location": "Vilnius, Lithuania"
+        },
+        {
+          "id": "bo4dfIQX55tqfrDLZ4va",
+          "year": "2022 — 2023",
+          "heading": "Frontend Techlead at Sensmetry",
+          "url": "https://sensmetry.com",
+          "collaborators": [],
+          "description": "* Leading design and engineering work for all user-facing software.\n* Working with Next.js, Prisma, tRPC, Astro, TailwindCSS, PostgreSQL and much more...\n* Mentored C++ to become TypeScript engineers.\n* Designed and implemented a brand style and logo for the company.\n* Deploying products using Google Cloud Platform (GCP) and Kubernetes configurations.",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Frontend Techlead",
+          "company": "Sensmetry",
+          "location": "Vilnius"
+        },
+        {
+          "id": "BGOhbIPzFf9OQrk5qPak",
+          "year": "2021 — 2022",
+          "heading": "Senior Frontend Engineer at TeleSoftas",
+          "url": "https://telesoftas.com",
+          "collaborators": [],
+          "description": "Worked with multiple clients, developing different big projects, ranging from admin panels to e-commerce platforms. This is also where I've found most Frontend Engineer friends in a single company.\n\nI've also improved overall DX by pushing for better tooling. This includes, but is not limited to:\n\n* Switching MaterialUI to ChakraUI in one of the projects in under 1 month.\n\n* Convincing the whole FE team to shift from Redux to a hybrid approach with Zustand, React Context and Hooks.\n\n* Introducing React Query to the FE team and the projects I've worked on.",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Senior Frontend Engineer",
+          "company": "TeleSoftas",
+          "location": "Vilnius, Lithuania"
+        },
+        {
+          "id": "Swifn8KcEb6DriXrQGjb",
+          "year": "2021 — 2022",
+          "heading": "Part-Time DevOps Engineer at Sensmetry",
+          "url": "https://sensmetry.com/",
+          "collaborators": [],
+          "description": "* Working on infrastructure tasks ranging from Development to Deployment and Quality Assurance.\n\n* Creating deployment configurations for deploying AI models and reliability systems with Kubernetes / Helm.\n\n* Re-wrote company site into a JAM-stack frontend website with Next.js, TypeScript, TailwindCSS, and NetlifyCMS.\n\n* Tech used includes: Google Cloud Platform (GCP), Kubernetes, Docker, Nix, JavaScript/TypeScript, Next.js, TailwindCSS, NetlifyCMS.",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Part-Time DevOps Engineer",
+          "company": "Sensmetry",
+          "location": "Vilnius, Lithuania"
+        },
+        {
+          "id": "WEFWLenNLspb7sVQZal8",
+          "year": "2019 — 2020",
+          "heading": "Software Engineer at Innovattic",
+          "url": "https://www.innovattic.com/en/",
+          "collaborators": [],
+          "description": "* Worked with multiple clients on projects with React.js, Styled Components, Sass, AWS, Node.js, Unity 3D, and some other technologies.\n* Built and maintained numerous admin panels, dashboards, and user-facing websites.\n* Introduced Next.js, ChakraUI, and React-Query for faster frontend workflow and performance.\n* Created a deployment setup for Next.js on AWS for frontend projects.\n* Created Amazon Web Services (AWS) deployments for multiple new MVP projects.",
+          "attachments": [],
+          "type": "workExperience",
+          "title": "Software Engineer",
+          "company": "Innovattic",
+          "location": "Delft, Netherlands"
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "items": [
+        {
+          "id": "G0RUsiFm6Lrj6EUcfZvV",
+          "year": "2019 — 2020",
+          "heading": "MSc Artificial Intelligence at St. Andrews University",
+          "url": "https://www.st-andrews.ac.uk",
+          "collaborators": [],
+          "description": "After dabbling in simple neural network design I decided to join this course to learn more about AI in a more structured way. This experience taught me a lot about AI and made me able to research and create my own AI with the most suitable approach.",
+          "attachments": [],
+          "type": "education",
+          "degree": "MSc Artificial Intelligence",
+          "school": "St. Andrews University",
+          "location": "St. Andrews, UK"
+        },
+        {
+          "id": "dtZdMv7tYEBBhty7Nc53",
+          "year": "2016 — 2019",
+          "heading": "BEng Computer Science and Electronic Engineering at Liverpool University",
+          "url": "https://www.liverpool.ac.uk",
+          "collaborators": [],
+          "description": "Here I learned the full spectrum of how computers work - from designing my own silicon chip or making my own signal amplifier to data structures, game theory, neural networks, compiler architecture and a lot more.",
+          "attachments": [],
+          "type": "education",
+          "degree": "BEng Computer Science and Electronic Engineering",
+          "school": "Liverpool University",
+          "location": "Liverpool, UK"
+        },
+        {
+          "id": "coJ1d861vCYOyUHPEabO",
+          "year": "2012 — 2016",
+          "heading": "Vienožinskio Art School",
+          "url": "https://naujojivilnia.vienozinskis.lt",
+          "collaborators": [],
+          "description": "4-year art school study where I learned most of I know about sculpture, composition, painting, sketching, photography, design and art history.",
+          "attachments": [],
+          "type": "education",
+          "degree": null,
+          "school": "Vienožinskio Art School",
+          "location": "Vilnius"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "items": [
+        {
+          "id": "pvwL6PtaFAoJHCEqV74W",
+          "year": "2023",
+          "heading": "SquircleJS at Quassum",
+          "url": "https://squircle.js.org/",
+          "collaborators": [],
+          "description": "I've always liked how iOS has corner smoothing on its homepage icons, but always missed that in the front-end. This project solves this problem, by adding a small bit of JavaScript to calculate the corner-smoothed version of the element that you want to use, making it easy to make any element in your frontend application use corner smoothing.",
+          "attachments": [],
+          "type": "project",
+          "title": "SquircleJS",
+          "company": "Quassum"
+        },
+        {
+          "id": "m500zGmx1mqtmAy3I2iV",
+          "year": "2022",
+          "heading": "Random Excuse Generator",
+          "url": "https://github.com/bring-shrubbery/excuse-generator",
+          "collaborators": [],
+          "description": "Inspired by a meme, I created this random excuse generator which generated an excuse for not attending something via 3 part structure. Try it out to get the reason for not attending that party you don't want to go to!",
+          "attachments": [
+            {
+              "type": "image",
+              "width": 1966,
+              "height": 1090,
+              "url": "/content/media/Random-Excuse-Generator.png"
+            }
+          ],
+          "type": "project",
+          "title": "Random Excuse Generator",
+          "company": ""
+        },
+        {
+          "id": "o3ddyEfWR51Nv6sxupnh",
+          "year": "2021",
+          "heading": "useCookieConsent",
+          "url": "https://github.com/use-cookie-consent/use-cookie-consent",
+          "collaborators": [],
+          "description": "React hook that simplifies management of GDPR consent for JavaScript/TypeScript developers. This is something that I needed myself, and from the attention it's getting I see that I'm not alone. It's still in development, but with v1 release, it will cover all possible developer needs, including support for Vue, Svelte, and others.",
+          "attachments": [
+            {
+              "type": "image",
+              "width": 1244,
+              "height": 768,
+              "url": "/content/media/useCookieConsent.png"
+            }
+          ],
+          "type": "project",
+          "title": "useCookieConsent",
+          "company": ""
+        },
+        {
+          "id": "59w9TtcUKUS3tNHwRl2I",
+          "year": "2020",
+          "heading": "SwiftUI Tooltip",
+          "url": "https://github.com/quassum/SwiftUI-Tooltip",
+          "collaborators": [],
+          "description": "This swift package allows adding a nice-looking tooltip to your SwiftUI app with one line of code. Can't come up with a simpler solution!",
+          "attachments": [
+            {
+              "type": "image",
+              "width": 2144,
+              "height": 1292,
+              "url": "/content/media/SwiftUI-Tooltip-1.png"
+            },
+            {
+              "type": "image",
+              "width": 435,
+              "height": 245,
+              "url": "/content/media/SwiftUI-Tooltip-2.jpg"
+            }
+          ],
+          "type": "project",
+          "title": "SwiftUI Tooltip",
+          "company": ""
+        },
+        {
+          "id": "BNeHo5XFZ73xf6nwrhD1",
+          "year": "2020",
+          "heading": "SVG to SwiftUI compiler at Quassum",
+          "url": "http://svg-to-swiftui.quassum.com",
+          "collaborators": [],
+          "description": "A compiler that transforms SVG code into SwiftUI Shape structure. It allows converting SVG icons to Swift code to display in a SwiftUI app.",
+          "attachments": [
+            {
+              "type": "image",
+              "width": 2534,
+              "height": 1606,
+              "url": "/content/media/SVG-to-SwiftUI-compiler-at-Quassum.jpg"
+            }
+          ],
+          "type": "project",
+          "title": "SVG to SwiftUI compiler",
+          "company": "Quassum"
+        },
+        {
+          "id": "cbXHwqZBstzOQyTXCEcL",
+          "year": "2020",
+          "heading": "rythmic",
+          "url": "https://apps.apple.com/app/rythmic/id1515876711",
+          "collaborators": [],
+          "description": "This app lets users create polyrhythms with ease while also functioning as a regular metronome. It features an integrated tuner for the user to have the only two things they need to practice.",
+          "attachments": [],
+          "type": "project",
+          "title": "rythmic",
+          "company": null
+        }
+      ]
+    },
+    {
+      "name": "Side Projects",
+      "items": [
+        {
+          "id": "yajcFZtN4eE49RqMnJfk",
+          "year": "2023",
+          "heading": "Quassum",
+          "url": "https://quassum.com",
+          "collaborators": [],
+          "description": "A software development company I created for bigger projects.",
+          "attachments": [],
+          "type": "sideProject",
+          "title": "Quassum",
+          "company": ""
+        }
+      ]
+    },
+    {
+      "name": "Volunteering",
+      "items": [
+        {
+          "id": "bORDlb7eWXW4uzhRmVPH",
+          "year": "2020 — 2020",
+          "heading": "Co-Lecturer at Code First Girls",
+          "url": "https://codefirstgirls.arlo.co/w/courses/133-university-of-st-andrews-introduction-to-web-development",
+          "collaborators": [],
+          "description": "Hosted an introductory course to Web Development for students from other departments who want to get into coding.",
+          "attachments": [],
+          "type": "volunteering",
+          "title": "Co-Lecturer",
+          "organization": "Code First Girls",
+          "location": "St. Andrews"
+        },
+        {
+          "id": "yNVsFczjmjNWk6qD75JA",
+          "year": "2019 — 2019",
+          "heading": "Teaching Assistant at St. Andrews University",
+          "url": null,
+          "collaborators": [],
+          "description": "Volunteered to be a lab teaching assistant for a JavaScript course at the St. Andrews University.",
+          "attachments": [],
+          "type": "volunteering",
+          "title": "Teaching Assistant",
+          "organization": "St. Andrews University",
+          "location": "St. Andrews"
+        }
+      ]
+    },
+    {
+      "name": "Certifications",
+      "items": [
+        {
+          "id": "KHqm2ZDq5OwptsrWIe0o",
+          "year": "2022",
+          "heading": "Graph Developer - Associate from Apollo GraphQL",
+          "url": "https://www.apollographql.com/tutorials/certifications/12c0ee1c-c6a2-4896-9496-30f76ab67286",
+          "collaborators": [],
+          "description": "Credential ID 12c0ee1c-c6a2-4896-9496-30f76ab67286",
+          "attachments": [],
+          "type": "certification",
+          "name": "Graph Developer - Associate",
+          "organization": "Apollo GraphQL"
+        }
+      ]
+    }
+  ]
+}
