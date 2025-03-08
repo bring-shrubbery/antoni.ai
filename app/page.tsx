@@ -1,12 +1,9 @@
 import { promises as fs } from "fs";
 import Profile from "../components/Profile";
+import { loadCV } from "@/lib/loadCV";
 
 export default async function Home() {
-  const file = await fs.readFile(
-    process.cwd() + "/public/content/profileData.json",
-    "utf8"
-  );
-  const cv = JSON.parse(file);
+  const cv = await loadCV();
 
   return (
     <div className="px-6">

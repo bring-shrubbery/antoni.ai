@@ -4,6 +4,7 @@ import Arrow12 from "./Arrow12";
 import Attachments from "./Attachments";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 type ProfileProps = {
   cv: any;
@@ -25,53 +26,101 @@ const Profile: React.FC<ProfileProps> = ({ cv }) => {
           <h1 className="text-xl">{cv.general.displayName}</h1>
           <div className="text-muted-foreground">{cv.general.byline}</div>
           {cv.general.website ? (
-            <Badge asChild variant="secondary" className="mt-2">
-              <Link href={cv.general.website}>
+            <Link href={cv.general.website}>
+              <Badge variant="secondary" className="mt-2">
                 {String(cv.general.website).split("https://").at(1)}
-              </Link>
-            </Badge>
+              </Badge>
+            </Link>
           ) : null}
         </div>
       </div>
 
-      {cv.general.about ? (
-        <section className={`my-8 md:my-16`}>
-          <h3 className="mb-2">About</h3>
-          <div className="mt-2 text-muted-foreground gap-4 flex flex-col ml-4 md:ml-0">
-            <RichText text={cv.general.about} />
-          </div>
-        </section>
-      ) : null}
+      <Tabs defaultValue="cv" className="my-0">
+        <TabsList className="mt-4 w-full">
+          <TabsTrigger value="cv">CV</TabsTrigger>
+          <TabsTrigger value="projects">Projects</TabsTrigger>
+        </TabsList>
+        <TabsContent value="cv" className="my-0">
+          {cv.general.about ? (
+            <section className={`my-4 motion-preset-slide-up-sm`}>
+              <h3 className="mb-2">About</h3>
+              <div className="mt-2 text-muted-foreground gap-4 flex flex-col ml-4 md:ml-0">
+                <RichText text={cv.general.about} />
+              </div>
+            </section>
+          ) : null}
 
-      {cv.allCollections.map((collection: any, index: number) => {
-        return (
-          <section className="my-12 md:my-16" key={index}>
-            <h3 className="mb-2">{collection.name}</h3>
-            <div
-              className={
-                collection.name === "Contact"
-                  ? "flex flex-col gap-4 md:gap-4 mt-6"
-                  : "flex flex-col gap-9 mt-6"
-              }
-            >
-              {collection.items.map((experience: any, index: number) => {
-                if (collection.name === "Contact") {
-                  return (
-                    <ContactItem key={experience.url} experience={experience} />
-                  );
-                }
+          {cv.allCV.map((collection: any, index: number) => {
+            return (
+              <section
+                className={`my-12 md:my-16 motion-preset-slide-up-sm delay-150`}
+                key={index}
+              >
+                <h3 className="mb-2">{collection.name}</h3>
+                <div
+                  className={
+                    collection.name === "Contact"
+                      ? "flex flex-col gap-4 md:gap-4 mt-6"
+                      : "flex flex-col gap-9 mt-6"
+                  }
+                >
+                  {collection.items.map((experience: any, index: number) => {
+                    if (collection.name === "Contact") {
+                      return (
+                        <ContactItem
+                          key={experience.id}
+                          experience={experience}
+                        />
+                      );
+                    }
 
-                return (
-                  <ProfileItem
-                    key={experience.heading}
-                    experience={experience}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
+                    return (
+                      <ProfileItem
+                        key={experience.heading}
+                        experience={experience}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </TabsContent>
+        <TabsContent value="projects" className="my-0">
+          {cv.allProjects.map((collection: any, index: number) => {
+            return (
+              <section className="my-4 motion-preset-slide-up-sm" key={index}>
+                <h3 className="mb-2">{collection.name}</h3>
+                <div
+                  className={
+                    collection.name === "Contact"
+                      ? "flex flex-col gap-4 md:gap-4 mt-6"
+                      : "flex flex-col gap-9 mt-6"
+                  }
+                >
+                  {collection.items.map((experience: any, index: number) => {
+                    if (collection.name === "Contact") {
+                      return (
+                        <ContactItem
+                          key={experience.id}
+                          experience={experience}
+                        />
+                      );
+                    }
+
+                    return (
+                      <ProfileItem
+                        key={experience.heading}
+                        experience={experience}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
