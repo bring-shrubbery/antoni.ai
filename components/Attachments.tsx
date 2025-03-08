@@ -20,7 +20,7 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
   });
   const scrollRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const galleryHeight = 90;
+  const galleryHeight = 240;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [viewport, scrollbooster] = useScrollBoost({

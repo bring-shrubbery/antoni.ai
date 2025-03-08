@@ -5,6 +5,7 @@ import Attachments from "./Attachments";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { CVRenderer } from "./CVRenderer";
 
 type ProfileProps = {
   cv: any;
@@ -40,95 +41,50 @@ const Profile: React.FC<ProfileProps> = ({ cv }) => {
           <TabsTrigger value="cv">CV</TabsTrigger>
           <TabsTrigger value="projects">Projects</TabsTrigger>
         </TabsList>
-        <TabsContent value="cv" className="my-0">
-          {cv.general.about ? (
-            <section className={`my-4 motion-preset-slide-up-sm`}>
-              <h3 className="mb-2">About</h3>
-              <div className="mt-2 text-muted-foreground gap-4 flex flex-col ml-4 md:ml-0">
-                <RichText text={cv.general.about} />
-              </div>
-            </section>
-          ) : null}
-
-          {cv.allCV.map((collection: any, index: number) => {
-            return (
-              <section
-                className={`my-12 md:my-16 motion-preset-slide-up-sm delay-150`}
-                key={index}
-              >
-                <h3 className="mb-2">{collection.name}</h3>
-                <div
-                  className={
-                    collection.name === "Contact"
-                      ? "flex flex-col gap-4 md:gap-4 mt-6"
-                      : "flex flex-col gap-9 mt-6"
-                  }
-                >
-                  {collection.items.map((experience: any, index: number) => {
-                    if (collection.name === "Contact") {
-                      return (
-                        <ContactItem
-                          key={experience.id}
-                          experience={experience}
-                        />
-                      );
-                    }
-
-                    return (
-                      <ProfileItem
-                        key={experience.heading}
-                        experience={experience}
-                      />
-                    );
-                  })}
-                </div>
-              </section>
-            );
-          })}
-        </TabsContent>
         <TabsContent value="projects" className="my-0">
-          {cv.allProjects.map((collection: any, index: number) => {
-            return (
-              <section className="my-4 motion-preset-slide-up-sm" key={index}>
-                <h3 className="mb-2">{collection.name}</h3>
-                <div
-                  className={
-                    collection.name === "Contact"
-                      ? "flex flex-col gap-4 md:gap-4 mt-6"
-                      : "flex flex-col gap-9 mt-6"
-                  }
-                >
-                  {collection.items.map((experience: any, index: number) => {
-                    if (collection.name === "Contact") {
-                      return (
-                        <ContactItem
-                          key={experience.id}
-                          experience={experience}
-                        />
-                      );
-                    }
-
-                    return (
-                      <ProfileItem
-                        key={experience.heading}
-                        experience={experience}
-                      />
-                    );
-                  })}
-                </div>
-              </section>
-            );
-          })}
+          <ProjectsRenderer items={cv.allProjects} />
+        </TabsContent>
+        <TabsContent value="cv" className="my-0">
+          <CVRenderer items={cv.allCV} about={cv.general.about} />
         </TabsContent>
       </Tabs>
     </div>
   );
 };
 
-type ProfileItemProps = {
+export default Profile;
+
+const ProjectsRenderer = ({ items }: { items: any[] }) => {
+  return (
+    <>
+      {items.map((collection: any, index: number) => {
+        return (
+          <section
+            className={`my-16 first:my-4 motion-preset-slide-up-sm`}
+            key={index}
+          >
+            <h3 className="mb-2">{collection.name}</h3>
+            <div className={"flex flex-col gap-9 mt-6"}>
+              {collection.items.map((experience: any, index: number) => {
+                return (
+                  <ProjectItem
+                    key={experience.heading}
+                    experience={experience}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </>
+  );
+};
+
+type ProjectItemProps = {
   experience: any;
 };
-const ProfileItem: React.FC<ProfileItemProps> = ({ experience }) => {
+const ProjectItem: React.FC<ProjectItemProps> = ({ experience }) => {
   let title;
 
   if (experience.url) {
@@ -147,10 +103,10 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ experience }) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-2 md:gap-9 ml-4 md:ml-0">
-      <div className="text-muted-foreground tabular-nums relative shrink-0 min-w-24">
-        {experience.year}
-      </div>
+    <div className="flex flex-col gap-2 md:gap-9 ml-4 md:ml-0">
+      {experience.attachments && experience.attachments.length > 0 ? (
+        <Attachments attachments={experience.attachments} />
+      ) : null}
       <div>
         <div className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors">
           {title}
@@ -163,35 +119,7 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ experience }) => {
             <RichText text={experience.description} />
           </div>
         ) : null}
-        {experience.attachments && experience.attachments.length > 0 ? (
-          <Attachments attachments={experience.attachments} />
-        ) : null}
       </div>
     </div>
   );
 };
-
-type ContactItemProps = {
-  experience: any;
-};
-const ContactItem: React.FC<ContactItemProps> = ({ experience }) => {
-  return (
-    <div className="flex flex-col md:flex-row gap-0 md:gap-9 ml-4 md:ml-0">
-      <div className="text-muted-foreground tabular-nums relative min-w-24 w-fit">
-        {experience.platform}
-      </div>
-      <div>
-        <div className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors">
-          <a href={experience.url} target="_blank">
-            {experience.handle}
-          </a>
-          <span className="whitespace-nowrap">
-            <Arrow12 />
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Profile;
