@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import useResizeObserver from "use-resize-observer";
-import ReactDOM from 'react-dom';
-import isMobile from './isMobile';
-import styles from './Lightbox.module.css';
+import ReactDOM from "react-dom";
+import isMobile from "@/lib/isMobile";
+import styles from "./Lightbox.module.css";
 
 type LightboxProps = {
-  attachments: Array<any>,
-  startingIndex: number,
-  close: () => void,
-}
+  attachments: Array<any>;
+  startingIndex: number;
+  close: () => void;
+};
 const Lightbox: React.FC<LightboxProps> = ({
   attachments,
   startingIndex,
-  close
+  close,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(startingIndex);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -23,74 +23,78 @@ const Lightbox: React.FC<LightboxProps> = ({
       let bounds = scrollRef.current.getBoundingClientRect();
       scrollRef.current.scrollLeft = bounds.width * startingIndex;
     }
-    
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     };
   }, []);
 
   const handleKey = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       close();
     }
-    
+
     if (event.key === "ArrowRight") {
       next();
     }
-    
+
     if (event.key === "ArrowLeft") {
       prev();
     }
   };
-  
+
   useEffect(() => {
-    window.addEventListener('keydown', handleKey);
+    window.addEventListener("keydown", handleKey);
 
     return () => {
-      window.removeEventListener('keydown', handleKey);
+      window.removeEventListener("keydown", handleKey);
     };
   }, []);
 
   const next = () => {
-    setCurrentIndex(currentIndex => {
+    setCurrentIndex((currentIndex) => {
       if (currentIndex < attachments.length - 1) {
         return currentIndex + 1;
       } else {
         return 0;
       }
     });
-  }
-    
+  };
+
   const prev = () => {
-    setCurrentIndex(currentIndex => {
+    setCurrentIndex((currentIndex) => {
       if (currentIndex === 0) {
         return attachments.length - 1;
       } else {
         return currentIndex - 1;
       }
     });
-  }
+  };
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
-    if (!attachments) { return }
+    if (!attachments) {
+      return;
+    }
     let view = event.currentTarget;
-    setCurrentIndex(currentIndex => {
-      let index = Math.round((view.scrollLeft / (view.scrollWidth - view.offsetWidth)) * (attachments.length -1));
-      return index
+    setCurrentIndex((currentIndex) => {
+      let index = Math.round(
+        (view.scrollLeft / (view.scrollWidth - view.offsetWidth)) *
+          (attachments.length - 1)
+      );
+      return index;
     });
-  }
+  };
 
   return ReactDOM.createPortal(
-    <div
-      data-mobile={isMobile()}
-      className={styles.lightbox}>
+    <div data-mobile={isMobile()} className={styles.lightbox}>
       <div
         onScroll={(event) => handleScroll(event)}
         ref={scrollRef}
-        className={styles.carouselScroll}>
+        className={styles.carouselScroll}
+      >
         <div className={styles.carousel}>
           {attachments.map((media, index) => {
             return (
@@ -101,14 +105,14 @@ const Lightbox: React.FC<LightboxProps> = ({
                 display={currentIndex === index || isMobile() ? true : false}
                 media={media}
               />
-            )
+            );
           })}
         </div>
       </div>
-      
-      {attachments && attachments.length > 1 ?
+
+      {attachments && attachments.length > 1 ? (
         <motion.div
-          initial={{ 
+          initial={{
             opacity: 0,
           }}
           animate={{
@@ -118,24 +122,26 @@ const Lightbox: React.FC<LightboxProps> = ({
             opacity: 0,
           }}
           transition={{
-            type: 'spring',
+            type: "spring",
             stiffness: 700,
             damping: 50,
           }}
-          className={styles.dots}>
+          className={styles.dots}
+        >
           {attachments.map((media, index) => {
             return (
               <div
                 className={styles.pagerDot}
                 data-active={currentIndex === index}
-                key={media.url + "dot"}/>
-            )
+                key={media.url + "dot"}
+              />
+            );
           })}
         </motion.div>
-      : null}
+      ) : null}
 
       <motion.div
-        initial={{ 
+        initial={{
           opacity: 0,
         }}
         animate={{
@@ -145,14 +151,15 @@ const Lightbox: React.FC<LightboxProps> = ({
           opacity: 0,
         }}
         transition={{
-          type: 'spring',
+          type: "spring",
           stiffness: 700,
           damping: 50,
         }}
         className={styles.backdrop}
-        onClick={() => close()}/>
+        onClick={() => close()}
+      />
       <motion.button
-        initial={{ 
+        initial={{
           opacity: 0,
         }}
         animate={{
@@ -163,22 +170,24 @@ const Lightbox: React.FC<LightboxProps> = ({
         }}
         whileTap={{ scale: 0.9 }}
         transition={{
-          type: 'spring',
+          type: "spring",
           stiffness: 700,
           damping: 50,
         }}
         className={styles.close}
-        onClick={() => close()}/>
-    </div>
-  , document.body);
-}
+        onClick={() => close()}
+      />
+    </div>,
+    document.body
+  );
+};
 
 type LightboxImageProps = {
-  media: any,
-  prev?: () => void,
-  next?: () => void,
-  display: boolean,
-}
+  media: any;
+  prev?: () => void;
+  next?: () => void;
+  display: boolean;
+};
 const LightboxImage: React.FC<LightboxImageProps> = ({
   media,
   prev,
@@ -186,35 +195,36 @@ const LightboxImage: React.FC<LightboxImageProps> = ({
   display,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerAspectRatio, setContainerAspectRatio] = useState((window.innerWidth - 48) / (window.innerHeight - 96));
+  const [containerAspectRatio, setContainerAspectRatio] = useState(
+    (window.innerWidth - 48) / (window.innerHeight - 96)
+  );
   const imageAspectRatio = media.width / media.height;
-  
-  let attachment = media.type === "image" ?
-    <img src={media.url}/> :
-    <video
-      src={media.url}
-      autoPlay
-      muted
-      playsInline
-      loop/>
+
+  let attachment =
+    media.type === "image" ? (
+      <img src={media.url} />
+    ) : (
+      <video src={media.url} autoPlay muted playsInline loop />
+    );
 
   useEffect(() => {
     setRatio();
   }, []);
 
-  
   const setRatio = () => {
-    if (!containerRef.current) { return }
+    if (!containerRef.current) {
+      return;
+    }
     let bounds = containerRef.current.getBoundingClientRect();
     setContainerAspectRatio(bounds.width / bounds.height);
-  }
-  
+  };
+
   const onResize = () => {
     setRatio();
-  }
+  };
 
   useResizeObserver({ ref: containerRef as any, onResize });
-  
+
   return (
     <div
       className={styles.lightboxImage}
@@ -227,12 +237,13 @@ const LightboxImage: React.FC<LightboxImageProps> = ({
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.98 }}
         transition={{
-          type: 'spring',
+          type: "spring",
           stiffness: 700,
           damping: 50,
         }}
         ref={containerRef}
-        className={styles.lightboxInner}>
+        className={styles.lightboxInner}
+      >
         <div
           className={styles.imageWrap}
           style={{
@@ -242,18 +253,17 @@ const LightboxImage: React.FC<LightboxImageProps> = ({
             height: containerAspectRatio > imageAspectRatio ? "100%" : "auto",
           }}
         >
-          {prev && next && !isMobile() ?
-            <div
-              className={styles.navigation}>
+          {prev && next && !isMobile() ? (
+            <div className={styles.navigation}>
               <button className={styles.prev} onClick={() => prev()} />
               <button className={styles.next} onClick={() => next()} />
             </div>
-          : null}
+          ) : null}
           {attachment}
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
 export default Lightbox;

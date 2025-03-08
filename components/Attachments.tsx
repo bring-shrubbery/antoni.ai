@@ -1,21 +1,19 @@
-"use client"
+"use client";
 
 import { useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Scrollbar from "./Scrollbar";
 import Lightbox from "./Lightbox";
 import { AnimatePresence } from "framer-motion";
-import { useScrollBoost } from 'react-scrollbooster';
-import isMobile from "./isMobile";
+import { useScrollBoost } from "react-scrollbooster";
+import isMobile from "@/lib/isMobile";
 import useResizeObserver from "use-resize-observer";
 import styles from "./Attachments.module.css";
 
 type AttachmentsProps = {
-  attachments: Array<any>,
+  attachments: Array<any>;
 };
-const Attachments: React.FC<AttachmentsProps> = ({
-  attachments
-}) => {
+const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
   const [lightboxState, setLightboxState] = useState({
     open: false,
     startingIndex: 0,
@@ -26,23 +24,28 @@ const Attachments: React.FC<AttachmentsProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [viewport, scrollbooster] = useScrollBoost({
-    direction: 'horizontal',
+    direction: "horizontal",
     friction: 0.05,
-    scrollMode: 'native',
+    scrollMode: "native",
     textSelection: false,
     onUpdate: (data) => {
       if (containerRef.current) {
         containerRef.current.scrollLeft = data.position.x;
       }
     },
-    shouldScroll: () => { return !isMobile() }
+    shouldScroll: () => {
+      return !isMobile();
+    },
   });
 
-  const setRefs = useCallback<React.RefCallback<HTMLDivElement>>(node => {
-    containerRef.current = node;
-    viewport(node);
-    onResize();
-  }, [viewport]);
+  const setRefs = useCallback<React.RefCallback<HTMLDivElement>>(
+    (node) => {
+      containerRef.current = node;
+      viewport(node);
+      onResize();
+    },
+    [viewport]
+  );
 
   const updateScrollbooster = () => {
     if (!scrollbooster || !containerRef.current) {
@@ -53,21 +56,25 @@ const Attachments: React.FC<AttachmentsProps> = ({
 
   const onResize = () => {
     updateScrollbooster();
-  }
+  };
 
   useResizeObserver({ ref: containerRef as any, onResize });
   useResizeObserver({ ref: innerRef as any, onResize });
 
   let lightbox;
   if (lightboxState.open === true) {
-    lightbox = <Lightbox
+    lightbox = (
+      <Lightbox
         attachments={attachments}
-        startingIndex={lightboxState.startingIndex}        
-        close={() => setLightboxState({
-          open: false,
-          startingIndex: 0,
-        })}
+        startingIndex={lightboxState.startingIndex}
+        close={() =>
+          setLightboxState({
+            open: false,
+            startingIndex: 0,
+          })
+        }
       />
+    );
   }
 
   return (
@@ -75,7 +82,7 @@ const Attachments: React.FC<AttachmentsProps> = ({
       <div
         className={styles.attachments}
         style={{
-          paddingTop: galleryHeight
+          paddingTop: galleryHeight,
         }}
       >
         <div ref={setRefs} className={styles.scrollableArea}>
@@ -83,54 +90,62 @@ const Attachments: React.FC<AttachmentsProps> = ({
             {attachments.map((media, index) => {
               return (
                 <Attachment
-                  onClick={() => setLightboxState({
-                    open: true,
-                    startingIndex: index,
-                  })}
-                  media={media}
                   key={media.url}
-                  height={galleryHeight}/>
-              )
+                  onClick={() =>
+                    setLightboxState({
+                      open: true,
+                      startingIndex: index,
+                    })
+                  }
+                  media={media}
+                  height={galleryHeight}
+                />
+              );
             })}
           </div>
         </div>
       </div>
-      <Scrollbar scrollview={containerRef} innerChild={scrollRef} inlineStyle={{ marginTop: 8 }}/>
-      <AnimatePresence>
-        {lightbox}
-      </AnimatePresence>
+      <Scrollbar
+        scrollview={containerRef}
+        innerChild={scrollRef}
+        inlineStyle={{ marginTop: 8 }}
+      />
+      <AnimatePresence>{lightbox}</AnimatePresence>
     </>
-  )
-}
+  );
+};
 
 type AttachmentProps = {
-  media: any,
-  height: number,
-  onClick: () => void,
-}
-const Attachment: React.FC<AttachmentProps> = ({
-  media,
-  height,
-  onClick,
-}) => {
-  const maxWidth = 21/9;   // ultrawide monitor
-  const minWidth = 19/5/9; // iPhone
+  media: any;
+  height: number;
+  onClick: () => void;
+};
+const Attachment: React.FC<AttachmentProps> = ({ media, height, onClick }) => {
+  const maxWidth = 21 / 9; // ultrawide monitor
+  const minWidth = 19 / 5 / 9; // iPhone
 
   const returnThumbnailAspectRatio = (ratio: number) => {
     if (ratio < minWidth) {
-      return minWidth
+      return minWidth;
     } else if (ratio > maxWidth) {
-      return maxWidth
+      return maxWidth;
     } else {
-      return ratio
+      return ratio;
     }
-  }
+  };
 
   let item;
   if (media.type === "image") {
-    item = <Image alt="" src={media.url} height={height} width={height * returnThumbnailAspectRatio(media.width / media.height)} />
+    item = (
+      <Image
+        alt=""
+        src={media.url}
+        height={height}
+        width={height * returnThumbnailAspectRatio(media.width / media.height)}
+      />
+    );
   } else if (media.type === "video") {
-    item = <video src={media.url} autoPlay loop muted playsInline/>
+    item = <video src={media.url} autoPlay loop muted playsInline />;
   }
 
   return (
@@ -140,10 +155,11 @@ const Attachment: React.FC<AttachmentProps> = ({
         aspectRatio: returnThumbnailAspectRatio(media.width / media.height),
       }}
       onClick={onClick}
-      className={styles.media}>
+      className={styles.media}
+    >
       {item}
     </div>
-  )
-}
+  );
+};
 
 export default Attachments;

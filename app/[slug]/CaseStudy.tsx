@@ -1,16 +1,11 @@
-import RichText from "../RichText";
+import RichText from "../../components/RichText";
 
 type CaseStudyProps = {
-  cv: any,
-  markdownText: string,
+  cv: any;
+  markdownText: string;
 };
-const CaseStudy: React.FC<CaseStudyProps> = ({
-  cv,
-  markdownText,
-}) => {
-  return (
-    <RichText text={markdownText} />
-  );
-}
+const CaseStudy: React.FC<CaseStudyProps> = ({ cv, markdownText }) => {
+  return <RichText text={markdownText} />;
+};
 
 export default CaseStudy;

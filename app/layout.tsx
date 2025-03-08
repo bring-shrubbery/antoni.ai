@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from 'next/font/google'
-import { promises as fs } from 'fs';
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { loadCV } from "@/lib/loadCV";
+import { ThemeProvider } from "next-themes";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
-  const file = await fs.readFile(process.cwd() + '/public/content/profileData.json', 'utf8');
-  const cv = JSON.parse(file);
+  const cv = await loadCV();
   return {
     title: cv.general.displayName,
-    description: cv.general.byline || '',
+    description: cv.general.byline || "",
   };
 }
 
@@ -23,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(inter.variable, "font-sans")}>
+        <ThemeProvider attribute="class">{children}</ThemeProvider>
       </body>
     </html>
   );
