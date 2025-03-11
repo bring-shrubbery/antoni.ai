@@ -13,6 +13,7 @@ export const loadCV = async () => {
     cv.volunteering,
     cv.certifications,
   ];
-  cv.allProjects = [cv.projects, cv.sideProjects];
+  cv.allProjects = [cv.projects];
+  cv.allDesign = [cv.design];
   return cv;
 };

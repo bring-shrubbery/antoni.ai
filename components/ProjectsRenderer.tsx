@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Arrow12 from "./Arrow12";
 import Attachments from "./Attachments";
 import RichText from "./RichText";
@@ -11,8 +12,7 @@ export const ProjectsRenderer = ({ items }: { items: any[] }) => {
             className={`my-16 first:my-4 motion-preset-slide-up-sm`}
             key={index}
           >
-            <h3 className="mb-2">{collection.name}</h3>
-            <div className={"flex flex-col gap-9 mt-6"}>
+            <div className={"flex flex-col gap-24 mt-6"}>
               {collection.items.map((experience: any, index: number) => {
                 return (
                   <ProjectItem
@@ -38,9 +38,9 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ experience }) => {
   if (experience.url) {
     title = (
       <>
-        <a href={experience.url} target="_blank">
+        <Link href={experience.url} target="_blank">
           {experience.heading}
-        </a>
+        </Link>
         <span className="whitespace-nowrap">
           <Arrow12 />
         </span>
@@ -51,13 +51,18 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ experience }) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 md:gap-9 ml-4 md:ml-0">
-      {experience.attachments && experience.attachments.length > 0 ? (
-        <Attachments attachments={experience.attachments} />
-      ) : null}
-      <div>
-        <div className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors">
-          {title}
+    <div className="flex flex-col gap-2 md:gap-5 ml-4 md:ml-0">
+      <div className="-mx-4">
+        {experience.attachments && experience.attachments.length > 0 ? (
+          <Attachments attachments={experience.attachments} />
+        ) : null}
+      </div>
+      <div className="">
+        <div className="w-full space-y-1">
+          <div className="text-muted-foreground">{experience.year ?? ""}</div>
+          <div className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors text-lg">
+            {title}
+          </div>
         </div>
         {experience.location ? (
           <div className="text-muted-foreground">{experience.location}</div>

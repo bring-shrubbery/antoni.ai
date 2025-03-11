@@ -6,7 +6,7 @@ export const CVRenderer = ({ items, about }: { items: any[]; about: any }) => {
   return (
     <>
       {about ? (
-        <section className={`my-4 motion-preset-slide-up-sm`}>
+        <section className={`mt-4 motion-preset-fade`}>
           <h3 className="mb-2">About</h3>
           <div className="mt-2 text-muted-foreground gap-4 flex flex-col ml-4 md:ml-0">
             <RichText text={about} />
@@ -16,10 +16,7 @@ export const CVRenderer = ({ items, about }: { items: any[]; about: any }) => {
 
       {items.map((collection: any, index: number) => {
         return (
-          <section
-            className="my-12 md:my-16 motion-preset-slide-up-sm delay-150"
-            key={index}
-          >
+          <section className="my-12 md:my-12 motion-preset-fade" key={index}>
             <h3 className="mb-2">{collection.name}</h3>
             <div
               className={

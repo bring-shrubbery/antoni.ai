@@ -8,7 +8,6 @@ import { AnimatePresence } from "framer-motion";
 import { useScrollBoost } from "react-scrollbooster";
 import isMobile from "@/lib/isMobile";
 import useResizeObserver from "use-resize-observer";
-import styles from "./Attachments.module.css";
 
 type AttachmentsProps = {
   attachments: Array<any>;
@@ -20,7 +19,6 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
   });
   const scrollRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const galleryHeight = 240;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [viewport, scrollbooster] = useScrollBoost({
@@ -79,14 +77,9 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
 
   return (
     <>
-      <div
-        className={styles.attachments}
-        style={{
-          paddingTop: galleryHeight,
-        }}
-      >
-        <div ref={setRefs} className={styles.scrollableArea}>
-          <div ref={innerRef} className={styles.images}>
+      <div className="w-full flex">
+        <div ref={setRefs} className="w-full">
+          <div ref={innerRef} className="w-full flex">
             {attachments.map((media, index) => {
               return (
                 <Attachment
@@ -98,7 +91,6 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
                     })
                   }
                   media={media}
-                  height={galleryHeight}
                 />
               );
             })}
@@ -117,10 +109,9 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
 
 type AttachmentProps = {
   media: any;
-  height: number;
   onClick: () => void;
 };
-const Attachment: React.FC<AttachmentProps> = ({ media, height, onClick }) => {
+const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
   const maxWidth = 21 / 9; // ultrawide monitor
   const minWidth = 19 / 5 / 9; // iPhone
 
@@ -140,8 +131,9 @@ const Attachment: React.FC<AttachmentProps> = ({ media, height, onClick }) => {
       <Image
         alt=""
         src={media.url}
-        height={height}
-        width={height * returnThumbnailAspectRatio(media.width / media.height)}
+        height={400}
+        width={800}
+        className="object-cover w-full h-full shadow-lg"
       />
     );
   } else if (media.type === "video") {
@@ -151,11 +143,10 @@ const Attachment: React.FC<AttachmentProps> = ({ media, height, onClick }) => {
   return (
     <div
       style={{
-        height: height,
         aspectRatio: returnThumbnailAspectRatio(media.width / media.height),
       }}
       onClick={onClick}
-      className={styles.media}
+      className="cursor-pointer w-full h-full z-10 rounded-md overflow-hidden shadow"
     >
       {item}
     </div>
