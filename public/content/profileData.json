@@ -294,16 +294,10 @@
     "name": "Contact",
     "items": [
       {
-        "id": "mg0NvM43bxjQcFIKX3bA",
-        "platform": "Website",
-        "handle": "quassum.com",
-        "url": "http://quassum.com"
-      },
-      {
-        "id": "SpKnboEozW8bQkb7MDho",
-        "platform": "Email",
-        "handle": "antoni@quassum.com",
-        "url": "mailto:antoni@quassum.com"
+        "id": "BD8VG3wnAONOkjuL43OD",
+        "platform": "GitHub",
+        "handle": "bring-shrubbery",
+        "url": "https://github.com/bring-shrubbery"
       },
       {
         "id": "mhfLW9cXuOCJkeeOm60u",
@@ -312,10 +306,16 @@
         "url": "https://linkedin.com/in/antoni-silvestrovic"
       },
       {
-        "id": "BD8VG3wnAONOkjuL43OD",
-        "platform": "GitHub",
-        "handle": "bring-shrubbery",
-        "url": "https://github.com/bring-shrubbery"
+        "id": "SpKnboEozW8bQkb7MDho",
+        "platform": "Email",
+        "handle": "antoni@quassum.com",
+        "url": "mailto:antoni@quassum.com"
+      },
+      {
+        "id": "mg0NvM43bxjQcFIKX3bA",
+        "platform": "Website",
+        "handle": "quassum.com",
+        "url": "http://quassum.com"
       }
     ]
   }

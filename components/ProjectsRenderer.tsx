@@ -9,10 +9,10 @@ export const ProjectsRenderer = ({ items }: { items: any[] }) => {
       {items.map((collection: any, index: number) => {
         return (
           <section
-            className={`my-16 first:my-4 motion-preset-slide-up-sm`}
+            className={`my-12 first:my-4 motion-preset-fade`}
             key={index}
           >
-            <div className={"flex flex-col gap-24 mt-6"}>
+            <div className={"flex flex-col gap-12 md:gap-24 mt-6"}>
               {collection.items.map((experience: any, index: number) => {
                 return (
                   <ProjectItem
@@ -51,7 +51,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ experience }) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 md:gap-5 ml-4 md:ml-0">
+    <div className="flex flex-col gap-5">
       <div className="-mx-4">
         {experience.attachments && experience.attachments.length > 0 ? (
           <Attachments attachments={experience.attachments} />
