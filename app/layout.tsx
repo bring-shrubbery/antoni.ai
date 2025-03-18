@@ -4,6 +4,7 @@ import "./globals.css";
 import { loadCV } from "@/lib/loadCV";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
+import PlausibleProvider from "next-plausible";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.variable, "font-sans")}>
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <PlausibleProvider domain="antoni.cv">
+          <ThemeProvider attribute="class">{children}</ThemeProvider>
+        </PlausibleProvider>
       </body>
     </html>
   );
