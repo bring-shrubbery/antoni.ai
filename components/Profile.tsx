@@ -4,9 +4,7 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { CVRenderer } from "./CVRenderer";
 import { ProjectsRenderer } from "./ProjectsRenderer";
-import { Button } from "./ui/button";
-import { SunIcon } from "lucide-react";
-import { DarkModeToggle } from "./dark-mode-toggle";
+import { DarkModeToggleLazy } from "./dark-mode-toggle-lazy";
 
 type ProfileProps = {
   cv: any;
@@ -36,7 +34,7 @@ const Profile: React.FC<ProfileProps> = ({ cv }) => {
               </Link>
             ) : null}
           </div>
-          <DarkModeToggle />
+          <DarkModeToggleLazy />
         </div>
       </div>
 

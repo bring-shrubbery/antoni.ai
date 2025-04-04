@@ -3,7 +3,7 @@
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-export const DarkModeToggle = () => {
+const DarkModeToggle = () => {
   const { setTheme, theme } = useTheme();
 
   const Icon = theme === "dark" ? SunIcon : MoonIcon;
@@ -17,3 +17,5 @@ export const DarkModeToggle = () => {
     </button>
   );
 };
+
+export default DarkModeToggle;
