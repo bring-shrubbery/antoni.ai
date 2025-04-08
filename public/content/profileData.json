@@ -7,8 +7,23 @@
     "location": "Vilnius, Lithuania",
     "pronouns": null,
     "byline": "Senior Reductionist in Vilnius, Lithuania",
-    "website": "https://antoni.cv",
-    "websiteURL": "https://antoni.cv",
+    "websites": [
+      {
+        "id": "2",
+        "label": "github",
+        "url": "https://github.com/bring-shrubbery"
+      },
+      {
+        "id": "3",
+        "label": "linkedin",
+        "url": "https://linkedin.com/in/antoni-silvestrovic"
+      },
+      {
+        "id": "3",
+        "label": "bento.me",
+        "url": "https://bento.me/bring-shrubbery"
+      }
+    ],
     "about": "Software Engineer / Product Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: Zustand, XState, Redux Toolkit\\\n\\- DBs: PostgreSQL, Planetscale, Redis\\\n\\- APIs: OpenAPI, tRPC or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
   },
   "projects": {
@@ -296,28 +311,16 @@
     "name": "Contact",
     "items": [
       {
-        "id": "BD8VG3wnAONOkjuL43OD",
-        "platform": "GitHub",
-        "handle": "bring-shrubbery",
-        "url": "https://github.com/bring-shrubbery"
-      },
-      {
-        "id": "mhfLW9cXuOCJkeeOm60u",
-        "platform": "LinkedIn",
-        "handle": "antoni-silvestrovic",
-        "url": "https://linkedin.com/in/antoni-silvestrovic"
-      },
-      {
-        "id": "SpKnboEozW8bQkb7MDho",
+        "id": "1",
         "platform": "Email",
         "handle": "antoni@quassum.com",
         "url": "mailto:antoni@quassum.com"
       },
       {
-        "id": "mg0NvM43bxjQcFIKX3bA",
-        "platform": "Website",
-        "handle": "quassum.com",
-        "url": "http://quassum.com"
+        "id": "2",
+        "platform": "Twitter",
+        "handle": "@bring_shrubbery",
+        "url": "https://x.com/bringshrubberyy"
       }
     ]
   }

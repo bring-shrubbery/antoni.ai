@@ -26,13 +26,17 @@ const Profile: React.FC<ProfileProps> = ({ cv }) => {
           <div>
             <h1 className="text-xl">{cv.general.displayName}</h1>
             <div className="text-muted-foreground">{cv.general.byline}</div>
-            {cv.general.website ? (
-              <Link href={cv.general.website}>
-                <Badge variant="secondary" className="mt-2">
-                  {String(cv.general.website).split("https://").at(1)}
-                </Badge>
-              </Link>
-            ) : null}
+            <div className="flex flex-wrap gap-2">
+              {cv.general.websites
+                ? cv.general.websites.map((w: any, i: number) => (
+                    <Link href={w.url} key={w.id}>
+                      <Badge variant="outline" className="mt-2">
+                        {w.label}
+                      </Badge>
+                    </Link>
+                  ))
+                : null}
+            </div>
           </div>
           <DarkModeToggleLazy />
         </div>
