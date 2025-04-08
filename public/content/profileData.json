@@ -6,15 +6,15 @@
     "profession": "Senior Reductionist",
     "location": "Vilnius, Lithuania",
     "pronouns": null,
-    "byline": "Senior Reductionist in Vilnius, Lithuania",
+    "byline": "Software Engineer / Designer in Vilnius, Lithuania",
     "websites": [
       {
-        "id": "2",
+        "id": "1",
         "label": "github",
         "url": "https://github.com/bring-shrubbery"
       },
       {
-        "id": "3",
+        "id": "2",
         "label": "linkedin",
         "url": "https://linkedin.com/in/antoni-silvestrovic"
       },
@@ -47,6 +47,7 @@
       },
       {
         "id": "pvwL6PtaFAoJHCEqV74W",
+        "fav": true,
         "year": "2023",
         "heading": "SquircleJS",
         "url": "https://squircle.js.org/",
@@ -63,6 +64,7 @@
       },
       {
         "id": "m500zGmx1mqtmAy3I2iV",
+        "fav": true,
         "year": "2022",
         "heading": "Random Excuse Generator",
         "url": "https://github.com/bring-shrubbery/excuse-generator",
@@ -111,6 +113,7 @@
       },
       {
         "id": "BNeHo5XFZ73xf6nwrhD1",
+        "fav": true,
         "year": "2020",
         "heading": "SVG to SwiftUI",
         "url": "http://svg-to-swiftui.quassum.com",
@@ -127,6 +130,7 @@
       },
       {
         "id": "cbXHwqZBstzOQyTXCEcL",
+        "fav": true,
         "year": "2020",
         "heading": "rythmic",
         "url": "https://apps.apple.com/app/rythmic/id1515876711",

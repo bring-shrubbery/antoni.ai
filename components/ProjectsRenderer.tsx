@@ -5,27 +5,15 @@ import RichText from "./RichText";
 
 export const ProjectsRenderer = ({ items }: { items: any[] }) => {
   return (
-    <>
-      {items.map((collection: any, index: number) => {
-        return (
-          <section
-            className={`my-12 first:my-4 motion-preset-fade`}
-            key={index}
-          >
-            <div className={"flex flex-col gap-12 md:gap-24 mt-6"}>
-              {collection.items.map((experience: any, index: number) => {
-                return (
-                  <ProjectItem
-                    key={experience.heading}
-                    experience={experience}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
-    </>
+    <section className={`my-12 first:my-4 motion-preset-fade`}>
+      <div className={"flex flex-col gap-12 md:gap-24 mt-6"}>
+        {items.map((experience: any, index: number) => {
+          return (
+            <ProjectItem key={experience.heading} experience={experience} />
+          );
+        })}
+      </div>
+    </section>
   );
 };
 
