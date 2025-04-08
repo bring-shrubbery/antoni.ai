@@ -15,6 +15,22 @@
     "name": "Projects",
     "items": [
       {
+        "id": "2a3b4c5d6e7f8g9h0i1j",
+        "year": "2024",
+        "heading": "Video to Image Sequence Converter",
+        "url": "https://video-to-sequence.antoni.ai/",
+        "collaborators": [],
+        "description": "I've always liked photogrammetry, it brings a level of realism to 3D models that is hard to achieve otherwise. Apple has great photogrammetry tools, but you need image sequence for that. This project solves that problem by allowing you to upload a video and get an image sequence back.",
+        "attachments": [
+          {
+            "type": "image",
+            "width": 1920,
+            "height": 1080,
+            "url": "/content/media/video-to-sequence.jpg"
+          }
+        ]
+      },
+      {
         "id": "pvwL6PtaFAoJHCEqV74W",
         "year": "2023",
         "heading": "SquircleJS",
