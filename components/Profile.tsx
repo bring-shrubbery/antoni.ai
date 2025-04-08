@@ -106,7 +106,7 @@ const StarToggle = ({
     <button
       type="button"
       className={cn(
-        "w-[26px] flex items-center justify-center text-muted ml-1 hover:bg-muted hover:text-orange-400 h-full rounded-sm transition-all duration-75",
+        "w-[28px] h-[28px] flex items-center justify-center text-border ml-[3px] mr-[0.25px] hover:bg-muted hover:text-orange-400 rounded-sm transition-all duration-75",
         hidden && "opacity-0 pointer-events-none select-none",
         checked && "text-orange-400 bg-foreground/5"
       )}
