@@ -1,11 +1,7 @@
-import { promises as fs } from "fs";
+import profileData from "../content/profileData.json";
 
 export const loadCV = async () => {
-  const file = await fs.readFile(
-    process.cwd() + "/public/content/profileData.json",
-    "utf8"
-  );
-  const cv = JSON.parse(file);
+  const cv: any = profileData;
   cv.allCV = [
     cv.contact,
     cv.workExperience,

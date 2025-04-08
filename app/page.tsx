@@ -1,4 +1,3 @@
-import { promises as fs } from "fs";
 import Profile from "../components/Profile";
 import { loadCV } from "@/lib/loadCV";
 
