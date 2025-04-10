@@ -22,6 +22,11 @@
         "id": "3",
         "label": "bento.me",
         "url": "https://bento.me/bring-shrubbery"
+      },
+      {
+        "id": "4",
+        "label": "book a call",
+        "url": "https://cal.com/bring-shrubbery"
       }
     ],
     "about": "Software Engineer / Product Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: Zustand, XState, Redux Toolkit\\\n\\- DBs: PostgreSQL, Planetscale, Redis\\\n\\- APIs: OpenAPI, tRPC or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
