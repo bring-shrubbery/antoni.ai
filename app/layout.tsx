@@ -11,6 +11,14 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
+// const merriweather = Merriweather({
+//   subsets: ["latin"],
+//   variable: "--font-serif",
+//   display: "swap",
+//   weight: ["400", "700"],
+//   style: ["normal", "italic"],
+// });
+
 export async function generateMetadata(): Promise<Metadata> {
   const cv = await loadCV();
   return {

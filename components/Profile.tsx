@@ -33,7 +33,7 @@ const Profile = ({ cv, tab }: { cv: any; tab?: string }) => {
         </div>
         <div className="flex w-full justify-between items-center">
           <div>
-            <h1 className="text-xl">{cv.general.displayName}</h1>
+            <h1 className="text-xl font-medium">{cv.general.displayName}</h1>
             <div className="text-muted-foreground">{cv.general.byline}</div>
             <div className="flex flex-wrap gap-2">
               {cv.general.websites
