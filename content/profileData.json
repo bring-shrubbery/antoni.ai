@@ -324,12 +324,6 @@
         "platform": "Email",
         "handle": "antoni@quassum.com",
         "url": "mailto:antoni@quassum.com"
-      },
-      {
-        "id": "2",
-        "platform": "Twitter",
-        "handle": "@bring_shrubbery",
-        "url": "https://x.com/bringshrubberyy"
       }
     ]
   }
