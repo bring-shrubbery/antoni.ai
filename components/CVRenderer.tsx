@@ -7,7 +7,7 @@ export const CVRenderer = ({ items, about }: { items: any[]; about: any }) => {
     <>
       {about ? (
         <section className={`mt-4 motion-preset-fade`}>
-          <h3 className="mb-2">About</h3>
+          <h2 className="mb-2">About</h2>
           <div className="mt-2 text-muted-foreground gap-4 flex flex-col ml-4 md:ml-0">
             <RichText text={about} />
           </div>
@@ -17,7 +17,7 @@ export const CVRenderer = ({ items, about }: { items: any[]; about: any }) => {
       {items.map((collection: any, index: number) => {
         return (
           <section className="my-12 md:my-12 motion-preset-fade" key={index}>
-            <h3 className="mb-2">{collection.name}</h3>
+            <h2 className="mb-2">{collection.name}</h2>
             <div
               className={
                 collection.name === "Contact"
@@ -74,9 +74,9 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ experience }) => {
         {experience.year}
       </div>
       <div>
-        <div className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors">
+        <h3 className="flex items-center gap-1 text-primary [&>a]:hover:border-b-primary [&>a]:border-b [&>a]:border-b-transparent [&>a]:transition-colors">
           {title}
-        </div>
+        </h3>
         {experience.location ? (
           <div className="text-muted-foreground">{experience.location}</div>
         ) : null}

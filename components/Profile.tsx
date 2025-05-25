@@ -79,9 +79,11 @@ const Profile = ({ cv, tab }: { cv: any; tab?: string }) => {
           {/* <TabsTrigger value="design">Design</TabsTrigger>
           <TabsTrigger value="blog">Tech Blog</TabsTrigger> */}
         </TabsList>
+
         <TabsContent value="cv" className="my-0">
           <CVRenderer items={cv.allCV} about={cv.general.about} />
         </TabsContent>
+
         <TabsContent value="projects" className="my-0">
           <ProjectsRenderer items={filteredProjects} />
         </TabsContent>
