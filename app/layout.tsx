@@ -5,6 +5,7 @@ import { loadCV } from "@/lib/loadCV";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
 import PlausibleProvider from "next-plausible";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,10 @@ export default function RootLayout({
         <PlausibleProvider domain="antoni.cv">
           <ThemeProvider attribute="class">{children}</ThemeProvider>
         </PlausibleProvider>
+        <Script
+          src="https://onedollarchatbot.com/script/g492j4c474wkzzcp5enj0"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
