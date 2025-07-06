@@ -35,6 +35,22 @@
     "name": "Projects",
     "items": [
       {
+        "id": "1a2b3c4d5e6f7g8h9i0j",
+        "year": "2025",
+        "heading": "One Dollar Chatbot",
+        "url": "https://onedollarchatbot.com/",
+        "collaborators": [],
+        "description": "Customer support is a critical aspect of any business, but it can also be one of the most expensive. Many companies struggle to provide timely and effective support to their customers, leading to frustration and lost sales. Although there are many customer support solutions available, they often come with a hefty price tag. This is where One Dollar Chatbot comes in. It is a simple, yet powerful, customer support chatbot that can be set up in minutes and plans start at just $1 per month. It is designed to help businesses provide better support to their customers without breaking the bank.",
+        "attachments": [
+          {
+            "type": "image",
+            "width": 1920,
+            "height": 1080,
+            "url": "/content/media/one-dollar-chatbot.jpg"
+          }
+        ]
+      },
+      {
         "id": "2a3b4c5d6e7f8g9h0i1j",
         "year": "2024",
         "heading": "Video to Image Sequence Converter",
