@@ -29,7 +29,7 @@
         "url": "https://cal.com/bring-shrubbery"
       }
     ],
-    "about": "Software Engineer / Product Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: Zustand, XState, Redux Toolkit\\\n\\- DBs: PostgreSQL, Planetscale, Redis\\\n\\- APIs: OpenAPI, tRPC or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
+    "about": "Software Engineer / Product Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: React Query, Zustand, XState\\\n\\- DBs: PostgreSQL, Neon, Upstash\\\n\\- APIs: tRPC, OpenAPI or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
   },
   "projects": {
     "name": "Projects",
@@ -48,6 +48,22 @@
             "width": 1920,
             "height": 1080,
             "url": "/content/media/one-dollar-chatbot.jpg"
+          }
+        ]
+      },
+      {
+        "id": "UVul8MuPc1wMRKCjk7vwt",
+        "year": "2025",
+        "heading": "Panorama Stitcher",
+        "url": "https://panorama.antoni.ai/",
+        "collaborators": [],
+        "description": "This project was written on the day GPT 5 was released. It's 100% vibe-coded in about 5-6 hours. It allows you to upload a sequence of photos, and it will stitch them together into a panorama. It uses OpenCV for image processing and does complex masking to ensure that the panorama is seamless.",
+        "attachments": [
+          {
+            "type": "image",
+            "width": 2072,
+            "height": 1096,
+            "url": "/content/media/panorama-stitcher.png"
           }
         ]
       },
