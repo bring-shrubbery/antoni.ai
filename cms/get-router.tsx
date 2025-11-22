@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CreateCMSOptions } from "./route-utils";
-import { renderToString } from "react-dom/server";
 import { renderAdminPanel } from "./admin-panel";
 import { readFile } from "fs/promises";
+import { join } from "path";
 
 export const runGetRouter = async (
   req: NextRequest,
@@ -15,7 +15,28 @@ export const runGetRouter = async (
     case adminRoute.startsWith("/static/"):
       const staticPath = adminRoute.replace("/static/", "");
 
-      if (!staticPath.endsWith(".js")) {
+      // Determine content type
+      let contentType = "text/plain";
+      if (staticPath.endsWith(".js")) {
+        contentType = "application/javascript";
+      } else if (staticPath.endsWith(".css")) {
+        contentType = "text/css";
+      } else if (staticPath.endsWith(".json")) {
+        contentType = "application/json";
+      }
+
+      try {
+        // Read file from cms/static directory
+        const filePath = join(process.cwd(), "cms", "static", staticPath);
+        const file = await readFile(filePath, "utf-8");
+
+        return new Response(file, {
+          headers: {
+            "Content-Type": contentType,
+            "Cache-Control": "no-store",
+          },
+        });
+      } catch (error) {
         return new Response("Not Found", {
           status: 404,
           headers: {
@@ -25,17 +46,6 @@ export const runGetRouter = async (
         });
       }
 
-      const file = await readFile(
-        __dirname + `/../../../../../cms/static/${staticPath}`,
-        "utf-8"
-      );
-
-      return new Response(file, {
-        headers: {
-          "Content-Type": "application/javascript",
-          "Cache-Control": "no-store",
-        },
-      });
     default: {
       return new Response(renderAdminPanel(), {
         headers: {

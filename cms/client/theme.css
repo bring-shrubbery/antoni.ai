@@ -1,0 +1,4 @@
+@theme inline {
+  /* Scope all utilities to #cms-root for isolation */
+  --selector: #cms-root;
+}
