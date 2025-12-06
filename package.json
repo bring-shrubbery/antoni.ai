@@ -4,13 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @apps/web dev",
-    "build": "pnpm --filter @turbulence/cms build && pnpm --filter @apps/web build",
-    "build:cms": "pnpm --filter @turbulence/cms build",
-    "start": "pnpm --filter @apps/web start",
-    "lint": "pnpm --filter @apps/web lint"
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=@apps/web",
+    "build": "turbo build",
+    "build:cms": "turbo build --filter=@turbulence/cms",
+    "start": "turbo start --filter=@apps/web",
+    "lint": "turbo lint"
   },
   "devDependencies": {
+    "turbo": "^2.6.3",
     "typescript": "^5.9.3"
   },
   "pnpm": {
@@ -18,9 +20,6 @@
       "@types/react": "19.2.7",
       "@types/react-dom": "19.2.3"
     }
-  },
-  "dependencies": {
-    "turbo": "^2.6.3"
   },
   "packageManager": "pnpm@10.18.1"
 }

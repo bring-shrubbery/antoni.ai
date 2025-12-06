@@ -11,11 +11,10 @@ overrides:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       turbo:
         specifier: ^2.6.3
         version: 2.6.3
-    devDependencies:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
