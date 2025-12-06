@@ -21743,6 +21743,7 @@
           headers: {
             "Content-Type": "application/json"
           },
+          credentials: "include",
           body: JSON.stringify({
             email,
             password
@@ -21888,7 +21889,9 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json"
-          }
+          },
+          credentials: "include",
+          body: JSON.stringify({})
         });
       } catch (e) {
       }
@@ -21909,21 +21912,72 @@
       /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("main", { className: "py-10", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "px-4 sm:px-6 lg:px-8", children: [
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { className: "h-6 w-6 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              "svg",
+              {
+                className: "h-6 w-6 text-gray-400",
+                fill: "none",
+                viewBox: "0 0 24 24",
+                stroke: "currentColor",
+                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                  "path",
+                  {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  }
+                )
+              }
+            ) }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Total Content" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
             ] }) })
           ] }) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { className: "h-6 w-6 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              "svg",
+              {
+                className: "h-6 w-6 text-gray-400",
+                fill: "none",
+                viewBox: "0 0 24 24",
+                stroke: "currentColor",
+                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                  "path",
+                  {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  }
+                )
+              }
+            ) }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Users" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
             ] }) })
           ] }) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { className: "h-6 w-6 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              "svg",
+              {
+                className: "h-6 w-6 text-gray-400",
+                fill: "none",
+                viewBox: "0 0 24 24",
+                stroke: "currentColor",
+                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                  "path",
+                  {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  }
+                )
+              }
+            ) }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Collections" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
@@ -21934,7 +21988,8 @@
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg font-medium text-gray-900 mb-2", children: "Welcome to your CMS Dashboard" }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-gray-600", children: "This is a self-contained CMS system that can be integrated into any project. The UI is built with React and uses isolated Tailwind CSS classes (prefixed with '') to avoid conflicts with your project's styles." }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-sm text-gray-500", children: [
-            "Current route: ",
+            "Current route:",
+            " ",
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("code", { className: "bg-gray-100 px-2 py-1 rounded text-xs", children: window.location.pathname })
           ] }) })
         ] }) })
@@ -22278,7 +22333,11 @@
       try {
         await fetch("/admin/api/auth/sign-out", {
           method: "POST",
-          credentials: "include"
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({})
         });
       } catch (error) {
         console.error("Logout error:", error);
@@ -22330,9 +22389,20 @@
         return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Setup, { onComplete: handleSetupComplete });
       }
       if (authStatus?.isAuthenticated) {
+        if (currentPath === "/admin/login" || currentPath === "/admin" || currentPath === "/admin/") {
+          if (currentPath !== "/admin/dashboard") {
+            window.history.replaceState({}, "", "/admin/dashboard");
+          }
+        }
         return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Dashboard, { user: authStatus.user, onLogout: handleLogout });
+      } else {
+        if (currentPath !== "/admin/login" && currentPath !== "/admin/setup") {
+          if (currentPath !== "/admin/login") {
+            window.history.replaceState({}, "", "/admin/login");
+          }
+        }
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Login, { onLoginSuccess: handleLoginSuccess });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Login, { onLoginSuccess: handleLoginSuccess });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { id: "cms-app", children: renderPage() });
   }

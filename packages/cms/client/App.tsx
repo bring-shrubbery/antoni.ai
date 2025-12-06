@@ -133,7 +133,11 @@ export function App() {
     try {
       await fetch("/admin/api/auth/sign-out", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
+        body: JSON.stringify({}),
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -186,13 +190,32 @@ export function App() {
       return <Setup onComplete={handleSetupComplete} />;
     }
 
-    // If user is authenticated, show dashboard (unless explicitly on login page after logout)
+    // Determine what to show based on auth state and handle redirects
     if (authStatus?.isAuthenticated) {
+      // User is authenticated
+      // If on login page or root admin, redirect to dashboard
+      if (
+        currentPath === "/admin/login" ||
+        currentPath === "/admin" ||
+        currentPath === "/admin/"
+      ) {
+        // Update URL to dashboard without triggering re-render loop
+        if (currentPath !== "/admin/dashboard") {
+          window.history.replaceState({}, "", "/admin/dashboard");
+        }
+      }
       return <Dashboard user={authStatus.user} onLogout={handleLogout} />;
+    } else {
+      // User is not authenticated
+      // If trying to access protected pages, redirect to login
+      if (currentPath !== "/admin/login" && currentPath !== "/admin/setup") {
+        // Update URL to login without triggering re-render loop
+        if (currentPath !== "/admin/login") {
+          window.history.replaceState({}, "", "/admin/login");
+        }
+      }
+      return <Login onLoginSuccess={handleLoginSuccess} />;
     }
-
-    // Not authenticated, show login
-    return <Login onLoginSuccess={handleLoginSuccess} />;
   };
 
   return <div id="cms-app">{renderPage()}</div>;

@@ -5,10 +5,11 @@ import * as schema from "../db/schema";
 
 export interface AuthConfig {
   /**
-   * The base URL for the auth routes
-   * @default "/api/auth"
+   * The base URL for the auth routes (relative to basePath)
+   * This is automatically set based on the CMS basePath
+   * @internal
    */
-  basePath?: string;
+  authBasePath?: string;
 
   /**
    * Secret key for signing tokens
@@ -64,7 +65,7 @@ export const createAuth = (db: DrizzleClient, config: AuthConfig) => {
         verification: schema.verification,
       },
     }),
-    basePath: config.basePath ?? "/api/auth",
+    basePath: config.authBasePath ?? "/admin/api/auth",
     secret: config.secret,
     baseURL: config.baseUrl,
     trustedOrigins: config.trustedOrigins,

@@ -3,7 +3,7 @@ import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as drizzle_orm_pg_core0 from "drizzle-orm/pg-core";
 import { z } from "zod";
 import * as better_auth0 from "better-auth";
-import * as _trpc_server73 from "@trpc/server";
+import * as _trpc_server53 from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import superjson from "superjson";
 
@@ -1393,10 +1393,11 @@ declare const setStorage: (client: StorageClient) => void;
 //#region src/auth/index.d.ts
 interface AuthConfig {
   /**
-   * The base URL for the auth routes
-   * @default "/api/auth"
+   * The base URL for the auth routes (relative to basePath)
+   * This is automatically set based on the CMS basePath
+   * @internal
    */
-  basePath?: string;
+  authBasePath?: string;
   /**
    * Secret key for signing tokens
    * Should be a random string at least 32 characters long
@@ -1531,19 +1532,19 @@ interface TRPCContext {
 /**
  * Export reusable tRPC helpers
  */
-declare const createTRPCRouter: _trpc_server73.TRPCRouterBuilder<{
+declare const createTRPCRouter: _trpc_server53.TRPCRouterBuilder<{
   ctx: TRPCContext;
   meta: object;
   errorShape: {
     data: {
       zodError: string | undefined;
-      code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+      code: _trpc_server53.TRPC_ERROR_CODE_KEY;
       httpStatus: number;
       path?: string;
       stack?: string;
     };
     message: string;
-    code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+    code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
   };
   transformer: true;
 }>;
@@ -1551,12 +1552,12 @@ declare const createTRPCRouter: _trpc_server73.TRPCRouterBuilder<{
  * Public (unauthenticated) procedure
  * Can be used by anyone, no session required
  */
-declare const publicProcedure: _trpc_server73.TRPCProcedureBuilder<TRPCContext, object, object, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, false>;
+declare const publicProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContext, object, object, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, false>;
 /**
  * Protected (authenticated) procedure
  * Requires a valid session
  */
-declare const protectedProcedure: _trpc_server73.TRPCProcedureBuilder<TRPCContext, object, {
+declare const protectedProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContext, object, {
   user: {
     id: string;
     name: string;
@@ -1578,7 +1579,7 @@ declare const protectedProcedure: _trpc_server73.TRPCProcedureBuilder<TRPCContex
     userId: string;
   };
   req: Request;
-}, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, _trpc_server73.TRPCUnsetMarker, false>;
+}, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, false>;
 /**
  * Middleware for logging
  */
@@ -1587,42 +1588,42 @@ declare const protectedProcedure: _trpc_server73.TRPCProcedureBuilder<TRPCContex
 /**
  * Main CMS API Router
  */
-declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
+declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
   ctx: TRPCContext;
   meta: object;
   errorShape: {
     data: {
       zodError: string | undefined;
-      code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+      code: _trpc_server53.TRPC_ERROR_CODE_KEY;
       httpStatus: number;
       path?: string;
       stack?: string;
     };
     message: string;
-    code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+    code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
   };
   transformer: true;
-}, _trpc_server73.TRPCDecorateCreateRouterOptions<{
+}, _trpc_server53.TRPCDecorateCreateRouterOptions<{
   /**
    * Setup and admin management
    */
-  setup: _trpc_server73.TRPCBuiltRouter<{
+  setup: _trpc_server53.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server73.TRPCDecorateCreateRouterOptions<{
-    getStatus: _trpc_server73.TRPCQueryProcedure<{
+  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
+    getStatus: _trpc_server53.TRPCQueryProcedure<{
       input: void;
       output: {
         isSetupComplete: boolean;
@@ -1635,7 +1636,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    createSuperadmin: _trpc_server73.TRPCMutationProcedure<{
+    createSuperadmin: _trpc_server53.TRPCMutationProcedure<{
       input: {
         name: string;
         email: string;
@@ -1652,7 +1653,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getMyRole: _trpc_server73.TRPCQueryProcedure<{
+    getMyRole: _trpc_server53.TRPCQueryProcedure<{
       input: void;
       output: {
         role: "superadmin" | "admin" | "editor";
@@ -1661,7 +1662,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    inviteAdmin: _trpc_server73.TRPCMutationProcedure<{
+    inviteAdmin: _trpc_server53.TRPCMutationProcedure<{
       input: {
         name: string;
         email: string;
@@ -1679,7 +1680,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    listAdmins: _trpc_server73.TRPCQueryProcedure<{
+    listAdmins: _trpc_server53.TRPCQueryProcedure<{
       input: void;
       output: {
         admins: {
@@ -1696,23 +1697,23 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
   /**
    * Content types (schemas)
    */
-  contentType: _trpc_server73.TRPCBuiltRouter<{
+  contentType: _trpc_server53.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server73.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server73.TRPCQueryProcedure<{
+  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server53.TRPCQueryProcedure<{
       input: void;
       output: {
         id: string;
@@ -1742,7 +1743,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       }[];
       meta: object;
     }>;
-    getBySlug: _trpc_server73.TRPCQueryProcedure<{
+    getBySlug: _trpc_server53.TRPCQueryProcedure<{
       input: {
         slug: string;
       };
@@ -1774,7 +1775,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server73.TRPCMutationProcedure<{
+    create: _trpc_server53.TRPCMutationProcedure<{
       input: {
         name: string;
         slug: string;
@@ -1825,7 +1826,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    update: _trpc_server73.TRPCMutationProcedure<{
+    update: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
         name?: string | undefined;
@@ -1876,7 +1877,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server73.TRPCMutationProcedure<{
+    delete: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -1889,23 +1890,23 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
   /**
    * Content entries (actual data)
    */
-  contentEntry: _trpc_server73.TRPCBuiltRouter<{
+  contentEntry: _trpc_server53.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server73.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server73.TRPCQueryProcedure<{
+  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server53.TRPCQueryProcedure<{
       input: {
         contentTypeSlug: string;
         status?: "draft" | "published" | "archived" | undefined;
@@ -1928,7 +1929,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getById: _trpc_server73.TRPCQueryProcedure<{
+    getById: _trpc_server53.TRPCQueryProcedure<{
       input: {
         id: string;
       };
@@ -1945,7 +1946,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server73.TRPCMutationProcedure<{
+    create: _trpc_server53.TRPCMutationProcedure<{
       input: {
         contentTypeId: string;
         data: Record<string | number | symbol, unknown>;
@@ -1964,7 +1965,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    update: _trpc_server73.TRPCMutationProcedure<{
+    update: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
         data?: Record<string | number | symbol, unknown> | undefined;
@@ -1983,7 +1984,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server73.TRPCMutationProcedure<{
+    delete: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -1992,7 +1993,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    publish: _trpc_server73.TRPCMutationProcedure<{
+    publish: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2009,7 +2010,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    unpublish: _trpc_server73.TRPCMutationProcedure<{
+    unpublish: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2030,23 +2031,23 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
   /**
    * Media/file management
    */
-  media: _trpc_server73.TRPCBuiltRouter<{
+  media: _trpc_server53.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server73.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server73.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server73.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server73.TRPCQueryProcedure<{
+  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server53.TRPCQueryProcedure<{
       input: {
         limit?: number | undefined;
         offset?: number | undefined;
@@ -2072,7 +2073,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getById: _trpc_server73.TRPCQueryProcedure<{
+    getById: _trpc_server53.TRPCQueryProcedure<{
       input: {
         id: string;
       };
@@ -2093,7 +2094,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server73.TRPCMutationProcedure<{
+    create: _trpc_server53.TRPCMutationProcedure<{
       input: {
         filename: string;
         originalFilename: string;
@@ -2122,7 +2123,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    update: _trpc_server73.TRPCMutationProcedure<{
+    update: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
         alt?: string | undefined;
@@ -2146,7 +2147,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server73.TRPCMutationProcedure<{
+    delete: _trpc_server53.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2159,7 +2160,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getSignedUrl: _trpc_server73.TRPCQueryProcedure<{
+    getSignedUrl: _trpc_server53.TRPCQueryProcedure<{
       input: {
         id: string;
         expiresIn?: number | undefined;
@@ -2173,7 +2174,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
   /**
    * Example public endpoint - health check
    */
-  health: _trpc_server73.TRPCQueryProcedure<{
+  health: _trpc_server53.TRPCQueryProcedure<{
     input: void;
     output: {
       status: string;
@@ -2185,7 +2186,7 @@ declare const appRouter: _trpc_server73.TRPCBuiltRouter<{
   /**
    * Example protected endpoint - get current user info
    */
-  me: _trpc_server73.TRPCQueryProcedure<{
+  me: _trpc_server53.TRPCQueryProcedure<{
     input: void;
     output: {
       user: {
@@ -2255,4 +2256,4 @@ type CMSHandlers = {
 };
 //#endregion
 export { session as $, createDatabase as A, NewContentType as B, UploadResult as C, setStorage as D, initStorage as E, ContentField as F, User as G, NewSession as H, ContentType as I, contentEntry as J, UserRole as K, ContentTypeSchema as L, runMigrations as M, setDatabase as N, DatabaseConfig as O, ContentEntry as P, media as Q, Media as R, StorageConfig as S, getStorage as T, NewUser as U, NewMedia as V, Session as W, contentType as X, contentFieldSchema as Y, contentTypeSchemaValidator as Z, createAuth as _, handleTRPCRequest as a, isAuthenticated as b, TRPCContext as c, publicProcedure as d, user as et, htmlTemplate as f, AuthConfig as g, Auth as h, createContext as i, getDatabase as j, DrizzleClient as k, createTRPCRouter as l, createCMS as m, CMSRequest as n, verification as nt, AppRouter as o, renderAdminPanel as p, account as q, CreateCMSOptions as r, appRouter as s, CMSHandlers as t, userRoleEnum as tt, protectedProcedure as u, getAuth as v, createStorageClient as w, StorageClient as x, getSession as y, NewContentEntry as z };
-//# sourceMappingURL=index-CGRhY1zV.d.ts.map
+//# sourceMappingURL=index-KeDVcsYz.d.ts.map

@@ -12,6 +12,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
+        body: JSON.stringify({}),
       });
     } catch (e) {
       // Ignore errors, just clear the session

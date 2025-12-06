@@ -424,7 +424,7 @@ const createAuth = (db, config) => {
 				verification
 			}
 		}),
-		basePath: config.basePath ?? "/api/auth",
+		basePath: config.authBasePath ?? "/admin/api/auth",
 		secret: config.secret,
 		baseURL: config.baseUrl,
 		trustedOrigins: config.trustedOrigins,
@@ -966,7 +966,10 @@ const createCMS = (options) => {
 			let db = null;
 			if (options?.database) db = await createDatabase(options.database);
 			if (options?.storage) initStorage(options.storage);
-			if (options?.auth && db) createAuth(db, options.auth);
+			if (options?.auth && db) createAuth(db, {
+				...options.auth,
+				authBasePath: `${opts.basePath}/api/auth`
+			});
 			initialized = true;
 			return db;
 		})();
@@ -1008,4 +1011,4 @@ const createCMS = (options) => {
 
 //#endregion
 export { renderAdminPanel as A, contentType as C, user as D, session as E, userRoleEnum as O, contentFieldSchema as S, media as T, getDatabase as _, createTRPCRouter as a, account as b, createAuth as c, isAuthenticated as d, createStorageClient as f, createDatabase as g, setStorage as h, appRouter as i, htmlTemplate as j, verification as k, getAuth as l, initStorage as m, createContext as n, protectedProcedure as o, getStorage as p, handleTRPCRequest as r, publicProcedure as s, createCMS as t, getSession as u, runMigrations as v, contentTypeSchemaValidator as w, contentEntry as x, setDatabase as y };
-//# sourceMappingURL=create-cms-Bm3-xas1.js.map
+//# sourceMappingURL=create-cms-BDEpMCQG.js.map

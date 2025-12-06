@@ -22,6 +22,7 @@ export function Login({ onLoginSuccess }: LoginProps) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email,
           password,

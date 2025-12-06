@@ -55,7 +55,10 @@ export const createCMS = (options?: CreateCMSOptions): CMSHandlers => {
 
         // Initialize auth if config provided (requires database)
         if (options?.auth && db) {
-          createAuth(db, options.auth);
+          createAuth(db, {
+            ...options.auth,
+            authBasePath: `${opts.basePath}/api/auth`,
+          });
         }
 
         initialized = true;
