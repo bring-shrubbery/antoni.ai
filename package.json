@@ -18,5 +18,9 @@
       "@types/react": "19.2.7",
       "@types/react-dom": "19.2.3"
     }
-  }
+  },
+  "dependencies": {
+    "turbo": "^2.6.3"
+  },
+  "packageManager": "pnpm@10.18.1"
 }
