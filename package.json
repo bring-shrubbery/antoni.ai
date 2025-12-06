@@ -1,56 +1,17 @@
 {
-  "name": "antoni.cv",
+  "name": "antoni-cv-monorepo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "cms:build": "node cms/build.js",
-    "cms:watch": "node cms/build.js --watch"
-  },
-  "dependencies": {
-    "@radix-ui/react-checkbox": "^1.3.3",
-    "@radix-ui/react-label": "^2.1.8",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@radix-ui/react-tabs": "^1.1.13",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.25",
-    "lucide-react": "^0.556.0",
-    "next": "16.0.7",
-    "next-plausible": "^3.12.5",
-    "next-themes": "^0.4.6",
-    "postcss": "^8.5.6",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
-    "react-markdown": "^10.1.0",
-    "react-scrollbooster": "^0.1.2",
-    "sharp": "^0.34.5",
-    "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.17",
-    "tailwindcss-animate": "^1.0.7",
-    "url-join": "^5.0.0",
-    "use-resize-observer": "^9.1.0"
+    "dev": "pnpm --filter @apps/web dev",
+    "build": "pnpm --filter @turbulence/cms build && pnpm --filter @apps/web build",
+    "build:cms": "pnpm --filter @turbulence/cms build",
+    "start": "pnpm --filter @apps/web start",
+    "lint": "pnpm --filter @apps/web lint"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.17",
-    "@types/node": "^24.10.1",
-    "@types/react": "19.2.7",
-    "@types/react-dom": "19.2.3",
-    "autoprefixer": "^10.4.22",
-    "esbuild": "^0.27.1",
-    "postcss-cli": "^11.0.1",
-    "tailwindcss-motion": "^1.1.1",
     "typescript": "^5.9.3"
-  },
-  "overrides": {
-    "use-resize-observer": {
-      "react": "^19",
-      "react-dom": "^19"
-    }
   },
   "pnpm": {
     "overrides": {

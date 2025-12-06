@@ -1,0 +1,66 @@
+{
+  "name": "@turbulence/cms",
+  "version": "0.1.0",
+  "description": "A framework-agnostic, self-contained CMS using Web Standards",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "import": "./dist/next.js"
+    }
+  },
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "tsdown && node build.js",
+    "build:client": "node build.js",
+    "build:lib": "tsdown",
+    "dev": "tsdown --watch",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "cms",
+    "admin",
+    "headless",
+    "react",
+    "web-standards"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bring-shrubbery/antoni.cv"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.22",
+    "esbuild": "^0.27.1",
+    "postcss": "^8.5.6",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "tailwindcss": "^4.1.17",
+    "tsdown": "^0.12.6",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  }
+}

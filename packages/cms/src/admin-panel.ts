@@ -1,6 +1,6 @@
-import { htmlTemplate } from "../templates/root";
+import { htmlTemplate } from "./templates/root";
 
-export const renderAdminPanel = () => {
+export const renderAdminPanel = (): string => {
   return htmlTemplate({
     title: "CMS Admin Panel",
     body: `
