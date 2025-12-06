@@ -1,6 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import { renderToString } from "react-dom/server";
-import { Root } from "./layout";
+import { type NextRequest, NextResponse } from "next/server";
 import { runGetRouter } from "./get-router";
 
 export type CreateCMSOptions = {

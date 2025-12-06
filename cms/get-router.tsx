@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { CreateCMSOptions } from "./route-utils";
+import type { NextRequest } from "next/server";
+import type { CreateCMSOptions } from "./route-utils";
 import { renderAdminPanel } from "./admin-panel";
 import { readFile } from "fs/promises";
 import { join } from "path";
@@ -12,7 +12,7 @@ export const runGetRouter = async (
   const adminRoute = pathname.split(opts.basePath!)[1];
 
   switch (true) {
-    case adminRoute.startsWith("/static/"):
+    case adminRoute.startsWith("/static/"): {
       const staticPath = adminRoute.replace("/static/", "");
 
       // Determine content type
@@ -45,6 +45,7 @@ export const runGetRouter = async (
           },
         });
       }
+    }
 
     default: {
       return new Response(renderAdminPanel(), {
