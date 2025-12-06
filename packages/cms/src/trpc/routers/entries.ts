@@ -7,7 +7,63 @@ import {
   contentEntry,
   type ContentTypeSchema,
   type CollectionField,
+  type ArrayItemType,
 } from "../../db/schema";
+
+/**
+ * URL validation regex
+ */
+const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+
+/**
+ * ISO date string validation regex
+ */
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+
+/**
+ * Validate a single value against a field type
+ */
+function validateValue(
+  value: unknown,
+  type: string,
+  fieldName: string
+): string | null {
+  switch (type) {
+    case "string":
+    case "textarea":
+      if (typeof value !== "string") {
+        return `Field "${fieldName}" must be a string`;
+      }
+      break;
+    case "number":
+      if (typeof value !== "number" || isNaN(value)) {
+        return `Field "${fieldName}" must be a number`;
+      }
+      break;
+    case "boolean":
+      if (typeof value !== "boolean") {
+        return `Field "${fieldName}" must be a boolean`;
+      }
+      break;
+    case "date":
+      if (typeof value !== "string" || !ISO_DATE_REGEX.test(value)) {
+        return `Field "${fieldName}" must be a valid date`;
+      }
+      break;
+    case "url":
+      if (typeof value !== "string" || !URL_REGEX.test(value)) {
+        return `Field "${fieldName}" must be a valid URL`;
+      }
+      break;
+    case "image":
+      // Image stores a media ID (uuid string) or object with id
+      if (typeof value !== "string" && typeof value !== "object") {
+        return `Field "${fieldName}" must be a valid image reference`;
+      }
+      break;
+  }
+  return null;
+}
 
 /**
  * Validate entry data against the collection schema
@@ -22,12 +78,16 @@ function validateEntryData(
     const value = data[field.key];
 
     // Check required fields
-    if (
-      field.required &&
-      (value === undefined || value === null || value === "")
-    ) {
-      errors.push(`Field "${field.name}" is required`);
-      continue;
+    if (field.required) {
+      const isEmpty =
+        value === undefined ||
+        value === null ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0);
+      if (isEmpty) {
+        errors.push(`Field "${field.name}" is required`);
+        continue;
+      }
     }
 
     // Skip validation if value is empty and not required
@@ -36,22 +96,28 @@ function validateEntryData(
     }
 
     // Type validation
-    switch (field.type) {
-      case "string":
-        if (typeof value !== "string") {
-          errors.push(`Field "${field.name}" must be a string`);
+    if (field.type === "array") {
+      if (!Array.isArray(value)) {
+        errors.push(`Field "${field.name}" must be an array`);
+        continue;
+      }
+      // Validate each item in the array
+      const itemType = field.arrayItemType || "string";
+      for (let i = 0; i < value.length; i++) {
+        const itemError = validateValue(
+          value[i],
+          itemType,
+          `${field.name}[${i}]`
+        );
+        if (itemError) {
+          errors.push(itemError);
         }
-        break;
-      case "number":
-        if (typeof value !== "number" || isNaN(value)) {
-          errors.push(`Field "${field.name}" must be a number`);
-        }
-        break;
-      case "boolean":
-        if (typeof value !== "boolean") {
-          errors.push(`Field "${field.name}" must be a boolean`);
-        }
-        break;
+      }
+    } else {
+      const error = validateValue(value, field.type, field.name);
+      if (error) {
+        errors.push(error);
+      }
     }
   }
 

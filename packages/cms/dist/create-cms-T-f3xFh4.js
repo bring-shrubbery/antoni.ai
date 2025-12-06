@@ -101,6 +101,7 @@ const runGetRouter = async (req, opts) => {
 //#region src/db/schema.ts
 var schema_exports = /* @__PURE__ */ __export({
 	account: () => account,
+	arrayItemTypeEnum: () => arrayItemTypeEnum,
 	collectionFieldSchema: () => collectionFieldSchema,
 	contentEntry: () => contentEntry,
 	contentFieldSchema: () => contentFieldSchema,
@@ -219,12 +220,36 @@ const media = pgTable("cms_media", {
 });
 /**
 * Basic field types for collections
-* Starting with core types, will expand later
+* - string: Short text input
+* - number: Numeric input
+* - boolean: Checkbox/toggle
+* - date: Date picker (stored as ISO string)
+* - textarea: Multi-line text input
+* - url: URL input with validation
+* - image: Image upload (stores media reference)
+* - array: Array of values (single type per array)
 */
 const fieldTypeEnum = [
 	"string",
 	"number",
-	"boolean"
+	"boolean",
+	"date",
+	"textarea",
+	"url",
+	"image",
+	"array"
+];
+/**
+* Types that can be used as array item types
+*/
+const arrayItemTypeEnum = [
+	"string",
+	"number",
+	"boolean",
+	"date",
+	"textarea",
+	"url",
+	"image"
 ];
 /**
 * Schema for defining a single field in a collection
@@ -239,8 +264,10 @@ const collectionFieldSchema = z.object({
 	defaultValue: z.union([
 		z.string(),
 		z.number(),
-		z.boolean()
-	]).optional()
+		z.boolean(),
+		z.array(z.unknown())
+	]).optional(),
+	arrayItemType: z.enum(arrayItemTypeEnum).optional()
 });
 /**
 * Schema for the collection's field configuration
@@ -336,17 +363,96 @@ const storageConfigSchema = z.object({
 	secretAccessKey: z.string(),
 	region: z.string().optional().default("auto"),
 	publicUrl: z.string().url().optional(),
-	pathPrefix: z.string().optional().default("cms")
+	pathPrefix: z.string().optional().default("cms"),
+	urlStyle: z.enum(["virtual-hosted", "path"]).optional().default("virtual-hosted")
 });
 let storageInstance = null;
+async function sha256(message) {
+	const encoder = new TextEncoder();
+	const data = typeof message === "string" ? encoder.encode(message) : message;
+	return await crypto.subtle.digest("SHA-256", data);
+}
+function toHex(buffer) {
+	return Array.from(new Uint8Array(buffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+async function hmacSha256(key, message) {
+	const encoder = new TextEncoder();
+	const keyData = typeof key === "string" ? encoder.encode(key) : key;
+	const cryptoKey = await crypto.subtle.importKey("raw", keyData, {
+		name: "HMAC",
+		hash: "SHA-256"
+	}, false, ["sign"]);
+	return await crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(message));
+}
+async function getSignatureKey(secretKey, dateStamp, region, service) {
+	return await hmacSha256(await hmacSha256(await hmacSha256(await hmacSha256("AWS4" + secretKey, dateStamp), region), service), "aws4_request");
+}
+async function signRequest(method, url, headers, body, accessKeyId, secretAccessKey, region, service = "s3") {
+	const amzDate = (/* @__PURE__ */ new Date()).toISOString().replace(/[:-]|\.\d{3}/g, "");
+	const dateStamp = amzDate.slice(0, 8);
+	const payloadHash = toHex(await sha256(body));
+	const host = url.host;
+	const signedHeadersList = [
+		"host",
+		"x-amz-content-sha256",
+		"x-amz-date"
+	];
+	if (headers["Content-Type"]) signedHeadersList.push("content-type");
+	signedHeadersList.sort();
+	const canonicalHeaders = signedHeadersList.map((h) => {
+		if (h === "host") return `host:${host}`;
+		if (h === "x-amz-date") return `x-amz-date:${amzDate}`;
+		if (h === "x-amz-content-sha256") return `x-amz-content-sha256:${payloadHash}`;
+		if (h === "content-type") return `content-type:${headers["Content-Type"]}`;
+		return `${h}:${headers[h]}`;
+	}).join("\n");
+	const signedHeaders = signedHeadersList.join(";");
+	const canonicalRequest = [
+		method,
+		url.pathname,
+		url.search.slice(1),
+		canonicalHeaders + "\n",
+		signedHeaders,
+		payloadHash
+	].join("\n");
+	const algorithm = "AWS4-HMAC-SHA256";
+	const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
+	const stringToSign = [
+		algorithm,
+		amzDate,
+		credentialScope,
+		toHex(await sha256(canonicalRequest))
+	].join("\n");
+	const signature = toHex(await hmacSha256(await getSignatureKey(secretAccessKey, dateStamp, region, service), stringToSign));
+	return {
+		Authorization: [
+			`${algorithm} Credential=${accessKeyId}/${credentialScope}`,
+			`SignedHeaders=${signedHeaders}`,
+			`Signature=${signature}`
+		].join(", "),
+		"x-amz-date": amzDate,
+		"x-amz-content-sha256": payloadHash
+	};
+}
 /**
 * Creates a storage client for S3-compatible storage
 */
 const createStorageClient = (config) => {
 	const validatedConfig = storageConfigSchema.parse(config);
+	const useVirtualHosted = validatedConfig.urlStyle === "virtual-hosted";
+	/**
+	* Build the S3 URL based on the configured URL style
+	*/
+	const buildS3Url = (bucketPath) => {
+		if (useVirtualHosted) {
+			const endpointUrl = new URL(validatedConfig.endpoint);
+			const virtualHostedUrl = `${endpointUrl.protocol}//${validatedConfig.bucket}.${endpointUrl.host}/${bucketPath}`;
+			return new URL(virtualHostedUrl);
+		} else return new URL(`${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`);
+	};
 	const getPublicUrl = (bucketPath) => {
 		if (validatedConfig.publicUrl) return `${validatedConfig.publicUrl}/${bucketPath}`;
-		return `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
+		return buildS3Url(bucketPath).toString();
 	};
 	const generatePath = (filename, folder) => {
 		return [
@@ -359,17 +465,22 @@ const createStorageClient = (config) => {
 		const filename = options?.filename || (file instanceof File ? file.name : "file");
 		const contentType$1 = options?.contentType || file.type || "application/octet-stream";
 		const bucketPath = generatePath(filename, options?.folder);
-		const uploadUrl = `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
+		const uploadUrl = buildS3Url(bucketPath);
 		const arrayBuffer = await file.arrayBuffer();
-		const response = await fetch(uploadUrl, {
+		const headers = { "Content-Type": contentType$1 };
+		const signedHeaders = await signRequest("PUT", uploadUrl, headers, arrayBuffer, validatedConfig.accessKeyId, validatedConfig.secretAccessKey, validatedConfig.region || "auto");
+		const response = await fetch(uploadUrl.toString(), {
 			method: "PUT",
 			headers: {
-				"Content-Type": contentType$1,
-				"Content-Length": String(arrayBuffer.byteLength)
+				...headers,
+				...signedHeaders
 			},
 			body: arrayBuffer
 		});
-		if (!response.ok) throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+		if (!response.ok) {
+			const errorText = await response.text().catch(() => "");
+			throw new Error(`Upload failed: ${response.status} ${response.statusText}${errorText ? ` - ${errorText}` : ""}`);
+		}
 		return {
 			url: getPublicUrl(bucketPath),
 			bucketPath,
@@ -377,18 +488,31 @@ const createStorageClient = (config) => {
 		};
 	};
 	const deleteFile = async (bucketPath) => {
-		const deleteUrl = `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
-		const response = await fetch(deleteUrl, { method: "DELETE" });
+		const deleteUrl = buildS3Url(bucketPath);
+		const signedHeaders = await signRequest("DELETE", deleteUrl, {}, /* @__PURE__ */ new ArrayBuffer(0), validatedConfig.accessKeyId, validatedConfig.secretAccessKey, validatedConfig.region || "auto");
+		const response = await fetch(deleteUrl.toString(), {
+			method: "DELETE",
+			headers: signedHeaders
+		});
 		if (!response.ok && response.status !== 404) throw new Error(`Delete failed: ${response.status} ${response.statusText}`);
 	};
 	const getSignedUrl = async (bucketPath, _expiresIn = 3600) => {
 		return getPublicUrl(bucketPath);
 	};
+	const fetchFile = async (bucketPath) => {
+		const fileUrl = buildS3Url(bucketPath);
+		const signedHeaders = await signRequest("GET", fileUrl, {}, /* @__PURE__ */ new ArrayBuffer(0), validatedConfig.accessKeyId, validatedConfig.secretAccessKey, validatedConfig.region || "auto");
+		return fetch(fileUrl.toString(), {
+			method: "GET",
+			headers: signedHeaders
+		});
+	};
 	return {
 		upload,
 		delete: deleteFile,
 		getSignedUrl,
-		getPublicUrl
+		getPublicUrl,
+		fetch: fetchFile
 	};
 };
 /**
@@ -1030,27 +1154,67 @@ const collectionsRouter = createTRPCRouter({
 //#endregion
 //#region src/trpc/routers/entries.ts
 /**
+* URL validation regex
+*/
+const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+/**
+* ISO date string validation regex
+*/
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+/**
+* Validate a single value against a field type
+*/
+function validateValue(value, type, fieldName) {
+	switch (type) {
+		case "string":
+		case "textarea":
+			if (typeof value !== "string") return `Field "${fieldName}" must be a string`;
+			break;
+		case "number":
+			if (typeof value !== "number" || isNaN(value)) return `Field "${fieldName}" must be a number`;
+			break;
+		case "boolean":
+			if (typeof value !== "boolean") return `Field "${fieldName}" must be a boolean`;
+			break;
+		case "date":
+			if (typeof value !== "string" || !ISO_DATE_REGEX.test(value)) return `Field "${fieldName}" must be a valid date`;
+			break;
+		case "url":
+			if (typeof value !== "string" || !URL_REGEX.test(value)) return `Field "${fieldName}" must be a valid URL`;
+			break;
+		case "image":
+			if (typeof value !== "string" && typeof value !== "object") return `Field "${fieldName}" must be a valid image reference`;
+			break;
+	}
+	return null;
+}
+/**
 * Validate entry data against the collection schema
 */
 function validateEntryData(data, schema) {
 	const errors = [];
 	for (const field of schema.fields) {
 		const value = data[field.key];
-		if (field.required && (value === void 0 || value === null || value === "")) {
-			errors.push(`Field "${field.name}" is required`);
-			continue;
+		if (field.required) {
+			if (value === void 0 || value === null || value === "" || Array.isArray(value) && value.length === 0) {
+				errors.push(`Field "${field.name}" is required`);
+				continue;
+			}
 		}
 		if (value === void 0 || value === null || value === "") continue;
-		switch (field.type) {
-			case "string":
-				if (typeof value !== "string") errors.push(`Field "${field.name}" must be a string`);
-				break;
-			case "number":
-				if (typeof value !== "number" || isNaN(value)) errors.push(`Field "${field.name}" must be a number`);
-				break;
-			case "boolean":
-				if (typeof value !== "boolean") errors.push(`Field "${field.name}" must be a boolean`);
-				break;
+		if (field.type === "array") {
+			if (!Array.isArray(value)) {
+				errors.push(`Field "${field.name}" must be an array`);
+				continue;
+			}
+			const itemType = field.arrayItemType || "string";
+			for (let i = 0; i < value.length; i++) {
+				const itemError = validateValue(value[i], itemType, `${field.name}[${i}]`);
+				if (itemError) errors.push(itemError);
+			}
+		} else {
+			const error = validateValue(value, field.type, field.name);
+			if (error) errors.push(error);
 		}
 	}
 	return {
@@ -1333,6 +1497,7 @@ const createCMS = (options) => {
 		const { pathname } = new URL(req.url);
 		if (options?.auth && pathname.startsWith(`${opts.basePath}/api/auth`)) return getAuth().handler(req);
 		if (pathname.startsWith(`${opts.basePath}/api/trpc`)) return handleTRPCRequest(req);
+		if (pathname.startsWith(`${opts.basePath}/api/media/`)) return handleMediaProxy(req, opts.basePath, options?.storage);
 		if (!pathname.startsWith(opts.basePath)) return Response.json({ message: "Please put your CMS in the /admin route. Or customize basePath in the options." });
 		return await runGetRouter(req, opts);
 	};
@@ -1342,6 +1507,7 @@ const createCMS = (options) => {
 		const { pathname } = url;
 		if (options?.auth && pathname.startsWith(`${opts.basePath}/api/auth`)) return getAuth().handler(req);
 		if (pathname.startsWith(`${opts.basePath}/api/trpc`)) return handleTRPCRequest(req);
+		if (pathname.startsWith(`${opts.basePath}/api/upload`)) return handleUpload(req, options?.storage);
 		if (!pathname.startsWith(opts.basePath)) return Response.json({ message: "Please put your CMS in the /admin route. Or customize basePath in the options." });
 		let body = null;
 		try {
@@ -1361,7 +1527,88 @@ const createCMS = (options) => {
 		POST
 	};
 };
+/**
+* Handle file upload requests
+* Accepts JSON body with base64 encoded data to avoid binary corruption in Next.js 16
+*/
+async function handleUpload(req, storageConfigured) {
+	if (!storageConfigured) return Response.json({ error: "Storage not configured" }, { status: 500 });
+	try {
+		const { filename, contentType: contentType$1, data } = await req.json();
+		if (!data || !filename) return Response.json({ error: "Missing required fields: filename, data" }, { status: 400 });
+		const binaryString = atob(data);
+		const bytes = new Uint8Array(binaryString.length);
+		for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+		const blob = new Blob([bytes], { type: contentType$1 || "application/octet-stream" });
+		const result = await getStorage().upload(blob, {
+			filename,
+			contentType: contentType$1 || "application/octet-stream",
+			folder: "uploads"
+		});
+		const url = new URL(req.url);
+		const basePath = url.pathname.replace("/api/upload", "");
+		const proxyUrl = `${url.origin}${basePath}/api/media/${result.bucketPath}`;
+		return Response.json({
+			url: proxyUrl,
+			bucketPath: result.bucketPath,
+			filename: result.filename
+		});
+	} catch (error) {
+		console.error("Upload error:", error);
+		return Response.json({ error: error instanceof Error ? error.message : "Upload failed" }, { status: 500 });
+	}
+}
+/**
+* Handle media proxy requests - serves files from the bucket through the backend
+* This avoids CORS issues with private buckets
+*/
+async function handleMediaProxy(req, basePath, storageConfigured) {
+	if (!storageConfigured) return Response.json({ error: "Storage not configured" }, { status: 500 });
+	try {
+		const mediaPath = new URL(req.url).pathname.replace(`${basePath}/api/media/`, "");
+		if (!mediaPath) return Response.json({ error: "No file path provided" }, { status: 400 });
+		const response = await getStorage().fetch(mediaPath);
+		if (!response.ok) return new Response(`File not found: ${response.status}`, { status: 404 });
+		const contentType$1 = response.headers.get("Content-Type") || getContentTypeFromPath(mediaPath);
+		const buffer = await response.arrayBuffer();
+		return new Response(buffer, {
+			status: 200,
+			headers: {
+				"Content-Type": contentType$1,
+				"Cache-Control": "public, max-age=31536000, immutable",
+				"Access-Control-Allow-Origin": "*"
+			}
+		});
+	} catch (error) {
+		console.error("Media proxy error:", error);
+		return Response.json({ error: error instanceof Error ? error.message : "Failed to fetch file" }, { status: 500 });
+	}
+}
+/**
+* Get content type from file path extension
+*/
+function getContentTypeFromPath(path) {
+	return {
+		jpg: "image/jpeg",
+		jpeg: "image/jpeg",
+		png: "image/png",
+		gif: "image/gif",
+		webp: "image/webp",
+		svg: "image/svg+xml",
+		ico: "image/x-icon",
+		pdf: "application/pdf",
+		json: "application/json",
+		txt: "text/plain",
+		html: "text/html",
+		css: "text/css",
+		js: "application/javascript",
+		mp4: "video/mp4",
+		webm: "video/webm",
+		mp3: "audio/mpeg",
+		wav: "audio/wav"
+	}[path.split(".").pop()?.toLowerCase() || ""] || "application/octet-stream";
+}
 
 //#endregion
-export { userRoleEnum as A, contentFieldSchema as C, media as D, fieldTypeEnum as E, renderAdminPanel as M, htmlTemplate as N, session as O, contentEntry as S, contentTypeSchemaValidator as T, getDatabase as _, createTRPCRouter as a, account as b, createAuth as c, isAuthenticated as d, createStorageClient as f, createDatabase as g, setStorage as h, appRouter as i, verification as j, user as k, getAuth as l, initStorage as m, createContext as n, protectedProcedure as o, getStorage as p, handleTRPCRequest as r, publicProcedure as s, createCMS as t, getSession as u, runMigrations as v, contentType as w, collectionFieldSchema as x, setDatabase as y };
-//# sourceMappingURL=create-cms-DWis62uY.js.map
+export { user as A, contentEntry as C, fieldTypeEnum as D, contentTypeSchemaValidator as E, verification as M, renderAdminPanel as N, media as O, htmlTemplate as P, collectionFieldSchema as S, contentType as T, getDatabase as _, createTRPCRouter as a, account as b, createAuth as c, isAuthenticated as d, createStorageClient as f, createDatabase as g, setStorage as h, appRouter as i, userRoleEnum as j, session as k, getAuth as l, initStorage as m, createContext as n, protectedProcedure as o, getStorage as p, handleTRPCRequest as r, publicProcedure as s, createCMS as t, getSession as u, runMigrations as v, contentFieldSchema as w, arrayItemTypeEnum as x, setDatabase as y };
+//# sourceMappingURL=create-cms-T-f3xFh4.js.map

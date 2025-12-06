@@ -22055,7 +22055,21 @@
   var FIELD_TYPES = [
     { value: "string", label: "String", icon: "Aa" },
     { value: "number", label: "Number", icon: "#" },
-    { value: "boolean", label: "Boolean", icon: "\u2713" }
+    { value: "boolean", label: "Boolean", icon: "\u2713" },
+    { value: "date", label: "Date", icon: "\u{1F4C5}" },
+    { value: "textarea", label: "Textarea", icon: "\xB6" },
+    { value: "url", label: "URL", icon: "\u{1F517}" },
+    { value: "image", label: "Image", icon: "\u{1F5BC}" },
+    { value: "array", label: "Array", icon: "[]" }
+  ];
+  var ARRAY_ITEM_TYPES = [
+    { value: "string", label: "String" },
+    { value: "number", label: "Number" },
+    { value: "boolean", label: "Boolean" },
+    { value: "date", label: "Date" },
+    { value: "textarea", label: "Textarea" },
+    { value: "url", label: "URL" },
+    { value: "image", label: "Image" }
   ];
   function SchemaEditor({
     collection,
@@ -22381,21 +22395,36 @@
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Field Type" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "flex gap-2", children: FIELD_TYPES.map((type) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "grid grid-cols-4 gap-2", children: FIELD_TYPES.map((type) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
                     "button",
                     {
                       onClick: () => updateField(field.id, {
                         type: type.value,
-                        defaultValue: void 0
+                        defaultValue: void 0,
+                        arrayItemType: type.value === "array" ? "string" : void 0
                       }),
-                      className: `flex-1 px-3 py-2 text-sm font-medium rounded-md border ${field.type === type.value ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}`,
+                      className: `px-3 py-2 text-sm font-medium rounded-md border ${field.type === type.value ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}`,
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "font-mono mr-2", children: type.icon }),
+                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "mr-1", children: type.icon }),
                         type.label
                       ]
                     },
                     type.value
                   )) })
+                ] }),
+                field.type === "array" && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Array Item Type" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    "select",
+                    {
+                      value: field.arrayItemType || "string",
+                      onChange: (e) => updateField(field.id, {
+                        arrayItemType: e.target.value
+                      }),
+                      className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                      children: ARRAY_ITEM_TYPES.map((type) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("option", { value: type.value, children: type.label }, type.value))
+                    }
+                  )
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Description (optional)" }),
@@ -22759,6 +22788,8 @@
           defaults[field.key] = false;
         } else if (field.type === "number") {
           defaults[field.key] = 0;
+        } else if (field.type === "array") {
+          defaults[field.key] = [];
         } else {
           defaults[field.key] = "";
         }
@@ -22773,15 +22804,21 @@
     const [fieldErrors, setFieldErrors] = import_react5.default.useState(
       {}
     );
+    const [uploadingFields, setUploadingFields] = import_react5.default.useState(
+      /* @__PURE__ */ new Set()
+    );
+    const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
     const validateField = (field, value) => {
-      if (field.required && (value === void 0 || value === null || value === "")) {
+      const isEmpty = value === void 0 || value === null || value === "" || Array.isArray(value) && value.length === 0;
+      if (field.required && isEmpty) {
         return `${field.name} is required`;
       }
-      if (value === void 0 || value === null || value === "") {
+      if (isEmpty) {
         return null;
       }
       switch (field.type) {
         case "string":
+        case "textarea":
           if (typeof value !== "string") return `${field.name} must be text`;
           break;
         case "number":
@@ -22791,6 +22828,21 @@
         case "boolean":
           if (typeof value !== "boolean")
             return `${field.name} must be true or false`;
+          break;
+        case "date":
+          if (typeof value !== "string")
+            return `${field.name} must be a valid date`;
+          break;
+        case "url":
+          if (typeof value !== "string" || !URL_REGEX.test(value))
+            return `${field.name} must be a valid URL`;
+          break;
+        case "image":
+          if (typeof value !== "string" && typeof value !== "object")
+            return `${field.name} must be a valid image`;
+          break;
+        case "array":
+          if (!Array.isArray(value)) return `${field.name} must be an array`;
           break;
       }
       return null;
@@ -22847,6 +22899,7 @@
     const renderField = (field) => {
       const value = data[field.key];
       const hasError = !!fieldErrors[field.key];
+      const isUploading = uploadingFields.has(field.key);
       const baseInputClass = `w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${hasError ? "border-red-300 bg-red-50" : "border-gray-300"}`;
       switch (field.type) {
         case "string":
@@ -22858,6 +22911,17 @@
               onChange: (e) => updateField(field.key, e.target.value),
               className: baseInputClass,
               placeholder: field.description || `Enter ${field.name.toLowerCase()}`
+            }
+          );
+        case "textarea":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "textarea",
+            {
+              value: value || "",
+              onChange: (e) => updateField(field.key, e.target.value),
+              className: `${baseInputClass} min-h-[120px] resize-y`,
+              placeholder: field.description || `Enter ${field.name.toLowerCase()}`,
+              rows: 4
             }
           );
         case "number":
@@ -22887,6 +22951,65 @@
             ),
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-sm text-gray-700", children: field.description || `Enable ${field.name.toLowerCase()}` })
           ] });
+        case "date":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "date",
+              value: value ? new Date(value).toISOString().split("T")[0] : "",
+              onChange: (e) => {
+                const dateValue = e.target.value;
+                updateField(
+                  field.key,
+                  dateValue ? new Date(dateValue).toISOString() : ""
+                );
+              },
+              className: baseInputClass
+            }
+          );
+        case "url":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "url",
+              value: value || "",
+              onChange: (e) => updateField(field.key, e.target.value),
+              className: baseInputClass,
+              placeholder: field.description || "https://example.com"
+            }
+          );
+        case "image":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            ImageField,
+            {
+              value,
+              onChange: (val) => updateField(field.key, val),
+              isUploading,
+              setUploading: (uploading) => {
+                setUploadingFields((prev) => {
+                  const next = new Set(prev);
+                  if (uploading) {
+                    next.add(field.key);
+                  } else {
+                    next.delete(field.key);
+                  }
+                  return next;
+                });
+              },
+              hasError
+            }
+          );
+        case "array":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            ArrayField,
+            {
+              value,
+              onChange: (val) => updateField(field.key, val),
+              itemType: field.arrayItemType || "string",
+              fieldName: field.name,
+              hasError
+            }
+          );
         default:
           return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-gray-500", children: [
             "Unsupported field type: ",
@@ -22964,6 +23087,561 @@
           /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-sm mt-1", children: "Add fields in the Schema Editor first." })
         ] })
       ] }) })
+    ] });
+  }
+  function ImageField({
+    value,
+    onChange,
+    isUploading,
+    setUploading,
+    hasError
+  }) {
+    const fileInputRef = import_react5.default.useRef(null);
+    const imageUrl = typeof value === "string" ? value : value?.url;
+    const handleUpload = async (file) => {
+      setUploading(true);
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        const response = await fetch("/admin/api/upload", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            filename: file.name,
+            contentType: file.type,
+            data: base64
+          })
+        });
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || "Upload failed");
+        }
+        const result = await response.json();
+        onChange(result.url || result);
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert(err instanceof Error ? err.message : "Failed to upload image");
+      } finally {
+        setUploading(false);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      "div",
+      {
+        className: `relative border-2 rounded-lg overflow-hidden ${hasError ? "border-red-300 bg-red-50" : imageUrl ? "border-gray-200" : "border-dashed border-gray-300 hover:border-blue-400"}`,
+        children: [
+          imageUrl ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "aspect-video bg-gray-100", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              "img",
+              {
+                src: imageUrl,
+                alt: "Uploaded",
+                className: "w-full h-full object-contain"
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "absolute top-2 right-2 flex gap-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => fileInputRef.current?.click(),
+                  disabled: isUploading,
+                  className: "p-1.5 text-gray-600 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md hover:bg-white hover:text-blue-600 shadow-sm",
+                  title: "Replace image",
+                  children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+                    "svg",
+                    {
+                      className: "animate-spin h-4 w-4",
+                      fill: "none",
+                      viewBox: "0 0 24 24",
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                          "circle",
+                          {
+                            className: "opacity-25",
+                            cx: "12",
+                            cy: "12",
+                            r: "10",
+                            stroke: "currentColor",
+                            strokeWidth: "4"
+                          }
+                        ),
+                        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                          "path",
+                          {
+                            className: "opacity-75",
+                            fill: "currentColor",
+                            d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                          }
+                        )
+                      ]
+                    }
+                  ) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                    "svg",
+                    {
+                      className: "h-4 w-4",
+                      fill: "none",
+                      stroke: "currentColor",
+                      viewBox: "0 0 24 24",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "path",
+                        {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          strokeWidth: 2,
+                          d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        }
+                      )
+                    }
+                  )
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => onChange(null),
+                  className: "p-1.5 text-gray-600 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md hover:bg-white hover:text-red-600 shadow-sm",
+                  title: "Remove image",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                    "svg",
+                    {
+                      className: "h-4 w-4",
+                      fill: "none",
+                      stroke: "currentColor",
+                      viewBox: "0 0 24 24",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "path",
+                        {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          strokeWidth: 2,
+                          d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        }
+                      )
+                    }
+                  )
+                }
+              )
+            ] })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "div",
+            {
+              className: "text-center py-8 px-4 cursor-pointer",
+              onClick: () => fileInputRef.current?.click(),
+              children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-gray-500", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+                  "svg",
+                  {
+                    className: "animate-spin mx-auto h-8 w-8 text-blue-500",
+                    fill: "none",
+                    viewBox: "0 0 24 24",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "circle",
+                        {
+                          className: "opacity-25",
+                          cx: "12",
+                          cy: "12",
+                          r: "10",
+                          stroke: "currentColor",
+                          strokeWidth: "4"
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "path",
+                        {
+                          className: "opacity-75",
+                          fill: "currentColor",
+                          d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                        }
+                      )
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "mt-2 text-sm", children: "Uploading..." })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                  "svg",
+                  {
+                    className: "mx-auto h-12 w-12 text-gray-400",
+                    stroke: "currentColor",
+                    fill: "none",
+                    viewBox: "0 0 48 48",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      "path",
+                      {
+                        d: "M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02",
+                        strokeWidth: "2",
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round"
+                      }
+                    )
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Click to upload an image" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-xs text-gray-500", children: "PNG, JPG, GIF up to 10MB" })
+              ] })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              ref: fileInputRef,
+              type: "file",
+              accept: "image/*",
+              className: "hidden",
+              onChange: (e) => {
+                const file = e.target.files?.[0];
+                if (file) handleUpload(file);
+                e.target.value = "";
+              }
+            }
+          )
+        ]
+      }
+    );
+  }
+  function ArrayField({
+    value = [],
+    onChange,
+    itemType,
+    fieldName,
+    hasError
+  }) {
+    const items = Array.isArray(value) ? value : [];
+    const addItem = () => {
+      let defaultValue;
+      switch (itemType) {
+        case "number":
+          defaultValue = 0;
+          break;
+        case "boolean":
+          defaultValue = false;
+          break;
+        default:
+          defaultValue = "";
+      }
+      onChange([...items, defaultValue]);
+    };
+    const removeItem = (index) => {
+      onChange(items.filter((_, i) => i !== index));
+    };
+    const updateItem = (index, newValue) => {
+      const newItems = [...items];
+      newItems[index] = newValue;
+      onChange(newItems);
+    };
+    const moveItem = (index, direction) => {
+      const newIndex = direction === "up" ? index - 1 : index + 1;
+      if (newIndex < 0 || newIndex >= items.length) return;
+      const newItems = [...items];
+      [newItems[index], newItems[newIndex]] = [
+        newItems[newIndex],
+        newItems[index]
+      ];
+      onChange(newItems);
+    };
+    const renderItemInput = (item, index) => {
+      const baseClass = "flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
+      switch (itemType) {
+        case "string":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "text",
+              value: item || "",
+              onChange: (e) => updateItem(index, e.target.value),
+              className: baseClass,
+              placeholder: "Enter text..."
+            }
+          );
+        case "textarea":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "textarea",
+            {
+              value: item || "",
+              onChange: (e) => updateItem(index, e.target.value),
+              className: `${baseClass} min-h-[80px] resize-y`,
+              placeholder: "Enter text...",
+              rows: 2
+            }
+          );
+        case "number":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "number",
+              value: item === null || item === void 0 ? "" : item,
+              onChange: (e) => updateItem(
+                index,
+                e.target.value === "" ? null : parseFloat(e.target.value)
+              ),
+              className: baseClass,
+              placeholder: "Enter number..."
+            }
+          );
+        case "boolean":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("label", { className: "flex items-center gap-2 cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              "input",
+              {
+                type: "checkbox",
+                checked: !!item,
+                onChange: (e) => updateItem(index, e.target.checked),
+                className: "w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-sm text-gray-700", children: "Enabled" })
+          ] });
+        case "date":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "date",
+              value: item ? new Date(item).toISOString().split("T")[0] : "",
+              onChange: (e) => updateItem(
+                index,
+                e.target.value ? new Date(e.target.value).toISOString() : ""
+              ),
+              className: baseClass
+            }
+          );
+        case "url":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "url",
+              value: item || "",
+              onChange: (e) => updateItem(index, e.target.value),
+              className: baseClass,
+              placeholder: "https://example.com"
+            }
+          );
+        case "image":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            ArrayImageItem,
+            {
+              value: item,
+              onChange: (val) => updateItem(index, val)
+            }
+          ) });
+        default:
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-gray-500", children: "Unsupported type" });
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      "div",
+      {
+        className: `border rounded-lg p-3 ${hasError ? "border-red-300 bg-red-50" : "border-gray-200"}`,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "space-y-2", children: items.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-start gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col gap-0.5 pt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => moveItem(index, "up"),
+                  disabled: index === 0,
+                  className: "p-0.5 text-gray-400 hover:text-gray-600 disabled:opacity-30",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                    "svg",
+                    {
+                      className: "w-4 h-4",
+                      fill: "none",
+                      stroke: "currentColor",
+                      viewBox: "0 0 24 24",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "path",
+                        {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          strokeWidth: 2,
+                          d: "M5 15l7-7 7 7"
+                        }
+                      )
+                    }
+                  )
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => moveItem(index, "down"),
+                  disabled: index === items.length - 1,
+                  className: "p-0.5 text-gray-400 hover:text-gray-600 disabled:opacity-30",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                    "svg",
+                    {
+                      className: "w-4 h-4",
+                      fill: "none",
+                      stroke: "currentColor",
+                      viewBox: "0 0 24 24",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "path",
+                        {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          strokeWidth: 2,
+                          d: "M19 9l-7 7-7-7"
+                        }
+                      )
+                    }
+                  )
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { className: "pt-2 text-xs text-gray-400 font-mono w-6", children: [
+              index + 1,
+              "."
+            ] }),
+            renderItemInput(item, index),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: () => removeItem(index),
+                className: "pt-2 p-1.5 text-gray-400 hover:text-red-600",
+                children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                  "svg",
+                  {
+                    className: "w-5 h-5",
+                    fill: "none",
+                    stroke: "currentColor",
+                    viewBox: "0 0 24 24",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      "path",
+                      {
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round",
+                        strokeWidth: 2,
+                        d: "M6 18L18 6M6 6l12 12"
+                      }
+                    )
+                  }
+                )
+              }
+            )
+          ] }, index)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+            "button",
+            {
+              type: "button",
+              onClick: addItem,
+              className: "mt-3 w-full py-2 border-2 border-dashed border-gray-300 rounded-md text-sm font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors",
+              children: [
+                "+ Add ",
+                fieldName.replace(/s$/, "")
+              ]
+            }
+          )
+        ]
+      }
+    );
+  }
+  function ArrayImageItem({ value, onChange }) {
+    const [isUploading, setIsUploading] = import_react5.default.useState(false);
+    const fileInputRef = import_react5.default.useRef(null);
+    const imageUrl = typeof value === "string" ? value : value?.url;
+    const handleUpload = async (file) => {
+      setIsUploading(true);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const response = await fetch("/admin/api/upload", {
+          method: "POST",
+          credentials: "include",
+          body: formData
+        });
+        if (!response.ok) throw new Error("Upload failed");
+        const result = await response.json();
+        onChange(result.url || result);
+      } catch {
+        alert("Failed to upload image");
+      } finally {
+        setIsUploading(false);
+      }
+    };
+    if (imageUrl) {
+      return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          "img",
+          {
+            src: imageUrl,
+            alt: "Uploaded",
+            className: "w-12 h-12 object-cover rounded border"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          "input",
+          {
+            type: "text",
+            value: imageUrl,
+            readOnly: true,
+            className: "flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm text-gray-600"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          "button",
+          {
+            type: "button",
+            onClick: () => onChange(null),
+            className: "p-1.5 text-gray-400 hover:text-red-600",
+            children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              "svg",
+              {
+                className: "w-5 h-5",
+                fill: "none",
+                stroke: "currentColor",
+                viewBox: "0 0 24 24",
+                children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                  "path",
+                  {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M6 18L18 6M6 6l12 12"
+                  }
+                )
+              }
+            )
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        "button",
+        {
+          type: "button",
+          onClick: () => fileInputRef.current?.click(),
+          disabled: isUploading,
+          className: "px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50",
+          children: isUploading ? "Uploading..." : "Upload Image"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        "input",
+        {
+          ref: fileInputRef,
+          type: "file",
+          accept: "image/*",
+          className: "hidden",
+          onChange: (e) => {
+            const file = e.target.files?.[0];
+            if (file) handleUpload(file);
+          }
+        }
+      )
     ] });
   }
 

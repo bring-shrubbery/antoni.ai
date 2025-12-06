@@ -1,13 +1,32 @@
 import React from "react";
 
+type FieldType =
+  | "string"
+  | "number"
+  | "boolean"
+  | "date"
+  | "textarea"
+  | "url"
+  | "image"
+  | "array";
+type ArrayItemType =
+  | "string"
+  | "number"
+  | "boolean"
+  | "date"
+  | "textarea"
+  | "url"
+  | "image";
+
 interface Field {
   id: string;
   name: string;
   key: string;
-  type: "string" | "number" | "boolean";
+  type: FieldType;
   required: boolean;
   description?: string;
-  defaultValue?: string | number | boolean;
+  defaultValue?: string | number | boolean | unknown[];
+  arrayItemType?: ArrayItemType;
 }
 
 interface Collection {
@@ -25,11 +44,26 @@ interface SchemaEditorProps {
   onUpdate: (collection: Collection) => void;
 }
 
-const FIELD_TYPES = [
+const FIELD_TYPES: { value: FieldType; label: string; icon: string }[] = [
   { value: "string", label: "String", icon: "Aa" },
   { value: "number", label: "Number", icon: "#" },
   { value: "boolean", label: "Boolean", icon: "✓" },
-] as const;
+  { value: "date", label: "Date", icon: "📅" },
+  { value: "textarea", label: "Textarea", icon: "¶" },
+  { value: "url", label: "URL", icon: "🔗" },
+  { value: "image", label: "Image", icon: "🖼" },
+  { value: "array", label: "Array", icon: "[]" },
+];
+
+const ARRAY_ITEM_TYPES: { value: ArrayItemType; label: string }[] = [
+  { value: "string", label: "String" },
+  { value: "number", label: "Number" },
+  { value: "boolean", label: "Boolean" },
+  { value: "date", label: "Date" },
+  { value: "textarea", label: "Textarea" },
+  { value: "url", label: "URL" },
+  { value: "image", label: "Image" },
+];
 
 export function SchemaEditor({
   collection,
@@ -398,7 +432,7 @@ export function SchemaEditor({
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Field Type
                     </label>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-4 gap-2">
                       {FIELD_TYPES.map((type) => (
                         <button
                           key={type.value}
@@ -406,20 +440,46 @@ export function SchemaEditor({
                             updateField(field.id, {
                               type: type.value,
                               defaultValue: undefined,
+                              arrayItemType:
+                                type.value === "array" ? "string" : undefined,
                             })
                           }
-                          className={`flex-1 px-3 py-2 text-sm font-medium rounded-md border ${
+                          className={`px-3 py-2 text-sm font-medium rounded-md border ${
                             field.type === type.value
                               ? "border-blue-500 bg-blue-50 text-blue-700"
                               : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                           }`}
                         >
-                          <span className="font-mono mr-2">{type.icon}</span>
+                          <span className="mr-1">{type.icon}</span>
                           {type.label}
                         </button>
                       ))}
                     </div>
                   </div>
+
+                  {/* Array item type selector */}
+                  {field.type === "array" && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Array Item Type
+                      </label>
+                      <select
+                        value={field.arrayItemType || "string"}
+                        onChange={(e) =>
+                          updateField(field.id, {
+                            arrayItemType: e.target.value as ArrayItemType,
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {ARRAY_ITEM_TYPES.map((type) => (
+                          <option key={type.value} value={type.value}>
+                            {type.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

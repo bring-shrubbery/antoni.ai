@@ -7,7 +7,7 @@ import { z } from "zod";
 export const storageConfigSchema = z.object({
   /**
    * The bucket endpoint URL
-   * e.g., "https://s3.amazonaws.com" or "https://<account>.r2.cloudflarestorage.com"
+   * e.g., "https://s3.amazonaws.com" or "https://storage.railway.app"
    */
   endpoint: z.url(),
 
@@ -42,6 +42,17 @@ export const storageConfigSchema = z.object({
    * e.g., "cms/uploads" -> files stored as "cms/uploads/filename.jpg"
    */
   pathPrefix: z.string().optional().default("cms"),
+
+  /**
+   * URL style for S3 requests
+   * - "virtual-hosted": bucket.endpoint/path (Railway, newer AWS S3)
+   * - "path": endpoint/bucket/path (older style, some S3-compatible services)
+   * Default: "virtual-hosted"
+   */
+  urlStyle: z
+    .enum(["virtual-hosted", "path"])
+    .optional()
+    .default("virtual-hosted"),
 });
 
 export type StorageConfig = z.infer<typeof storageConfigSchema>;
@@ -81,6 +92,149 @@ export interface StorageClient {
    * Get the public URL for a file
    */
   getPublicUrl(bucketPath: string): string;
+
+  /**
+   * Fetch a file from the bucket with authentication
+   * Returns the Response object for streaming
+   */
+  fetch(bucketPath: string): Promise<Response>;
+}
+
+// =============================================================================
+// AWS Signature V4 Implementation
+// =============================================================================
+
+async function sha256(message: ArrayBuffer | string): Promise<ArrayBuffer> {
+  const encoder = new TextEncoder();
+  const data = typeof message === "string" ? encoder.encode(message) : message;
+  return await crypto.subtle.digest("SHA-256", data);
+}
+
+function toHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function hmacSha256(
+  key: ArrayBuffer | string,
+  message: string
+): Promise<ArrayBuffer> {
+  const encoder = new TextEncoder();
+  const keyData = typeof key === "string" ? encoder.encode(key) : key;
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    keyData,
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  return await crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(message));
+}
+
+async function getSignatureKey(
+  secretKey: string,
+  dateStamp: string,
+  region: string,
+  service: string
+): Promise<ArrayBuffer> {
+  const kDate = await hmacSha256("AWS4" + secretKey, dateStamp);
+  const kRegion = await hmacSha256(kDate, region);
+  const kService = await hmacSha256(kRegion, service);
+  const kSigning = await hmacSha256(kService, "aws4_request");
+  return kSigning;
+}
+
+interface SignedHeaders {
+  Authorization: string;
+  "x-amz-date": string;
+  "x-amz-content-sha256": string;
+  [key: string]: string;
+}
+
+async function signRequest(
+  method: string,
+  url: URL,
+  headers: Record<string, string>,
+  body: ArrayBuffer,
+  accessKeyId: string,
+  secretAccessKey: string,
+  region: string,
+  service: string = "s3"
+): Promise<SignedHeaders> {
+  const now = new Date();
+  const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
+  const dateStamp = amzDate.slice(0, 8);
+
+  // Hash the payload
+  const payloadHash = toHex(await sha256(body));
+
+  // Create canonical headers
+  const host = url.host;
+  const signedHeadersList = ["host", "x-amz-content-sha256", "x-amz-date"];
+  if (headers["Content-Type"]) {
+    signedHeadersList.push("content-type");
+  }
+  signedHeadersList.sort();
+
+  const canonicalHeaders = signedHeadersList
+    .map((h) => {
+      if (h === "host") return `host:${host}`;
+      if (h === "x-amz-date") return `x-amz-date:${amzDate}`;
+      if (h === "x-amz-content-sha256")
+        return `x-amz-content-sha256:${payloadHash}`;
+      if (h === "content-type")
+        return `content-type:${headers["Content-Type"]}`;
+      return `${h}:${headers[h]}`;
+    })
+    .join("\n");
+
+  const signedHeaders = signedHeadersList.join(";");
+
+  // Create canonical request
+  const canonicalUri = url.pathname;
+  const canonicalQuerystring = url.search.slice(1); // Remove leading ?
+
+  const canonicalRequest = [
+    method,
+    canonicalUri,
+    canonicalQuerystring,
+    canonicalHeaders + "\n",
+    signedHeaders,
+    payloadHash,
+  ].join("\n");
+
+  // Create string to sign
+  const algorithm = "AWS4-HMAC-SHA256";
+  const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
+  const stringToSign = [
+    algorithm,
+    amzDate,
+    credentialScope,
+    toHex(await sha256(canonicalRequest)),
+  ].join("\n");
+
+  // Calculate signature
+  const signingKey = await getSignatureKey(
+    secretAccessKey,
+    dateStamp,
+    region,
+    service
+  );
+  const signature = toHex(await hmacSha256(signingKey, stringToSign));
+
+  // Create authorization header
+  const authorizationHeader = [
+    `${algorithm} Credential=${accessKeyId}/${credentialScope}`,
+    `SignedHeaders=${signedHeaders}`,
+    `Signature=${signature}`,
+  ].join(", ");
+
+  return {
+    Authorization: authorizationHeader,
+    "x-amz-date": amzDate,
+    "x-amz-content-sha256": payloadHash,
+  };
 }
 
 /**
@@ -88,12 +242,30 @@ export interface StorageClient {
  */
 export const createStorageClient = (config: StorageConfig): StorageClient => {
   const validatedConfig = storageConfigSchema.parse(config);
+  const useVirtualHosted = validatedConfig.urlStyle === "virtual-hosted";
+
+  /**
+   * Build the S3 URL based on the configured URL style
+   */
+  const buildS3Url = (bucketPath: string): URL => {
+    if (useVirtualHosted) {
+      // Virtual-hosted style: https://bucket.endpoint/path
+      const endpointUrl = new URL(validatedConfig.endpoint);
+      const virtualHostedUrl = `${endpointUrl.protocol}//${validatedConfig.bucket}.${endpointUrl.host}/${bucketPath}`;
+      return new URL(virtualHostedUrl);
+    } else {
+      // Path style: https://endpoint/bucket/path
+      return new URL(
+        `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`
+      );
+    }
+  };
 
   const getPublicUrl = (bucketPath: string): string => {
     if (validatedConfig.publicUrl) {
       return `${validatedConfig.publicUrl}/${bucketPath}`;
     }
-    return `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
+    return buildS3Url(bucketPath).toString();
   };
 
   const generatePath = (filename: string, folder?: string): string => {
@@ -123,29 +295,42 @@ export const createStorageClient = (config: StorageConfig): StorageClient => {
       options?.contentType || file.type || "application/octet-stream";
     const bucketPath = generatePath(filename, options?.folder);
 
-    // Create the upload URL
-    const uploadUrl = `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
+    // Create the upload URL using the configured URL style
+    const uploadUrl = buildS3Url(bucketPath);
 
     // Get file content as ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
 
-    // Create authorization header using AWS Signature Version 4
-    // For simplicity, we'll use a basic PUT request
-    // In production, you'd want to use proper AWS4 signing or an SDK
-    const response = await fetch(uploadUrl, {
+    // Sign the request with AWS Signature V4
+    const headers: Record<string, string> = {
+      "Content-Type": contentType,
+    };
+
+    const signedHeaders = await signRequest(
+      "PUT",
+      uploadUrl,
+      headers,
+      arrayBuffer,
+      validatedConfig.accessKeyId,
+      validatedConfig.secretAccessKey,
+      validatedConfig.region || "auto"
+    );
+
+    const response = await fetch(uploadUrl.toString(), {
       method: "PUT",
       headers: {
-        "Content-Type": contentType,
-        "Content-Length": String(arrayBuffer.byteLength),
-        // Note: In production, you'd add proper AWS4 signature headers here
-        // For now, this assumes the bucket allows public uploads or uses presigned URLs
+        ...headers,
+        ...signedHeaders,
       },
       body: arrayBuffer,
     });
 
     if (!response.ok) {
+      const errorText = await response.text().catch(() => "");
       throw new Error(
-        `Upload failed: ${response.status} ${response.statusText}`
+        `Upload failed: ${response.status} ${response.statusText}${
+          errorText ? ` - ${errorText}` : ""
+        }`
       );
     }
 
@@ -157,11 +342,22 @@ export const createStorageClient = (config: StorageConfig): StorageClient => {
   };
 
   const deleteFile = async (bucketPath: string): Promise<void> => {
-    const deleteUrl = `${validatedConfig.endpoint}/${validatedConfig.bucket}/${bucketPath}`;
+    const deleteUrl = buildS3Url(bucketPath);
 
-    const response = await fetch(deleteUrl, {
+    // Sign the DELETE request
+    const signedHeaders = await signRequest(
+      "DELETE",
+      deleteUrl,
+      {},
+      new ArrayBuffer(0),
+      validatedConfig.accessKeyId,
+      validatedConfig.secretAccessKey,
+      validatedConfig.region || "auto"
+    );
+
+    const response = await fetch(deleteUrl.toString(), {
       method: "DELETE",
-      // Note: In production, add proper AWS4 signature headers
+      headers: signedHeaders,
     });
 
     if (!response.ok && response.status !== 404) {
@@ -181,11 +377,32 @@ export const createStorageClient = (config: StorageConfig): StorageClient => {
     return getPublicUrl(bucketPath);
   };
 
+  const fetchFile = async (bucketPath: string): Promise<Response> => {
+    const fileUrl = buildS3Url(bucketPath);
+
+    // Sign the GET request
+    const signedHeaders = await signRequest(
+      "GET",
+      fileUrl,
+      {},
+      new ArrayBuffer(0),
+      validatedConfig.accessKeyId,
+      validatedConfig.secretAccessKey,
+      validatedConfig.region || "auto"
+    );
+
+    return fetch(fileUrl.toString(), {
+      method: "GET",
+      headers: signedHeaders,
+    });
+  };
+
   return {
     upload,
     delete: deleteFile,
     getSignedUrl,
     getPublicUrl,
+    fetch: fetchFile,
   };
 };
 

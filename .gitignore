@@ -19,3 +19,4 @@ logs
 *.pid
 *.seed
 *.pid.lock
+./packages/cms/dist

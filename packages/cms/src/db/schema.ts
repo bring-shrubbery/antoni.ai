@@ -149,10 +149,40 @@ export const media = pgTable("cms_media", {
 
 /**
  * Basic field types for collections
- * Starting with core types, will expand later
+ * - string: Short text input
+ * - number: Numeric input
+ * - boolean: Checkbox/toggle
+ * - date: Date picker (stored as ISO string)
+ * - textarea: Multi-line text input
+ * - url: URL input with validation
+ * - image: Image upload (stores media reference)
+ * - array: Array of values (single type per array)
  */
-export const fieldTypeEnum = ["string", "number", "boolean"] as const;
+export const fieldTypeEnum = [
+  "string",
+  "number",
+  "boolean",
+  "date",
+  "textarea",
+  "url",
+  "image",
+  "array",
+] as const;
 export type FieldType = (typeof fieldTypeEnum)[number];
+
+/**
+ * Types that can be used as array item types
+ */
+export const arrayItemTypeEnum = [
+  "string",
+  "number",
+  "boolean",
+  "date",
+  "textarea",
+  "url",
+  "image",
+] as const;
+export type ArrayItemType = (typeof arrayItemTypeEnum)[number];
 
 /**
  * Schema for defining a single field in a collection
@@ -174,7 +204,11 @@ export const collectionFieldSchema = z.object({
   /** Description/help text for editors */
   description: z.string().optional(),
   /** Default value for the field */
-  defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
+  defaultValue: z
+    .union([z.string(), z.number(), z.boolean(), z.array(z.unknown())])
+    .optional(),
+  /** For array fields: the type of items in the array */
+  arrayItemType: z.enum(arrayItemTypeEnum).optional(),
 });
 
 /**
