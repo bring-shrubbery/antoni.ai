@@ -1330,7 +1330,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React3 = require_react(), Internals = {
+        var React4 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -1348,7 +1348,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2883,7 +2883,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React3.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18515,14 +18515,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React3 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21310,7 +21310,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React3.version;
+          var isomorphicReactPackageVersion = React4.version;
           if ("19.2.1" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.1\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21664,18 +21664,18 @@
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React3 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React3 = {
+        React4 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React3.react_stack_bottom_frame.bind(
-          React3,
+        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
+          React4,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -21723,17 +21723,41 @@
   var import_client = __toESM(require_client(), 1);
 
   // client/App.tsx
-  var import_react2 = __toESM(require_react(), 1);
+  var import_react3 = __toESM(require_react(), 1);
 
   // client/pages/Login.tsx
   var import_react = __toESM(require_react(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  function Login() {
+  function Login({ onLoginSuccess }) {
     const [email, setEmail] = import_react.default.useState("");
     const [password, setPassword] = import_react.default.useState("");
-    const handleSubmit = (e) => {
+    const [error, setError] = import_react.default.useState(null);
+    const [isLoading, setIsLoading] = import_react.default.useState(false);
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      window.location.href = "/admin/dashboard";
+      setError(null);
+      setIsLoading(true);
+      try {
+        const response = await fetch("/admin/api/auth/sign-in/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email,
+            password
+          })
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || "Invalid email or password");
+        }
+        onLoginSuccess();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setIsLoading(false);
+      }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "w-full max-w-md space-y-8 p-8", children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
@@ -21741,6 +21765,25 @@
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "mt-2 text-center text-sm text-gray-600", children: "Enter your credentials to access the admin panel" })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", { className: "mt-8 space-y-6", onSubmit: handleSubmit, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "rounded-md bg-red-50 p-4", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "svg",
+            {
+              className: "h-5 w-5 text-red-400",
+              viewBox: "0 0 20 20",
+              fill: "currentColor",
+              children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "path",
+                {
+                  fillRule: "evenodd",
+                  d: "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z",
+                  clipRule: "evenodd"
+                }
+              )
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-sm font-medium text-red-800", children: error }) })
+        ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "space-y-4 rounded-md shadow-sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -21791,12 +21834,45 @@
             )
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
           "button",
           {
             type: "submit",
-            className: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors",
-            children: "Sign in"
+            disabled: isLoading,
+            className: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+            children: [
+              isLoading ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+                "svg",
+                {
+                  className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "circle",
+                      {
+                        className: "opacity-25",
+                        cx: "12",
+                        cy: "12",
+                        r: "10",
+                        stroke: "currentColor",
+                        strokeWidth: "4"
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "path",
+                      {
+                        className: "opacity-75",
+                        fill: "currentColor",
+                        d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      }
+                    )
+                  ]
+                }
+              ) : null,
+              isLoading ? "Signing in..." : "Sign in"
+            ]
           }
         ) })
       ] })
@@ -21805,16 +21881,26 @@
 
   // client/pages/Dashboard.tsx
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-  function Dashboard() {
+  function Dashboard({ onLogout }) {
+    const handleLogout = async () => {
+      try {
+        await fetch("/admin/api/auth/sign-out", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      } catch (e) {
+      }
+      onLogout();
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "min-h-screen bg-gray-50", children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("header", { className: "bg-white shadow", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "px-4 py-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex justify-between items-center", children: [
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-2xl font-bold text-gray-900", children: "CMS Dashboard" }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
           "button",
           {
-            onClick: () => {
-              window.location.href = "/admin/login";
-            },
+            onClick: handleLogout,
             className: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             children: "Logout"
           }
@@ -21856,37 +21942,407 @@
     ] });
   }
 
-  // client/App.tsx
+  // client/pages/Setup.tsx
+  var import_react2 = __toESM(require_react(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+  function Setup({ onComplete }) {
+    const [name, setName] = import_react2.default.useState("");
+    const [email, setEmail] = import_react2.default.useState("");
+    const [password, setPassword] = import_react2.default.useState("");
+    const [confirmPassword, setConfirmPassword] = import_react2.default.useState("");
+    const [error, setError] = import_react2.default.useState(null);
+    const [isLoading, setIsLoading] = import_react2.default.useState(false);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError(null);
+      if (password !== confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+      if (password.length < 8) {
+        setError("Password must be at least 8 characters");
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const response = await fetch("/admin/api/trpc/setup.createSuperadmin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            json: {
+              name,
+              email,
+              password
+            }
+          })
+        });
+        const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error.message || "Failed to create superadmin");
+        }
+        onComplete();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "w-full max-w-md space-y-8 p-8 bg-white rounded-xl shadow-lg", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          "svg",
+          {
+            className: "h-6 w-6 text-blue-600",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            stroke: "currentColor",
+            children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "path",
+              {
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                strokeWidth: 2,
+                d: "M12 6v6m0 0v6m0-6h6m-6 0H6"
+              }
+            )
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h2", { className: "mt-6 text-center text-3xl font-bold tracking-tight text-gray-900", children: "Welcome to CMS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "mt-2 text-center text-sm text-gray-600", children: "Let's create your superadmin account to get started" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("form", { className: "mt-8 space-y-6", onSubmit: handleSubmit, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rounded-md bg-red-50 p-4", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            "svg",
+            {
+              className: "h-5 w-5 text-red-400",
+              viewBox: "0 0 20 20",
+              fill: "currentColor",
+              children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                "path",
+                {
+                  fillRule: "evenodd",
+                  d: "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z",
+                  clipRule: "evenodd"
+                }
+              )
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm font-medium text-red-800", children: error }) })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "label",
+              {
+                htmlFor: "name",
+                className: "block text-sm font-medium text-gray-700 mb-1",
+                children: "Full Name"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "input",
+              {
+                id: "name",
+                name: "name",
+                type: "text",
+                autoComplete: "name",
+                required: true,
+                value: name,
+                onChange: (e) => setName(e.target.value),
+                className: "appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm",
+                placeholder: "John Doe"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "label",
+              {
+                htmlFor: "email",
+                className: "block text-sm font-medium text-gray-700 mb-1",
+                children: "Email address"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "input",
+              {
+                id: "email",
+                name: "email",
+                type: "email",
+                autoComplete: "email",
+                required: true,
+                value: email,
+                onChange: (e) => setEmail(e.target.value),
+                className: "appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm",
+                placeholder: "admin@example.com"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "label",
+              {
+                htmlFor: "password",
+                className: "block text-sm font-medium text-gray-700 mb-1",
+                children: "Password"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "input",
+              {
+                id: "password",
+                name: "password",
+                type: "password",
+                autoComplete: "new-password",
+                required: true,
+                value: password,
+                onChange: (e) => setPassword(e.target.value),
+                className: "appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm",
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "mt-1 text-xs text-gray-500", children: "Must be at least 8 characters" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "label",
+              {
+                htmlFor: "confirmPassword",
+                className: "block text-sm font-medium text-gray-700 mb-1",
+                children: "Confirm Password"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              "input",
+              {
+                id: "confirmPassword",
+                name: "confirmPassword",
+                type: "password",
+                autoComplete: "new-password",
+                required: true,
+                value: confirmPassword,
+                onChange: (e) => setConfirmPassword(e.target.value),
+                className: "appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm",
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+          "button",
+          {
+            type: "submit",
+            disabled: isLoading,
+            className: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+            children: [
+              isLoading ? /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+                "svg",
+                {
+                  className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "circle",
+                      {
+                        className: "opacity-25",
+                        cx: "12",
+                        cy: "12",
+                        r: "10",
+                        stroke: "currentColor",
+                        strokeWidth: "4"
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "path",
+                      {
+                        className: "opacity-75",
+                        fill: "currentColor",
+                        d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      }
+                    )
+                  ]
+                }
+              ) : null,
+              isLoading ? "Creating account..." : "Create Superadmin Account"
+            ]
+          }
+        ) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mt-6 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("p", { className: "text-xs text-gray-500", children: [
+        "This account will have full administrative access to the CMS.",
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("br", {}),
+        "You can invite other administrators later."
+      ] }) })
+    ] }) });
+  }
+
+  // client/App.tsx
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   function App() {
-    const [currentPath, setCurrentPath] = import_react2.default.useState(
+    const [currentPath, setCurrentPath] = import_react3.default.useState(
       window.location.pathname
     );
-    import_react2.default.useEffect(() => {
+    const [setupStatus, setSetupStatus] = import_react3.default.useState(
+      null
+    );
+    const [authStatus, setAuthStatus] = import_react3.default.useState(null);
+    const [isLoading, setIsLoading] = import_react3.default.useState(true);
+    import_react3.default.useEffect(() => {
+      const checkStatus = async () => {
+        try {
+          const setupResponse = await fetch("/admin/api/trpc/setup.getStatus", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+          const setupData = await setupResponse.json();
+          const data = setupData.result?.data?.json ?? setupData.result?.data;
+          if (data) {
+            setSetupStatus(data);
+          } else {
+            setSetupStatus({
+              isSetupComplete: false,
+              hasSuperadmin: false
+            });
+          }
+          const sessionResponse = await fetch("/admin/api/auth/get-session", {
+            method: "GET",
+            credentials: "include"
+          });
+          if (sessionResponse.ok) {
+            const sessionData = await sessionResponse.json();
+            if (sessionData?.user) {
+              setAuthStatus({
+                isAuthenticated: true,
+                user: sessionData.user
+              });
+            } else {
+              setAuthStatus({
+                isAuthenticated: false,
+                user: null
+              });
+            }
+          } else {
+            setAuthStatus({
+              isAuthenticated: false,
+              user: null
+            });
+          }
+        } catch (error) {
+          console.error("Failed to check status:", error);
+          setSetupStatus({
+            isSetupComplete: false,
+            hasSuperadmin: false,
+            error: "Failed to connect to server"
+          });
+          setAuthStatus({
+            isAuthenticated: false,
+            user: null
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      checkStatus();
+    }, []);
+    import_react3.default.useEffect(() => {
       const handlePopState = () => {
         setCurrentPath(window.location.pathname);
       };
       window.addEventListener("popstate", handlePopState);
       return () => window.removeEventListener("popstate", handlePopState);
     }, []);
-    const renderPage = () => {
-      if (currentPath.includes("/login")) {
-        return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Login, {});
-      } else if (currentPath.includes("/dashboard")) {
-        return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Dashboard, {});
-      } else {
-        return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Login, {});
-      }
+    const handleSetupComplete = () => {
+      setSetupStatus({
+        isSetupComplete: true,
+        hasSuperadmin: true
+      });
+      window.history.pushState({}, "", "/admin/login");
+      setCurrentPath("/admin/login");
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { id: "cms-app", children: renderPage() });
+    const handleLoginSuccess = (user) => {
+      setAuthStatus({
+        isAuthenticated: true,
+        user
+      });
+      window.history.pushState({}, "", "/admin/dashboard");
+      setCurrentPath("/admin/dashboard");
+    };
+    const handleLogout = async () => {
+      try {
+        await fetch("/admin/api/auth/sign-out", {
+          method: "POST",
+          credentials: "include"
+        });
+      } catch (error) {
+        console.error("Logout error:", error);
+      }
+      setAuthStatus({
+        isAuthenticated: false,
+        user: null
+      });
+      window.history.pushState({}, "", "/admin/login");
+      setCurrentPath("/admin/login");
+    };
+    if (isLoading) {
+      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { id: "cms-app", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+          "svg",
+          {
+            className: "animate-spin h-8 w-8 text-blue-600 mx-auto",
+            xmlns: "http://www.w3.org/2000/svg",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "circle",
+                {
+                  className: "opacity-25",
+                  cx: "12",
+                  cy: "12",
+                  r: "10",
+                  stroke: "currentColor",
+                  strokeWidth: "4"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "path",
+                {
+                  className: "opacity-75",
+                  fill: "currentColor",
+                  d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mt-4 text-gray-600", children: "Loading CMS..." })
+      ] }) }) });
+    }
+    const renderPage = () => {
+      if (!setupStatus?.isSetupComplete) {
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Setup, { onComplete: handleSetupComplete });
+      }
+      if (authStatus?.isAuthenticated) {
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Dashboard, { user: authStatus.user, onLogout: handleLogout });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Login, { onLoginSuccess: handleLoginSuccess });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { id: "cms-app", children: renderPage() });
   }
 
   // client/index.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var rootElement = document.getElementById("cms-root");
   if (rootElement) {
     const root = (0, import_client.createRoot)(rootElement);
-    root.render(/* @__PURE__ */ (0, import_jsx_runtime4.jsx)(App, {}));
+    root.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(App, {}));
   }
 })();
 /*! Bundled license information:

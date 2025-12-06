@@ -18,13 +18,18 @@
   },
   "files": [
     "dist",
-    "static"
+    "static",
+    "drizzle"
   ],
   "scripts": {
-    "build": "tsdown && node build.js",
+    "build": "pnpm db:generate && tsdown && node build.js",
     "build:client": "node build.js",
     "build:lib": "tsdown",
     "dev": "tsdown --watch",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "prepublishOnly": "pnpm build"
   },
   "keywords": [
@@ -32,7 +37,10 @@
     "admin",
     "headless",
     "react",
-    "web-standards"
+    "web-standards",
+    "trpc",
+    "drizzle",
+    "better-auth"
   ],
   "author": "",
   "license": "MIT",
@@ -40,13 +48,23 @@
     "type": "git",
     "url": "https://github.com/bring-shrubbery/antoni.cv"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@trpc/client": "^11.7.2",
+    "@trpc/server": "^11.7.2",
+    "better-auth": "^1.4.5",
+    "drizzle-orm": "^0.45.0",
+    "pg": "^8.16.3",
+    "superjson": "^2.2.6",
+    "zod": "^4.1.13"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.22",
+    "drizzle-kit": "^0.31.8",
     "esbuild": "^0.27.1",
     "postcss": "^8.5.6",
     "react": "^19.2.1",

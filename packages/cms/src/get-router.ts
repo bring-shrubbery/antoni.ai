@@ -1,14 +1,17 @@
-import type { CreateCMSOptions } from "./index";
 import { renderAdminPanel } from "./admin-panel";
 import { readFile } from "fs/promises";
 import { join } from "path";
+
+type RouterOptions = {
+  basePath: string;
+};
 
 /**
  * Internal router for handling GET requests to the CMS
  */
 export const runGetRouter = async (
   req: Request,
-  opts: Required<CreateCMSOptions>
+  opts: RouterOptions
 ): Promise<Response> => {
   const url = new URL(req.url);
   const { pathname } = url;

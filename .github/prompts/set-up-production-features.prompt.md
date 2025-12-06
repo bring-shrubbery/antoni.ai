@@ -2,7 +2,7 @@
 agent: agent
 ---
 
-Let's now start creating a more real cms setup:
+Let's now start creating a more real CMS setup:
 
 1. Database setup
 

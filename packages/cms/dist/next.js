@@ -1,9 +1,9 @@
-import { t as createCMS$1 } from "./create-cms-vVtYAhd8.js";
+import { t as createCMS$1 } from "./create-cms-Bm3-xas1.js";
 
 //#region src/next.ts
 /**
 * Creates CMS handlers specifically for Next.js App Router
-* 
+*
 * @example
 * ```ts
 * // app/admin/[[...slug]]/route.ts

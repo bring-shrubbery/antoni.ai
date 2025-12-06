@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "cms_user_unique_superadmin" ON "cms_user" USING btree ("role") WHERE "cms_user"."role" = 'superadmin';

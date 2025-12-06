@@ -1,4 +1,4 @@
-import { r as CreateCMSOptions } from "./index-DKdN0l7B.js";
+import { r as CreateCMSOptions } from "./index-CGRhY1zV.js";
 import { NextRequest } from "next/server";
 
 //#region src/next.d.ts
@@ -20,4 +20,4 @@ declare const createCMS: (options?: CreateCMSOptions) => {
 //# sourceMappingURL=next.d.ts.map
 //#endregion
 export { type CreateCMSOptions, createCMS };
-//# sourceMappingURL=next-BOBh_xhu.d.ts.map
+//# sourceMappingURL=next-BG5QqCeu.d.ts.map

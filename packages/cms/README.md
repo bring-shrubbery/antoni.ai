@@ -1,41 +1,73 @@
-# Self-Contained CMS
+# @turbulence/cms
 
 A framework-agnostic, self-contained content management system built with React and Tailwind CSS that can be embedded in any web project using Web Standard Request/Response patterns.
 
 ## ✨ Features
 
 - **Framework Agnostic**: Works with Next.js, Remix, SvelteKit, Hono, or any framework supporting Web Standards
-- **Zero Dependencies**: Host project doesn't need React, Tailwind, or any specific build tools
+- **Database Ready**: Built-in Drizzle ORM with PostgreSQL support for content management
+- **Authentication**: Integrated better-auth for secure admin access
+- **File Storage**: S3-compatible storage support (AWS S3, Cloudflare R2, MinIO)
+- **Type-Safe API**: tRPC-based API with public and protected endpoints
 - **Style Isolation**: Uses scoped Tailwind CSS that won't interfere with your project's styles
 - **Self-Contained**: All assets bundled and served from the CMS itself
-- **Simple API**: One function call to set up everything
-- **Type-Safe**: Built with TypeScript
-- **Modern Stack**: React 19, Tailwind CSS v4, esbuild
+- **Modern Stack**: React 19, Tailwind CSS v4, Drizzle ORM, tRPC, better-auth
 
 ## 🚀 Quick Start
 
-### 1. Set Up the Route
+### 1. Install the Package
+
+```bash
+pnpm add @turbulence/cms
+```
+
+### 2. Set Up the Route
 
 Create a catch-all route handler:
 
 ```typescript
 // app/admin/[[...slug]]/route.ts
-import { createCMS } from "@/cms/route-utils";
+import { createCMS } from "@turbulence/cms/next";
 
-export const { GET, POST } = createCMS();
+export const { GET, POST } = createCMS({
+  // Database configuration (Drizzle ORM with PostgreSQL)
+  database: {
+    connectionString: process.env.DATABASE_URL!,
+  },
+
+  // Storage configuration (S3-compatible)
+  storage: {
+    endpoint: process.env.S3_ENDPOINT!,
+    bucket: process.env.S3_BUCKET!,
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+    region: process.env.S3_REGION ?? "auto",
+  },
+
+  // Authentication configuration (better-auth)
+  auth: {
+    secret: process.env.AUTH_SECRET!,
+    baseUrl: process.env.NEXT_PUBLIC_APP_URL!,
+    emailAndPassword: true,
+  },
+});
 ```
 
-### 2. Build the CMS
+### 3. Set Up Database
+
+Run migrations to create the CMS tables:
 
 ```bash
-pnpm cms:build
+# Generate migrations
+pnpm drizzle-kit generate
+
+# Apply migrations
+pnpm drizzle-kit migrate
 ```
 
-### 3. Access the Admin Panel
+### 4. Access the Admin Panel
 
-Navigate to `http://localhost:3000/admin/login`
-
-That's it! 🎉
+Navigate to `http://localhost:3000/admin`
 
 ## 📖 Documentation
 
@@ -43,6 +75,52 @@ That's it! 🎉
 - **[Architecture](./docs/architecture.md)** - How the system works
 - **[Styling Guide](./docs/styling.md)** - Using Tailwind CSS with isolation
 - **[Routing](./docs/routing.md)** - Adding routes and navigation
+
+## 🗄️ Database Schema
+
+The CMS uses the following database tables:
+
+- **cms_user** - User accounts
+- **cms_session** - User sessions
+- **cms_account** - OAuth accounts
+- **cms_verification** - Email verification tokens
+- **cms_content_type** - Content type definitions (schemas)
+- **cms_content_entry** - Actual content entries
+- **cms_media** - Uploaded media files
+
+## 🔌 API Endpoints
+
+### tRPC API (`/api/trpc`)
+
+All API calls go through tRPC with automatic type inference:
+
+```typescript
+// Public endpoints
+trpc.health.query();
+trpc.contentType.list.query();
+trpc.contentEntry.list.query({ contentTypeSlug: "blog-post" });
+
+// Protected endpoints (require authentication)
+trpc.me.query();
+trpc.contentType.create.mutation({
+  name: "Blog Post",
+  slug: "blog-post",
+  schema: { fields: [] },
+});
+trpc.contentEntry.create.mutation({
+  contentTypeId: "...",
+  data: { title: "Hello" },
+});
+```
+
+### Auth API (`/api/auth`)
+
+Authentication is handled by better-auth:
+
+- `POST /api/auth/sign-up/email` - Register with email/password
+- `POST /api/auth/sign-in/email` - Login with email/password
+- `POST /api/auth/sign-out` - Logout
+- `GET /api/auth/session` - Get current session
 
 ## 🏗️ How It Works
 
