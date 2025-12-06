@@ -72,7 +72,7 @@ export const contentEntryRouter = createTRPCRouter({
     .input(
       z.object({
         contentTypeId: z.string().uuid(),
-        data: z.record(z.unknown()),
+        data: z.record(z.string(), z.unknown()),
         status: z
           .enum(["draft", "published", "archived"])
           .optional()
@@ -104,7 +104,7 @@ export const contentEntryRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().uuid(),
-        data: z.record(z.unknown()).optional(),
+        data: z.record(z.string(), z.unknown()).optional(),
         status: z.enum(["draft", "published", "archived"]).optional(),
       })
     )

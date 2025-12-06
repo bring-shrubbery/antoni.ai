@@ -1330,7 +1330,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React4 = require_react(), Internals = {
+        var React10 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -1348,7 +1348,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React10.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2883,7 +2883,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React10.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18515,14 +18515,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React10 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React10.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21310,7 +21310,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React4.version;
+          var isomorphicReactPackageVersion = React10.version;
           if ("19.2.1" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.1\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21664,18 +21664,18 @@
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React10 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React10.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React4 = {
+        React10 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
-          React4,
+        var unknownOwnerDebugStack = React10.react_stack_bottom_frame.bind(
+          React10,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -21723,7 +21723,7 @@
   var import_client = __toESM(require_client(), 1);
 
   // client/App.tsx
-  var import_react3 = __toESM(require_react(), 1);
+  var import_react9 = __toESM(require_react(), 1);
 
   // client/pages/Login.tsx
   var import_react = __toESM(require_react(), 1);
@@ -21881,15 +21881,1240 @@
   }
 
   // client/pages/Dashboard.tsx
+  var import_react7 = __toESM(require_react(), 1);
+
+  // client/components/CollectionsList.tsx
+  var import_react2 = __toESM(require_react(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+  function CollectionsList({
+    onSelectCollection,
+    onCreateCollection
+  }) {
+    const [collections, setCollections] = import_react2.default.useState([]);
+    const [isLoading, setIsLoading] = import_react2.default.useState(true);
+    const [error, setError] = import_react2.default.useState(null);
+    const fetchCollections = import_react2.default.useCallback(async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/admin/api/trpc/collections.list", {
+          credentials: "include"
+        });
+        const data = await response.json();
+        if (data.result?.data?.json) {
+          setCollections(data.result.data.json);
+        } else if (data.result?.data) {
+          setCollections(data.result.data);
+        }
+      } catch (err) {
+        setError("Failed to load collections");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }, []);
+    import_react2.default.useEffect(() => {
+      fetchCollections();
+    }, [fetchCollections]);
+    if (isLoading) {
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-8 text-center text-gray-500", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+          "svg",
+          {
+            className: "animate-spin h-6 w-6 mx-auto mb-2",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                "circle",
+                {
+                  className: "opacity-25",
+                  cx: "12",
+                  cy: "12",
+                  r: "10",
+                  stroke: "currentColor",
+                  strokeWidth: "4"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                "path",
+                {
+                  className: "opacity-75",
+                  fill: "currentColor",
+                  d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                }
+              )
+            ]
+          }
+        ),
+        "Loading collections..."
+      ] });
+    }
+    if (error) {
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-8 text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-red-600 mb-4", children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+          "button",
+          {
+            onClick: fetchCollections,
+            className: "text-blue-600 hover:text-blue-800",
+            children: "Try again"
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg font-semibold text-gray-900", children: "Collections" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+          "button",
+          {
+            onClick: onCreateCollection,
+            className: "inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                "svg",
+                {
+                  className: "w-4 h-4 mr-1.5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M12 4v16m8-8H4"
+                    }
+                  )
+                }
+              ),
+              "New Collection"
+            ]
+          }
+        )
+      ] }),
+      collections.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+          "svg",
+          {
+            className: "mx-auto h-12 w-12 text-gray-400",
+            fill: "none",
+            stroke: "currentColor",
+            viewBox: "0 0 24 24",
+            children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              "path",
+              {
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                strokeWidth: 2,
+                d: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              }
+            )
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { className: "mt-4 text-sm font-medium text-gray-900", children: "No collections yet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "mt-2 text-sm text-gray-500", children: "Get started by creating your first collection." }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+          "button",
+          {
+            onClick: onCreateCollection,
+            className: "mt-4 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700",
+            children: "Create Collection"
+          }
+        )
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "grid gap-4", children: collections.map((collection) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+        "button",
+        {
+          onClick: () => onSelectCollection(collection),
+          className: "text-left p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all",
+          children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start justify-between", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { className: "font-medium text-gray-900", children: collection.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-sm text-gray-500 mt-0.5", children: [
+                "/",
+                collection.slug
+              ] }),
+              collection.description && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-sm text-gray-600 mt-2", children: collection.description })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded", children: [
+              collection.schema.fields.length,
+              " field",
+              collection.schema.fields.length !== 1 ? "s" : ""
+            ] }) })
+          ] })
+        },
+        collection.id
+      )) })
+    ] });
+  }
+
+  // client/components/SchemaEditor.tsx
+  var import_react3 = __toESM(require_react(), 1);
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+  var FIELD_TYPES = [
+    { value: "string", label: "String", icon: "Aa" },
+    { value: "number", label: "Number", icon: "#" },
+    { value: "boolean", label: "Boolean", icon: "\u2713" }
+  ];
+  function SchemaEditor({
+    collection,
+    onBack,
+    onViewEntries,
+    onUpdate
+  }) {
+    const [fields, setFields] = import_react3.default.useState(collection.schema.fields);
+    const [isSaving, setIsSaving] = import_react3.default.useState(false);
+    const [error, setError] = import_react3.default.useState(null);
+    const [editingField, setEditingField] = import_react3.default.useState(null);
+    const [hasChanges, setHasChanges] = import_react3.default.useState(false);
+    import_react3.default.useEffect(() => {
+      const originalJson = JSON.stringify(collection.schema.fields);
+      const currentJson = JSON.stringify(fields);
+      setHasChanges(originalJson !== currentJson);
+    }, [fields, collection.schema.fields]);
+    const generateKey = (name) => {
+      return name.replace(/[^a-zA-Z0-9\s]/g, "").replace(/\s+(.)/g, (_, c) => c.toUpperCase()).replace(/\s/g, "").replace(/^(.)/, (c) => c.toLowerCase());
+    };
+    const addField = () => {
+      const newField = {
+        id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        name: "",
+        key: "",
+        type: "string",
+        required: false
+      };
+      setFields([...fields, newField]);
+      setEditingField(newField.id);
+    };
+    const updateField = (fieldId, updates) => {
+      setFields(
+        fields.map((f) => {
+          if (f.id !== fieldId) return f;
+          const updated = { ...f, ...updates };
+          if (updates.name && (!f.key || f.key === generateKey(f.name))) {
+            updated.key = generateKey(updates.name);
+          }
+          return updated;
+        })
+      );
+    };
+    const removeField = (fieldId) => {
+      setFields(fields.filter((f) => f.id !== fieldId));
+      if (editingField === fieldId) {
+        setEditingField(null);
+      }
+    };
+    const moveField = (fieldId, direction) => {
+      const index = fields.findIndex((f) => f.id === fieldId);
+      if (index === -1) return;
+      const newIndex = direction === "up" ? index - 1 : index + 1;
+      if (newIndex < 0 || newIndex >= fields.length) return;
+      const newFields = [...fields];
+      [newFields[index], newFields[newIndex]] = [
+        newFields[newIndex],
+        newFields[index]
+      ];
+      setFields(newFields);
+    };
+    const saveSchema = async () => {
+      for (const field of fields) {
+        if (!field.name.trim()) {
+          setError("All fields must have a name");
+          return;
+        }
+        if (!field.key.trim()) {
+          setError("All fields must have a key");
+          return;
+        }
+        if (!/^[a-z][a-zA-Z0-9]*$/.test(field.key)) {
+          setError(
+            `Field key "${field.key}" must be camelCase (start with lowercase letter)`
+          );
+          return;
+        }
+      }
+      const keys = fields.map((f) => f.key);
+      if (new Set(keys).size !== keys.length) {
+        setError("Field keys must be unique");
+        return;
+      }
+      setIsSaving(true);
+      setError(null);
+      try {
+        const response = await fetch("/admin/api/trpc/collections.updateSchema", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            json: {
+              id: collection.id,
+              schema: { fields }
+            }
+          })
+        });
+        const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error.message || "Failed to save schema");
+        }
+        const updatedCollection = data.result?.data?.json || data.result?.data;
+        onUpdate(updatedCollection);
+        setHasChanges(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to save schema");
+      } finally {
+        setIsSaving(false);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "h-full flex flex-col", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center justify-between p-4 border-b border-gray-200 bg-white", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            "button",
+            {
+              onClick: onBack,
+              className: "p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded",
+              children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M15 19l-7-7 7-7"
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-lg font-semibold text-gray-900", children: collection.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm text-gray-500", children: "Schema Editor" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            "button",
+            {
+              onClick: onViewEntries,
+              className: "px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+              children: "View Entries"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            "button",
+            {
+              onClick: saveSchema,
+              disabled: !hasChanges || isSaving,
+              className: `px-4 py-2 text-sm font-medium rounded-md ${hasChanges ? "text-white bg-blue-600 hover:bg-blue-700" : "text-gray-400 bg-gray-100 cursor-not-allowed"}`,
+              children: isSaving ? "Saving..." : "Save Schema"
+            }
+          )
+        ] })
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mx-4 mt-4 p-3 bg-red-50 border border-red-200 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm text-red-600", children: error }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex-1 overflow-auto p-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "space-y-3", children: fields.map((field, index) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+          "div",
+          {
+            className: `bg-white rounded-lg border ${editingField === field.id ? "border-blue-300 shadow-sm" : "border-gray-200"}`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+                "div",
+                {
+                  className: "flex items-center gap-3 p-3 cursor-pointer",
+                  onClick: () => setEditingField(editingField === field.id ? null : field.id),
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex flex-col gap-0.5", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                        "button",
+                        {
+                          onClick: (e) => {
+                            e.stopPropagation();
+                            moveField(field.id, "up");
+                          },
+                          disabled: index === 0,
+                          className: "p-0.5 text-gray-400 hover:text-gray-600 disabled:opacity-30",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                            "svg",
+                            {
+                              className: "w-4 h-4",
+                              fill: "none",
+                              stroke: "currentColor",
+                              viewBox: "0 0 24 24",
+                              children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                                "path",
+                                {
+                                  strokeLinecap: "round",
+                                  strokeLinejoin: "round",
+                                  strokeWidth: 2,
+                                  d: "M5 15l7-7 7 7"
+                                }
+                              )
+                            }
+                          )
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                        "button",
+                        {
+                          onClick: (e) => {
+                            e.stopPropagation();
+                            moveField(field.id, "down");
+                          },
+                          disabled: index === fields.length - 1,
+                          className: "p-0.5 text-gray-400 hover:text-gray-600 disabled:opacity-30",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                            "svg",
+                            {
+                              className: "w-4 h-4",
+                              fill: "none",
+                              stroke: "currentColor",
+                              viewBox: "0 0 24 24",
+                              children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                                "path",
+                                {
+                                  strokeLinecap: "round",
+                                  strokeLinejoin: "round",
+                                  strokeWidth: 2,
+                                  d: "M19 9l-7 7-7-7"
+                                }
+                              )
+                            }
+                          )
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "w-8 h-8 flex items-center justify-center bg-gray-100 rounded text-sm font-mono text-gray-600", children: FIELD_TYPES.find((t) => t.value === field.type)?.icon }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex-1 min-w-0", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "font-medium text-gray-900 truncate", children: field.name || /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-gray-400 italic", children: "Unnamed field" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-gray-500", children: field.key || "no key" })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
+                      field.required && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-1.5 py-0.5 text-xs font-medium text-orange-700 bg-orange-100 rounded", children: "Required" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-1.5 py-0.5 text-xs font-medium text-gray-600 bg-gray-100 rounded", children: field.type })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "button",
+                      {
+                        onClick: (e) => {
+                          e.stopPropagation();
+                          removeField(field.id);
+                        },
+                        className: "p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                          "svg",
+                          {
+                            className: "w-4 h-4",
+                            fill: "none",
+                            stroke: "currentColor",
+                            viewBox: "0 0 24 24",
+                            children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                              "path",
+                              {
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round",
+                                strokeWidth: 2,
+                                d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              }
+                            )
+                          }
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "svg",
+                      {
+                        className: `w-4 h-4 text-gray-400 transition-transform ${editingField === field.id ? "rotate-180" : ""}`,
+                        fill: "none",
+                        stroke: "currentColor",
+                        viewBox: "0 0 24 24",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                          "path",
+                          {
+                            strokeLinecap: "round",
+                            strokeLinejoin: "round",
+                            strokeWidth: 2,
+                            d: "M19 9l-7 7-7-7"
+                          }
+                        )
+                      }
+                    )
+                  ]
+                }
+              ),
+              editingField === field.id && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-4 pt-0 border-t border-gray-100 space-y-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Field Name" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "input",
+                      {
+                        type: "text",
+                        value: field.name,
+                        onChange: (e) => updateField(field.id, { name: e.target.value }),
+                        placeholder: "e.g., Title",
+                        className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Field Key" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                      "input",
+                      {
+                        type: "text",
+                        value: field.key,
+                        onChange: (e) => updateField(field.id, { key: e.target.value }),
+                        placeholder: "e.g., title",
+                        className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Field Type" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "flex gap-2", children: FIELD_TYPES.map((type) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+                    "button",
+                    {
+                      onClick: () => updateField(field.id, {
+                        type: type.value,
+                        defaultValue: void 0
+                      }),
+                      className: `flex-1 px-3 py-2 text-sm font-medium rounded-md border ${field.type === type.value ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}`,
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "font-mono mr-2", children: type.icon }),
+                        type.label
+                      ]
+                    },
+                    type.value
+                  )) })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Description (optional)" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    "input",
+                    {
+                      type: "text",
+                      value: field.description || "",
+                      onChange: (e) => updateField(field.id, { description: e.target.value }),
+                      placeholder: "Help text for editors",
+                      className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "flex items-center gap-4", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "flex items-center gap-2 cursor-pointer", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    "input",
+                    {
+                      type: "checkbox",
+                      checked: field.required,
+                      onChange: (e) => updateField(field.id, { required: e.target.checked }),
+                      className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-sm text-gray-700", children: "Required field" })
+                ] }) })
+              ] })
+            ]
+          },
+          field.id
+        )) }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          "button",
+          {
+            onClick: addField,
+            className: "mt-4 w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors",
+            children: "+ Add Field"
+          }
+        )
+      ] })
+    ] });
+  }
+
+  // client/components/EntriesList.tsx
+  var import_react4 = __toESM(require_react(), 1);
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  function EntriesList({
+    collection,
+    onBack,
+    onEditSchema,
+    onEditEntry,
+    onCreateEntry
+  }) {
+    const [entries, setEntries] = import_react4.default.useState([]);
+    const [total, setTotal] = import_react4.default.useState(0);
+    const [isLoading, setIsLoading] = import_react4.default.useState(true);
+    const [error, setError] = import_react4.default.useState(null);
+    const fetchEntries = import_react4.default.useCallback(async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `/admin/api/trpc/entries.list?input=${encodeURIComponent(
+            JSON.stringify({ json: { collectionId: collection.id } })
+          )}`,
+          { credentials: "include" }
+        );
+        const data = await response.json();
+        const result = data.result?.data?.json || data.result?.data;
+        if (result) {
+          setEntries(result.entries);
+          setTotal(result.total);
+        }
+      } catch (err) {
+        setError("Failed to load entries");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }, [collection.id]);
+    import_react4.default.useEffect(() => {
+      fetchEntries();
+    }, [fetchEntries]);
+    const deleteEntry = async (entryId) => {
+      if (!confirm("Are you sure you want to delete this entry?")) return;
+      try {
+        await fetch("/admin/api/trpc/entries.delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ json: { id: entryId } })
+        });
+        fetchEntries();
+      } catch (err) {
+        console.error("Failed to delete entry:", err);
+      }
+    };
+    const getDisplayValue = (entry) => {
+      const titleFields = ["title", "name", "label", "heading"];
+      for (const key of titleFields) {
+        if (entry.data[key] && typeof entry.data[key] === "string") {
+          return entry.data[key];
+        }
+      }
+      const firstField = collection.schema.fields[0];
+      if (firstField && entry.data[firstField.key]) {
+        const value = entry.data[firstField.key];
+        if (typeof value === "string") return value;
+        if (typeof value === "number" || typeof value === "boolean")
+          return String(value);
+      }
+      return `Entry ${entry.id.slice(0, 8)}`;
+    };
+    const statusColors = {
+      draft: "bg-yellow-100 text-yellow-800",
+      published: "bg-green-100 text-green-800",
+      archived: "bg-gray-100 text-gray-800"
+    };
+    if (collection.schema.fields.length === 0) {
+      return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "h-full flex flex-col", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-4 p-4 border-b border-gray-200 bg-white", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              onClick: onBack,
+              className: "p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded",
+              children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M15 19l-7-7 7-7"
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "text-lg font-semibold text-gray-900", children: collection.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-sm text-gray-500", children: "Entries" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-1 flex items-center justify-center p-8", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "svg",
+            {
+              className: "mx-auto h-12 w-12 text-gray-400",
+              fill: "none",
+              stroke: "currentColor",
+              viewBox: "0 0 24 24",
+              children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "path",
+                {
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeWidth: 2,
+                  d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { className: "mt-4 text-sm font-medium text-gray-900", children: "No schema defined" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mt-2 text-sm text-gray-500", children: "You need to define fields before adding entries." }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              onClick: onEditSchema,
+              className: "mt-4 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700",
+              children: "Edit Schema"
+            }
+          )
+        ] }) })
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "h-full flex flex-col", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between p-4 border-b border-gray-200 bg-white", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              onClick: onBack,
+              className: "p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded",
+              children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M15 19l-7-7 7-7"
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "text-lg font-semibold text-gray-900", children: collection.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { className: "text-sm text-gray-500", children: [
+              total,
+              " entries"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              onClick: onEditSchema,
+              className: "px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+              children: "Edit Schema"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+            "button",
+            {
+              onClick: onCreateEntry,
+              className: "inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "svg",
+                  {
+                    className: "w-4 h-4 mr-1.5",
+                    fill: "none",
+                    stroke: "currentColor",
+                    viewBox: "0 0 24 24",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "path",
+                      {
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round",
+                        strokeWidth: 2,
+                        d: "M12 4v16m8-8H4"
+                      }
+                    )
+                  }
+                ),
+                "New Entry"
+              ]
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-1 overflow-auto p-4", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center py-8 text-gray-500", children: "Loading entries..." }) : error ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center py-8", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-red-600", children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "button",
+          {
+            onClick: fetchEntries,
+            className: "mt-2 text-blue-600 hover:text-blue-800",
+            children: "Try again"
+          }
+        )
+      ] }) : entries.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "svg",
+          {
+            className: "mx-auto h-12 w-12 text-gray-400",
+            fill: "none",
+            stroke: "currentColor",
+            viewBox: "0 0 24 24",
+            children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "path",
+              {
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                strokeWidth: 2,
+                d: "M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              }
+            )
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { className: "mt-4 text-sm font-medium text-gray-900", children: "No entries yet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mt-2 text-sm text-gray-500", children: "Get started by creating your first entry." }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "button",
+          {
+            onClick: onCreateEntry,
+            className: "mt-4 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700",
+            children: "Create Entry"
+          }
+        )
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-white rounded-lg border border-gray-200 overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("table", { className: "min-w-full divide-y divide-gray-200", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("thead", { className: "bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { className: "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider", children: "Entry" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { className: "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider", children: "Status" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { className: "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider", children: "Updated" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { className: "px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider", children: "Actions" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("tbody", { className: "divide-y divide-gray-200", children: entries.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("tr", { className: "hover:bg-gray-50", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { className: "px-4 py-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              onClick: () => onEditEntry(entry),
+              className: "text-left text-sm font-medium text-gray-900 hover:text-blue-600",
+              children: getDisplayValue(entry)
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { className: "px-4 py-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "span",
+            {
+              className: `inline-flex px-2 py-1 text-xs font-medium rounded-full ${statusColors[entry.status]}`,
+              children: entry.status
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { className: "px-4 py-3 text-sm text-gray-500", children: new Date(entry.updatedAt).toLocaleDateString() }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("td", { className: "px-4 py-3 text-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                onClick: () => onEditEntry(entry),
+                className: "text-blue-600 hover:text-blue-800 text-sm font-medium mr-3",
+                children: "Edit"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                onClick: () => deleteEntry(entry.id),
+                className: "text-red-600 hover:text-red-800 text-sm font-medium",
+                children: "Delete"
+              }
+            )
+          ] })
+        ] }, entry.id)) })
+      ] }) }) })
+    ] });
+  }
+
+  // client/components/EntryEditor.tsx
+  var import_react5 = __toESM(require_react(), 1);
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  function EntryEditor({
+    collection,
+    entry,
+    onBack,
+    onSave
+  }) {
+    const isNew = !entry;
+    const [data, setData] = import_react5.default.useState(() => {
+      if (entry) return { ...entry.data };
+      const defaults = {};
+      for (const field of collection.schema.fields) {
+        if (field.defaultValue !== void 0) {
+          defaults[field.key] = field.defaultValue;
+        } else if (field.type === "boolean") {
+          defaults[field.key] = false;
+        } else if (field.type === "number") {
+          defaults[field.key] = 0;
+        } else {
+          defaults[field.key] = "";
+        }
+      }
+      return defaults;
+    });
+    const [status, setStatus] = import_react5.default.useState(
+      entry?.status === "published" ? "published" : "draft"
+    );
+    const [isSaving, setIsSaving] = import_react5.default.useState(false);
+    const [error, setError] = import_react5.default.useState(null);
+    const [fieldErrors, setFieldErrors] = import_react5.default.useState(
+      {}
+    );
+    const validateField = (field, value) => {
+      if (field.required && (value === void 0 || value === null || value === "")) {
+        return `${field.name} is required`;
+      }
+      if (value === void 0 || value === null || value === "") {
+        return null;
+      }
+      switch (field.type) {
+        case "string":
+          if (typeof value !== "string") return `${field.name} must be text`;
+          break;
+        case "number":
+          if (typeof value !== "number" || isNaN(value))
+            return `${field.name} must be a number`;
+          break;
+        case "boolean":
+          if (typeof value !== "boolean")
+            return `${field.name} must be true or false`;
+          break;
+      }
+      return null;
+    };
+    const validate = () => {
+      const errors = {};
+      for (const field of collection.schema.fields) {
+        const error2 = validateField(field, data[field.key]);
+        if (error2) {
+          errors[field.key] = error2;
+        }
+      }
+      setFieldErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
+    const handleSave = async (saveStatus) => {
+      if (!validate()) {
+        setError("Please fix the errors below");
+        return;
+      }
+      setIsSaving(true);
+      setError(null);
+      try {
+        const endpoint = isNew ? "/admin/api/trpc/entries.create" : "/admin/api/trpc/entries.update";
+        const payload = isNew ? { collectionId: collection.id, data, status: saveStatus } : { id: entry.id, data, status: saveStatus };
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ json: payload })
+        });
+        const result = await response.json();
+        if (result.error) {
+          throw new Error(result.error.message || "Failed to save entry");
+        }
+        const savedEntry = result.result?.data?.json || result.result?.data;
+        onSave(savedEntry);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to save entry");
+      } finally {
+        setIsSaving(false);
+      }
+    };
+    const updateField = (key, value) => {
+      setData((prev) => ({ ...prev, [key]: value }));
+      if (fieldErrors[key]) {
+        setFieldErrors((prev) => {
+          const next = { ...prev };
+          delete next[key];
+          return next;
+        });
+      }
+    };
+    const renderField = (field) => {
+      const value = data[field.key];
+      const hasError = !!fieldErrors[field.key];
+      const baseInputClass = `w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${hasError ? "border-red-300 bg-red-50" : "border-gray-300"}`;
+      switch (field.type) {
+        case "string":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "text",
+              value: value || "",
+              onChange: (e) => updateField(field.key, e.target.value),
+              className: baseInputClass,
+              placeholder: field.description || `Enter ${field.name.toLowerCase()}`
+            }
+          );
+        case "number":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "input",
+            {
+              type: "number",
+              value: value === void 0 || value === null ? "" : value,
+              onChange: (e) => {
+                const val = e.target.value;
+                updateField(field.key, val === "" ? null : parseFloat(val));
+              },
+              className: baseInputClass,
+              placeholder: field.description || `Enter ${field.name.toLowerCase()}`
+            }
+          );
+        case "boolean":
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("label", { className: "flex items-center gap-3 cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              "input",
+              {
+                type: "checkbox",
+                checked: !!value,
+                onChange: (e) => updateField(field.key, e.target.checked),
+                className: "w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-sm text-gray-700", children: field.description || `Enable ${field.name.toLowerCase()}` })
+          ] });
+        default:
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-gray-500", children: [
+            "Unsupported field type: ",
+            field.type
+          ] });
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "h-full flex flex-col", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center justify-between p-4 border-b border-gray-200 bg-white", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              onClick: onBack,
+              className: "p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded",
+              children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M15 19l-7-7 7-7"
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h1", { className: "text-lg font-semibold text-gray-900", children: isNew ? `New ${collection.name} Entry` : `Edit Entry` }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-sm text-gray-500", children: collection.name })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              onClick: () => handleSave("draft"),
+              disabled: isSaving,
+              className: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50",
+              children: isSaving ? "Saving..." : "Save Draft"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              onClick: () => handleSave("published"),
+              disabled: isSaving,
+              className: "px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 disabled:opacity-50",
+              children: isSaving ? "Saving..." : "Publish"
+            }
+          )
+        ] })
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "mx-4 mt-4 p-3 bg-red-50 border border-red-200 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-sm text-red-600", children: error }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex-1 overflow-auto p-4", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "max-w-2xl space-y-6", children: [
+        collection.schema.fields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: [
+            field.name,
+            field.required && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-red-500 ml-1", children: "*" })
+          ] }),
+          field.description && field.type !== "boolean" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-xs text-gray-500 mb-2", children: field.description }),
+          renderField(field),
+          fieldErrors[field.key] && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "mt-1 text-sm text-red-600", children: fieldErrors[field.key] })
+        ] }, field.id)),
+        collection.schema.fields.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-center py-8 text-gray-500", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { children: "This collection has no fields defined." }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-sm mt-1", children: "Add fields in the Schema Editor first." })
+        ] })
+      ] }) })
+    ] });
+  }
+
+  // client/components/CreateCollectionModal.tsx
+  var import_react6 = __toESM(require_react(), 1);
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+  function CreateCollectionModal({
+    isOpen,
+    onClose,
+    onCreate
+  }) {
+    const [name, setName] = import_react6.default.useState("");
+    const [description, setDescription] = import_react6.default.useState("");
+    const [isLoading, setIsLoading] = import_react6.default.useState(false);
+    const [error, setError] = import_react6.default.useState(null);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (!name.trim()) {
+        setError("Collection name is required");
+        return;
+      }
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch("/admin/api/trpc/collections.create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            json: {
+              name: name.trim(),
+              description: description.trim() || void 0
+            }
+          })
+        });
+        const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error.message || "Failed to create collection");
+        }
+        const collection = data.result?.data?.json || data.result?.data;
+        onCreate(collection);
+        setName("");
+        setDescription("");
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to create collection"
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    if (!isOpen) return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "fixed inset-0 z-50 flex items-center justify-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "absolute inset-0 bg-black/50", onClick: onClose }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex items-center justify-between p-4 border-b border-gray-200", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "text-lg font-semibold text-gray-900", children: "Create Collection" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "button",
+            {
+              onClick: onClose,
+              className: "p-1 text-gray-400 hover:text-gray-600 rounded",
+              children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M6 18L18 6M6 6l12 12"
+                    }
+                  )
+                }
+              )
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleSubmit, className: "p-4 space-y-4", children: [
+          error && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "p-3 bg-red-50 border border-red-200 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-sm text-red-600", children: error }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: [
+              "Collection Name ",
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "text-red-500", children: "*" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "input",
+              {
+                type: "text",
+                value: name,
+                onChange: (e) => setName(e.target.value),
+                placeholder: "e.g., Blog Posts",
+                className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                autoFocus: true
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: "Description (optional)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "textarea",
+              {
+                value: description,
+                onChange: (e) => setDescription(e.target.value),
+                placeholder: "A brief description of this collection",
+                rows: 3,
+                className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex justify-end gap-2 pt-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: onClose,
+                className: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+                children: "Cancel"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "button",
+              {
+                type: "submit",
+                disabled: isLoading,
+                className: "px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50",
+                children: isLoading ? "Creating..." : "Create Collection"
+              }
+            )
+          ] })
+        ] })
+      ] })
+    ] });
+  }
+
+  // client/pages/Dashboard.tsx
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   function Dashboard({ onLogout }) {
+    const [view, setView] = import_react7.default.useState({ type: "collections" });
+    const [showCreateModal, setShowCreateModal] = import_react7.default.useState(false);
+    const [refreshKey, setRefreshKey] = import_react7.default.useState(0);
     const handleLogout = async () => {
       try {
         await fetch("/admin/api/auth/sign-out", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({})
         });
@@ -21897,116 +23122,176 @@
       }
       onLogout();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "min-h-screen bg-gray-50", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("header", { className: "bg-white shadow", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "px-4 py-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex justify-between items-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-2xl font-bold text-gray-900", children: "CMS Dashboard" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+    const handleSelectCollection = (collection) => {
+      if (collection.schema.fields.length > 0) {
+        setView({ type: "entries", collection });
+      } else {
+        setView({ type: "schema", collection });
+      }
+    };
+    const handleCreateCollection = (collection) => {
+      setShowCreateModal(false);
+      setView({ type: "schema", collection });
+    };
+    const handleUpdateCollection = (updatedCollection) => {
+      if (view.type === "schema") {
+        setView({ type: "schema", collection: updatedCollection });
+      } else if (view.type === "entries") {
+        setView({ type: "entries", collection: updatedCollection });
+      }
+    };
+    const handleSaveEntry = (entry) => {
+      if (view.type === "entry-editor") {
+        setView({ type: "entries", collection: view.collection });
+        setRefreshKey((k) => k + 1);
+      }
+    };
+    const renderContent = () => {
+      switch (view.type) {
+        case "collections":
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            CollectionsList,
+            {
+              onSelectCollection: handleSelectCollection,
+              onCreateCollection: () => setShowCreateModal(true)
+            },
+            refreshKey
+          );
+        case "schema":
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            SchemaEditor,
+            {
+              collection: view.collection,
+              onBack: () => {
+                setView({ type: "collections" });
+                setRefreshKey((k) => k + 1);
+              },
+              onViewEntries: () => setView({ type: "entries", collection: view.collection }),
+              onUpdate: handleUpdateCollection
+            }
+          );
+        case "entries":
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            EntriesList,
+            {
+              collection: view.collection,
+              onBack: () => {
+                setView({ type: "collections" });
+                setRefreshKey((k) => k + 1);
+              },
+              onEditSchema: () => setView({ type: "schema", collection: view.collection }),
+              onEditEntry: (entry) => setView({
+                type: "entry-editor",
+                collection: view.collection,
+                entry
+              }),
+              onCreateEntry: () => setView({
+                type: "entry-editor",
+                collection: view.collection,
+                entry: null
+              })
+            },
+            refreshKey
+          );
+        case "entry-editor":
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            EntryEditor,
+            {
+              collection: view.collection,
+              entry: view.entry,
+              onBack: () => setView({ type: "entries", collection: view.collection }),
+              onSave: handleSaveEntry
+            }
+          );
+        default:
+          return null;
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "min-h-screen bg-gray-100 flex", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("aside", { className: "w-64 bg-white border-r border-gray-200 flex flex-col", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "p-4 border-b border-gray-200", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h1", { className: "text-xl font-bold text-gray-900", children: "CMS" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("nav", { className: "flex-1 p-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+          "button",
+          {
+            onClick: () => {
+              setView({ type: "collections" });
+              setRefreshKey((k) => k + 1);
+            },
+            className: `w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium ${view.type === "collections" ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-50"}`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    }
+                  )
+                }
+              ),
+              "Collections"
+            ]
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "p-4 border-t border-gray-200", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
           "button",
           {
             onClick: handleLogout,
-            className: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-            children: "Logout"
+            className: "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                "svg",
+                {
+                  className: "w-5 h-5",
+                  fill: "none",
+                  stroke: "currentColor",
+                  viewBox: "0 0 24 24",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                    "path",
+                    {
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      strokeWidth: 2,
+                      d: "M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    }
+                  )
+                }
+              ),
+              "Logout"
+            ]
           }
-        )
-      ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("main", { className: "py-10", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "px-4 sm:px-6 lg:px-8", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-              "svg",
-              {
-                className: "h-6 w-6 text-gray-400",
-                fill: "none",
-                viewBox: "0 0 24 24",
-                stroke: "currentColor",
-                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                  "path",
-                  {
-                    strokeLinecap: "round",
-                    strokeLinejoin: "round",
-                    strokeWidth: 2,
-                    d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  }
-                )
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Total Content" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
-            ] }) })
-          ] }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-              "svg",
-              {
-                className: "h-6 w-6 text-gray-400",
-                fill: "none",
-                viewBox: "0 0 24 24",
-                stroke: "currentColor",
-                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                  "path",
-                  {
-                    strokeLinecap: "round",
-                    strokeLinejoin: "round",
-                    strokeWidth: 2,
-                    d: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  }
-                )
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Users" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
-            ] }) })
-          ] }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-white overflow-hidden shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "p-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-              "svg",
-              {
-                className: "h-6 w-6 text-gray-400",
-                fill: "none",
-                viewBox: "0 0 24 24",
-                stroke: "currentColor",
-                children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                  "path",
-                  {
-                    strokeLinecap: "round",
-                    strokeLinejoin: "round",
-                    strokeWidth: 2,
-                    d: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                  }
-                )
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "ml-5 w-0 flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("dl", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dt", { className: "text-sm font-medium text-gray-500 truncate", children: "Collections" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("dd", { className: "text-lg font-semibold text-gray-900", children: "0" })
-            ] }) })
-          ] }) }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "mt-8 bg-white shadow rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg font-medium text-gray-900 mb-2", children: "Welcome to your CMS Dashboard" }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-gray-600", children: "This is a self-contained CMS system that can be integrated into any project. The UI is built with React and uses isolated Tailwind CSS classes (prefixed with '') to avoid conflicts with your project's styles." }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-sm text-gray-500", children: [
-            "Current route:",
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("code", { className: "bg-gray-100 px-2 py-1 rounded text-xs", children: window.location.pathname })
-          ] }) })
-        ] }) })
-      ] }) })
+        ) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("main", { className: "flex-1 flex flex-col overflow-hidden", children: renderContent() }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        CreateCollectionModal,
+        {
+          isOpen: showCreateModal,
+          onClose: () => setShowCreateModal(false),
+          onCreate: handleCreateCollection
+        }
+      )
     ] });
   }
 
   // client/pages/Setup.tsx
-  var import_react2 = __toESM(require_react(), 1);
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+  var import_react8 = __toESM(require_react(), 1);
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   function Setup({ onComplete }) {
-    const [name, setName] = import_react2.default.useState("");
-    const [email, setEmail] = import_react2.default.useState("");
-    const [password, setPassword] = import_react2.default.useState("");
-    const [confirmPassword, setConfirmPassword] = import_react2.default.useState("");
-    const [error, setError] = import_react2.default.useState(null);
-    const [isLoading, setIsLoading] = import_react2.default.useState(false);
+    const [name, setName] = import_react8.default.useState("");
+    const [email, setEmail] = import_react8.default.useState("");
+    const [password, setPassword] = import_react8.default.useState("");
+    const [confirmPassword, setConfirmPassword] = import_react8.default.useState("");
+    const [error, setError] = import_react8.default.useState(null);
+    const [isLoading, setIsLoading] = import_react8.default.useState(false);
     const handleSubmit = async (e) => {
       e.preventDefault();
       setError(null);
@@ -22044,16 +23329,16 @@
         setIsLoading(false);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "w-full max-w-md space-y-8 p-8 bg-white rounded-xl shadow-lg", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "w-full max-w-md space-y-8 p-8 bg-white rounded-xl shadow-lg", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           "svg",
           {
             className: "h-6 w-6 text-blue-600",
             fill: "none",
             viewBox: "0 0 24 24",
             stroke: "currentColor",
-            children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "path",
               {
                 strokeLinecap: "round",
@@ -22064,18 +23349,18 @@
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h2", { className: "mt-6 text-center text-3xl font-bold tracking-tight text-gray-900", children: "Welcome to CMS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "mt-2 text-center text-sm text-gray-600", children: "Let's create your superadmin account to get started" })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "mt-6 text-center text-3xl font-bold tracking-tight text-gray-900", children: "Welcome to CMS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "mt-2 text-center text-sm text-gray-600", children: "Let's create your superadmin account to get started" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("form", { className: "mt-8 space-y-6", onSubmit: handleSubmit, children: [
-        error && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rounded-md bg-red-50 p-4", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("form", { className: "mt-8 space-y-6", onSubmit: handleSubmit, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "rounded-md bg-red-50 p-4", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
             "svg",
             {
               className: "h-5 w-5 text-red-400",
               viewBox: "0 0 20 20",
               fill: "currentColor",
-              children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                 "path",
                 {
                   fillRule: "evenodd",
@@ -22085,11 +23370,11 @@
               )
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm font-medium text-red-800", children: error }) })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-sm font-medium text-red-800", children: error }) })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "space-y-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "label",
               {
                 htmlFor: "name",
@@ -22097,7 +23382,7 @@
                 children: "Full Name"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "input",
               {
                 id: "name",
@@ -22112,8 +23397,8 @@
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "label",
               {
                 htmlFor: "email",
@@ -22121,7 +23406,7 @@
                 children: "Email address"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "input",
               {
                 id: "email",
@@ -22136,8 +23421,8 @@
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "label",
               {
                 htmlFor: "password",
@@ -22145,7 +23430,7 @@
                 children: "Password"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "input",
               {
                 id: "password",
@@ -22159,10 +23444,10 @@
                 placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "mt-1 text-xs text-gray-500", children: "Must be at least 8 characters" })
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "mt-1 text-xs text-gray-500", children: "Must be at least 8 characters" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "label",
               {
                 htmlFor: "confirmPassword",
@@ -22170,7 +23455,7 @@
                 children: "Confirm Password"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "input",
               {
                 id: "confirmPassword",
@@ -22186,14 +23471,14 @@
             )
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
           "button",
           {
             type: "submit",
             disabled: isLoading,
             className: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
             children: [
-              isLoading ? /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+              isLoading ? /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
                 "svg",
                 {
                   className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
@@ -22201,7 +23486,7 @@
                   fill: "none",
                   viewBox: "0 0 24 24",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                       "circle",
                       {
                         className: "opacity-25",
@@ -22212,7 +23497,7 @@
                         strokeWidth: "4"
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                       "path",
                       {
                         className: "opacity-75",
@@ -22228,26 +23513,26 @@
           }
         ) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mt-6 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("p", { className: "text-xs text-gray-500", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mt-6 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { className: "text-xs text-gray-500", children: [
         "This account will have full administrative access to the CMS.",
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("br", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("br", {}),
         "You can invite other administrators later."
       ] }) })
     ] }) });
   }
 
   // client/App.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   function App() {
-    const [currentPath, setCurrentPath] = import_react3.default.useState(
+    const [currentPath, setCurrentPath] = import_react9.default.useState(
       window.location.pathname
     );
-    const [setupStatus, setSetupStatus] = import_react3.default.useState(
+    const [setupStatus, setSetupStatus] = import_react9.default.useState(
       null
     );
-    const [authStatus, setAuthStatus] = import_react3.default.useState(null);
-    const [isLoading, setIsLoading] = import_react3.default.useState(true);
-    import_react3.default.useEffect(() => {
+    const [authStatus, setAuthStatus] = import_react9.default.useState(null);
+    const [isLoading, setIsLoading] = import_react9.default.useState(true);
+    import_react9.default.useEffect(() => {
       const checkStatus = async () => {
         try {
           const setupResponse = await fetch("/admin/api/trpc/setup.getStatus", {
@@ -22306,7 +23591,7 @@
       };
       checkStatus();
     }, []);
-    import_react3.default.useEffect(() => {
+    import_react9.default.useEffect(() => {
       const handlePopState = () => {
         setCurrentPath(window.location.pathname);
       };
@@ -22350,8 +23635,8 @@
       setCurrentPath("/admin/login");
     };
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { id: "cms-app", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { id: "cms-app", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
           "svg",
           {
             className: "animate-spin h-8 w-8 text-blue-600 mx-auto",
@@ -22359,7 +23644,7 @@
             fill: "none",
             viewBox: "0 0 24 24",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                 "circle",
                 {
                   className: "opacity-25",
@@ -22370,7 +23655,7 @@
                   strokeWidth: "4"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                 "path",
                 {
                   className: "opacity-75",
@@ -22381,12 +23666,12 @@
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mt-4 text-gray-600", children: "Loading CMS..." })
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "mt-4 text-gray-600", children: "Loading CMS..." })
       ] }) }) });
     }
     const renderPage = () => {
       if (!setupStatus?.isSetupComplete) {
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Setup, { onComplete: handleSetupComplete });
+        return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Setup, { onComplete: handleSetupComplete });
       }
       if (authStatus?.isAuthenticated) {
         if (currentPath === "/admin/login" || currentPath === "/admin" || currentPath === "/admin/") {
@@ -22394,25 +23679,25 @@
             window.history.replaceState({}, "", "/admin/dashboard");
           }
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Dashboard, { user: authStatus.user, onLogout: handleLogout });
+        return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Dashboard, { user: authStatus.user, onLogout: handleLogout });
       } else {
         if (currentPath !== "/admin/login" && currentPath !== "/admin/setup") {
           if (currentPath !== "/admin/login") {
             window.history.replaceState({}, "", "/admin/login");
           }
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Login, { onLoginSuccess: handleLoginSuccess });
+        return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Login, { onLoginSuccess: handleLoginSuccess });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { id: "cms-app", children: renderPage() });
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { id: "cms-app", children: renderPage() });
   }
 
   // client/index.tsx
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var rootElement = document.getElementById("cms-root");
   if (rootElement) {
     const root = (0, import_client.createRoot)(rootElement);
-    root.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(App, {}));
+    root.render(/* @__PURE__ */ (0, import_jsx_runtime10.jsx)(App, {}));
   }
 })();
 /*! Bundled license information:

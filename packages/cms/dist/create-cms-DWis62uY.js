@@ -6,7 +6,7 @@ import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { fileURLToPath } from "url";
 import { existsSync } from "fs";
 import { boolean, integer, jsonb, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -101,10 +101,12 @@ const runGetRouter = async (req, opts) => {
 //#region src/db/schema.ts
 var schema_exports = /* @__PURE__ */ __export({
 	account: () => account,
+	collectionFieldSchema: () => collectionFieldSchema,
 	contentEntry: () => contentEntry,
 	contentFieldSchema: () => contentFieldSchema,
 	contentType: () => contentType,
 	contentTypeSchemaValidator: () => contentTypeSchemaValidator,
+	fieldTypeEnum: () => fieldTypeEnum,
 	media: () => media,
 	session: () => session,
 	user: () => user,
@@ -216,35 +218,38 @@ const media = pgTable("cms_media", {
 	uploadedById: text("uploaded_by_id").references(() => user.id)
 });
 /**
-* Schema for defining content type fields
+* Basic field types for collections
+* Starting with core types, will expand later
 */
-const contentFieldSchema = z.object({
-	name: z.string(),
-	type: z.enum([
-		"text",
-		"richtext",
-		"number",
-		"boolean",
-		"date",
-		"datetime",
-		"json",
-		"media",
-		"reference",
-		"array"
-	]),
+const fieldTypeEnum = [
+	"string",
+	"number",
+	"boolean"
+];
+/**
+* Schema for defining a single field in a collection
+*/
+const collectionFieldSchema = z.object({
+	id: z.string(),
+	name: z.string().min(1),
+	key: z.string().min(1).regex(/^[a-z][a-zA-Z0-9]*$/, "Must be camelCase"),
+	type: z.enum(fieldTypeEnum),
 	required: z.boolean().default(false),
 	description: z.string().optional(),
-	defaultValue: z.unknown().optional(),
-	validation: z.object({
-		min: z.number().optional(),
-		max: z.number().optional(),
-		pattern: z.string().optional(),
-		options: z.array(z.string()).optional()
-	}).optional(),
-	referenceType: z.string().optional(),
-	arrayItemType: z.string().optional()
+	defaultValue: z.union([
+		z.string(),
+		z.number(),
+		z.boolean()
+	]).optional()
 });
-const contentTypeSchemaValidator = z.object({ fields: z.array(contentFieldSchema) });
+/**
+* Schema for the collection's field configuration
+*/
+const contentTypeSchemaValidator = z.object({ fields: z.array(collectionFieldSchema) });
+/**
+* @deprecated Use collectionFieldSchema instead
+*/
+const contentFieldSchema = collectionFieldSchema;
 
 //#endregion
 //#region src/db/index.ts
@@ -603,7 +608,7 @@ const contentEntryRouter = createTRPCRouter({
 	}),
 	create: protectedProcedure.input(z.object({
 		contentTypeId: z.string().uuid(),
-		data: z.record(z.unknown()),
+		data: z.record(z.string(), z.unknown()),
 		status: z.enum([
 			"draft",
 			"published",
@@ -622,7 +627,7 @@ const contentEntryRouter = createTRPCRouter({
 	}),
 	update: protectedProcedure.input(z.object({
 		id: z.string().uuid(),
-		data: z.record(z.unknown()).optional(),
+		data: z.record(z.string(), z.unknown()).optional(),
 		status: z.enum([
 			"draft",
 			"published",
@@ -694,7 +699,7 @@ const mediaRouter = createTRPCRouter({
 		bucketPath: z.string(),
 		alt: z.string().optional(),
 		caption: z.string().optional(),
-		metadata: z.record(z.unknown()).optional()
+		metadata: z.record(z.string(), z.unknown()).optional()
 	})).mutation(async ({ input, ctx }) => {
 		const [newMedia] = await getDatabase().insert(media).values({
 			filename: input.filename,
@@ -714,7 +719,7 @@ const mediaRouter = createTRPCRouter({
 		id: z.string().uuid(),
 		alt: z.string().optional(),
 		caption: z.string().optional(),
-		metadata: z.record(z.unknown()).optional()
+		metadata: z.record(z.string(), z.unknown()).optional()
 	})).mutation(async ({ input }) => {
 		const db = getDatabase();
 		const updateData = { updatedAt: /* @__PURE__ */ new Date() };
@@ -855,12 +860,360 @@ const setupRouter = createTRPCRouter({
 });
 
 //#endregion
+//#region src/trpc/routers/collections.ts
+/**
+* Generate a URL-friendly slug from a name
+*/
+function generateSlug(name) {
+	return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+/**
+* Generate a unique ID for fields
+*/
+function generateFieldId() {
+	return `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
+const collectionsRouter = createTRPCRouter({
+	list: protectedProcedure.query(async () => {
+		return await getDatabase().select({
+			id: contentType.id,
+			name: contentType.name,
+			slug: contentType.slug,
+			description: contentType.description,
+			schema: contentType.schema,
+			createdAt: contentType.createdAt,
+			updatedAt: contentType.updatedAt
+		}).from(contentType).orderBy(contentType.name);
+	}),
+	getById: protectedProcedure.input(z.object({ id: z.string().uuid() })).query(async ({ input }) => {
+		const [collection] = await getDatabase().select().from(contentType).where(eq(contentType.id, input.id)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		return collection;
+	}),
+	getBySlug: protectedProcedure.input(z.object({ slug: z.string() })).query(async ({ input }) => {
+		const [collection] = await getDatabase().select().from(contentType).where(eq(contentType.slug, input.slug)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		return collection;
+	}),
+	create: protectedProcedure.input(z.object({
+		name: z.string().min(1).max(100),
+		description: z.string().optional()
+	})).mutation(async ({ input, ctx }) => {
+		const db = getDatabase();
+		const slug = generateSlug(input.name);
+		const [existing] = await db.select({ id: contentType.id }).from(contentType).where(eq(contentType.slug, slug)).limit(1);
+		if (existing) throw new Error(`A collection with the slug "${slug}" already exists`);
+		const [collection] = await db.insert(contentType).values({
+			name: input.name,
+			slug,
+			description: input.description,
+			schema: { fields: [] },
+			createdById: ctx.user.id
+		}).returning();
+		return collection;
+	}),
+	update: protectedProcedure.input(z.object({
+		id: z.string().uuid(),
+		name: z.string().min(1).max(100).optional(),
+		description: z.string().optional()
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const updates = { updatedAt: /* @__PURE__ */ new Date() };
+		if (input.name) {
+			updates.name = input.name;
+			updates.slug = generateSlug(input.name);
+			const [existing] = await db.select({ id: contentType.id }).from(contentType).where(eq(contentType.slug, updates.slug)).limit(1);
+			if (existing && existing.id !== input.id) throw new Error(`A collection with the slug "${updates.slug}" already exists`);
+		}
+		if (input.description !== void 0) updates.description = input.description;
+		const [collection] = await db.update(contentType).set(updates).where(eq(contentType.id, input.id)).returning();
+		if (!collection) throw new Error("Collection not found");
+		return collection;
+	}),
+	delete: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ input }) => {
+		const [deleted] = await getDatabase().delete(contentType).where(eq(contentType.id, input.id)).returning({ id: contentType.id });
+		if (!deleted) throw new Error("Collection not found");
+		return { success: true };
+	}),
+	updateSchema: protectedProcedure.input(z.object({
+		id: z.string().uuid(),
+		schema: contentTypeSchemaValidator
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const keys = input.schema.fields.map((f) => f.key);
+		if (new Set(keys).size !== keys.length) throw new Error("Field keys must be unique");
+		const [collection] = await db.update(contentType).set({
+			schema: input.schema,
+			updatedAt: /* @__PURE__ */ new Date()
+		}).where(eq(contentType.id, input.id)).returning();
+		if (!collection) throw new Error("Collection not found");
+		return collection;
+	}),
+	addField: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		field: collectionFieldSchema.omit({ id: true })
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const [collection] = await db.select({ schema: contentType.schema }).from(contentType).where(eq(contentType.id, input.collectionId)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		const currentSchema = collection.schema;
+		if (currentSchema.fields.some((f) => f.key === input.field.key)) throw new Error(`A field with key "${input.field.key}" already exists`);
+		const newField = {
+			...input.field,
+			id: generateFieldId()
+		};
+		const updatedSchema = { fields: [...currentSchema.fields, newField] };
+		const [updated] = await db.update(contentType).set({
+			schema: updatedSchema,
+			updatedAt: /* @__PURE__ */ new Date()
+		}).where(eq(contentType.id, input.collectionId)).returning();
+		return updated;
+	}),
+	updateField: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		fieldId: z.string(),
+		updates: collectionFieldSchema.partial().omit({ id: true })
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const [collection] = await db.select({ schema: contentType.schema }).from(contentType).where(eq(contentType.id, input.collectionId)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		const currentSchema = collection.schema;
+		const fieldIndex = currentSchema.fields.findIndex((f) => f.id === input.fieldId);
+		if (fieldIndex === -1) throw new Error("Field not found");
+		if (input.updates.key && currentSchema.fields.some((f, i) => i !== fieldIndex && f.key === input.updates.key)) throw new Error(`A field with key "${input.updates.key}" already exists`);
+		const updatedFields = [...currentSchema.fields];
+		updatedFields[fieldIndex] = {
+			...updatedFields[fieldIndex],
+			...input.updates
+		};
+		const updatedSchema = { fields: updatedFields };
+		const [updated] = await db.update(contentType).set({
+			schema: updatedSchema,
+			updatedAt: /* @__PURE__ */ new Date()
+		}).where(eq(contentType.id, input.collectionId)).returning();
+		return updated;
+	}),
+	removeField: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		fieldId: z.string()
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const [collection] = await db.select({ schema: contentType.schema }).from(contentType).where(eq(contentType.id, input.collectionId)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		const updatedSchema = { fields: collection.schema.fields.filter((f) => f.id !== input.fieldId) };
+		const [updated] = await db.update(contentType).set({
+			schema: updatedSchema,
+			updatedAt: /* @__PURE__ */ new Date()
+		}).where(eq(contentType.id, input.collectionId)).returning();
+		return updated;
+	}),
+	reorderFields: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		fieldIds: z.array(z.string())
+	})).mutation(async ({ input }) => {
+		const db = getDatabase();
+		const [collection] = await db.select({ schema: contentType.schema }).from(contentType).where(eq(contentType.id, input.collectionId)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		const currentSchema = collection.schema;
+		const fieldMap = new Map(currentSchema.fields.map((f) => [f.id, f]));
+		const reorderedFields = input.fieldIds.map((id) => fieldMap.get(id)).filter((f) => f !== void 0);
+		for (const field of currentSchema.fields) if (!input.fieldIds.includes(field.id)) reorderedFields.push(field);
+		const updatedSchema = { fields: reorderedFields };
+		const [updated] = await db.update(contentType).set({
+			schema: updatedSchema,
+			updatedAt: /* @__PURE__ */ new Date()
+		}).where(eq(contentType.id, input.collectionId)).returning();
+		return updated;
+	})
+});
+
+//#endregion
+//#region src/trpc/routers/entries.ts
+/**
+* Validate entry data against the collection schema
+*/
+function validateEntryData(data, schema) {
+	const errors = [];
+	for (const field of schema.fields) {
+		const value = data[field.key];
+		if (field.required && (value === void 0 || value === null || value === "")) {
+			errors.push(`Field "${field.name}" is required`);
+			continue;
+		}
+		if (value === void 0 || value === null || value === "") continue;
+		switch (field.type) {
+			case "string":
+				if (typeof value !== "string") errors.push(`Field "${field.name}" must be a string`);
+				break;
+			case "number":
+				if (typeof value !== "number" || isNaN(value)) errors.push(`Field "${field.name}" must be a number`);
+				break;
+			case "boolean":
+				if (typeof value !== "boolean") errors.push(`Field "${field.name}" must be a boolean`);
+				break;
+		}
+	}
+	return {
+		valid: errors.length === 0,
+		errors
+	};
+}
+/**
+* Apply default values from schema to entry data
+*/
+function applyDefaults(data, schema) {
+	const result = { ...data };
+	for (const field of schema.fields) if ((result[field.key] === void 0 || result[field.key] === null) && field.defaultValue !== void 0) result[field.key] = field.defaultValue;
+	return result;
+}
+const entriesRouter = createTRPCRouter({
+	list: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		status: z.enum([
+			"draft",
+			"published",
+			"archived"
+		]).optional(),
+		limit: z.number().min(1).max(100).default(50),
+		offset: z.number().min(0).default(0),
+		orderBy: z.enum(["createdAt", "updatedAt"]).default("createdAt"),
+		orderDir: z.enum(["asc", "desc"]).default("desc")
+	})).query(async ({ input }) => {
+		const db = getDatabase();
+		const conditions = [eq(contentEntry.contentTypeId, input.collectionId)];
+		if (input.status) conditions.push(eq(contentEntry.status, input.status));
+		const entries = await db.select({
+			id: contentEntry.id,
+			data: contentEntry.data,
+			status: contentEntry.status,
+			publishedAt: contentEntry.publishedAt,
+			createdAt: contentEntry.createdAt,
+			updatedAt: contentEntry.updatedAt
+		}).from(contentEntry).where(and(...conditions)).orderBy(input.orderDir === "desc" ? desc(contentEntry[input.orderBy]) : asc(contentEntry[input.orderBy])).limit(input.limit).offset(input.offset);
+		const [{ count }] = await db.select({ count: sql`count(*)::int` }).from(contentEntry).where(and(...conditions));
+		return {
+			entries,
+			total: count,
+			limit: input.limit,
+			offset: input.offset
+		};
+	}),
+	getById: protectedProcedure.input(z.object({ id: z.string().uuid() })).query(async ({ input }) => {
+		const [entry] = await getDatabase().select().from(contentEntry).where(eq(contentEntry.id, input.id)).limit(1);
+		if (!entry) throw new Error("Entry not found");
+		return entry;
+	}),
+	create: protectedProcedure.input(z.object({
+		collectionId: z.string().uuid(),
+		data: z.record(z.string(), z.unknown()),
+		status: z.enum(["draft", "published"]).default("draft")
+	})).mutation(async ({ input, ctx }) => {
+		const db = getDatabase();
+		const [collection] = await db.select({ schema: contentType.schema }).from(contentType).where(eq(contentType.id, input.collectionId)).limit(1);
+		if (!collection) throw new Error("Collection not found");
+		const schema = collection.schema;
+		const dataWithDefaults = applyDefaults(input.data, schema);
+		const validation = validateEntryData(dataWithDefaults, schema);
+		if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
+		const [entry] = await db.insert(contentEntry).values({
+			contentTypeId: input.collectionId,
+			data: dataWithDefaults,
+			status: input.status,
+			publishedAt: input.status === "published" ? /* @__PURE__ */ new Date() : null,
+			createdById: ctx.user.id,
+			updatedById: ctx.user.id
+		}).returning();
+		return entry;
+	}),
+	update: protectedProcedure.input(z.object({
+		id: z.string().uuid(),
+		data: z.record(z.string(), z.unknown()).optional(),
+		status: z.enum([
+			"draft",
+			"published",
+			"archived"
+		]).optional()
+	})).mutation(async ({ input, ctx }) => {
+		const db = getDatabase();
+		const [entry] = await db.select({
+			entry: contentEntry,
+			schema: contentType.schema
+		}).from(contentEntry).innerJoin(contentType, eq(contentEntry.contentTypeId, contentType.id)).where(eq(contentEntry.id, input.id)).limit(1);
+		if (!entry) throw new Error("Entry not found");
+		const schema = entry.schema;
+		const updates = {
+			updatedAt: /* @__PURE__ */ new Date(),
+			updatedById: ctx.user.id
+		};
+		if (input.data) {
+			const dataWithDefaults = applyDefaults({
+				...entry.entry.data,
+				...input.data
+			}, schema);
+			const validation = validateEntryData(dataWithDefaults, schema);
+			if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
+			updates.data = dataWithDefaults;
+		}
+		if (input.status) {
+			updates.status = input.status;
+			if (input.status === "published" && entry.entry.status !== "published") updates.publishedAt = /* @__PURE__ */ new Date();
+		}
+		const [updated] = await db.update(contentEntry).set(updates).where(eq(contentEntry.id, input.id)).returning();
+		return updated;
+	}),
+	delete: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ input }) => {
+		const [deleted] = await getDatabase().delete(contentEntry).where(eq(contentEntry.id, input.id)).returning({ id: contentEntry.id });
+		if (!deleted) throw new Error("Entry not found");
+		return { success: true };
+	}),
+	publish: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ input, ctx }) => {
+		const [entry] = await getDatabase().update(contentEntry).set({
+			status: "published",
+			publishedAt: /* @__PURE__ */ new Date(),
+			updatedAt: /* @__PURE__ */ new Date(),
+			updatedById: ctx.user.id
+		}).where(eq(contentEntry.id, input.id)).returning();
+		if (!entry) throw new Error("Entry not found");
+		return entry;
+	}),
+	unpublish: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ input, ctx }) => {
+		const [entry] = await getDatabase().update(contentEntry).set({
+			status: "draft",
+			updatedAt: /* @__PURE__ */ new Date(),
+			updatedById: ctx.user.id
+		}).where(eq(contentEntry.id, input.id)).returning();
+		if (!entry) throw new Error("Entry not found");
+		return entry;
+	}),
+	archive: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ input, ctx }) => {
+		const [entry] = await getDatabase().update(contentEntry).set({
+			status: "archived",
+			updatedAt: /* @__PURE__ */ new Date(),
+			updatedById: ctx.user.id
+		}).where(eq(contentEntry.id, input.id)).returning();
+		if (!entry) throw new Error("Entry not found");
+		return entry;
+	}),
+	bulkDelete: protectedProcedure.input(z.object({ ids: z.array(z.string().uuid()) })).mutation(async ({ input }) => {
+		const db = getDatabase();
+		let deletedCount = 0;
+		for (const id of input.ids) {
+			const [deleted] = await db.delete(contentEntry).where(eq(contentEntry.id, id)).returning({ id: contentEntry.id });
+			if (deleted) deletedCount++;
+		}
+		return { deletedCount };
+	})
+});
+
+//#endregion
 //#region src/trpc/router.ts
 /**
 * Main CMS API Router
 */
 const appRouter = createTRPCRouter({
 	setup: setupRouter,
+	collections: collectionsRouter,
+	entries: entriesRouter,
 	contentType: contentTypeRouter,
 	contentEntry: contentEntryRouter,
 	media: mediaRouter,
@@ -1010,5 +1363,5 @@ const createCMS = (options) => {
 };
 
 //#endregion
-export { renderAdminPanel as A, contentType as C, user as D, session as E, userRoleEnum as O, contentFieldSchema as S, media as T, getDatabase as _, createTRPCRouter as a, account as b, createAuth as c, isAuthenticated as d, createStorageClient as f, createDatabase as g, setStorage as h, appRouter as i, htmlTemplate as j, verification as k, getAuth as l, initStorage as m, createContext as n, protectedProcedure as o, getStorage as p, handleTRPCRequest as r, publicProcedure as s, createCMS as t, getSession as u, runMigrations as v, contentTypeSchemaValidator as w, contentEntry as x, setDatabase as y };
-//# sourceMappingURL=create-cms-BDEpMCQG.js.map
+export { userRoleEnum as A, contentFieldSchema as C, media as D, fieldTypeEnum as E, renderAdminPanel as M, htmlTemplate as N, session as O, contentEntry as S, contentTypeSchemaValidator as T, getDatabase as _, createTRPCRouter as a, account as b, createAuth as c, isAuthenticated as d, createStorageClient as f, createDatabase as g, setStorage as h, appRouter as i, verification as j, user as k, getAuth as l, initStorage as m, createContext as n, protectedProcedure as o, getStorage as p, handleTRPCRequest as r, publicProcedure as s, createCMS as t, getSession as u, runMigrations as v, contentType as w, collectionFieldSchema as x, setDatabase as y };
+//# sourceMappingURL=create-cms-DWis62uY.js.map

@@ -3,7 +3,7 @@ import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as drizzle_orm_pg_core0 from "drizzle-orm/pg-core";
 import { z } from "zod";
 import * as better_auth0 from "better-auth";
-import * as _trpc_server53 from "@trpc/server";
+import * as _trpc_server111 from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import superjson from "superjson";
 
@@ -722,19 +722,13 @@ declare const contentType: drizzle_orm_pg_core0.PgTableWithColumns<{
       columnType: "PgJsonb";
       data: {
         fields: {
+          id: string;
           name: string;
-          type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+          key: string;
+          type: "string" | "number" | "boolean";
           required: boolean;
           description?: string | undefined;
-          defaultValue?: unknown;
-          validation?: {
-            min?: number | undefined;
-            max?: number | undefined;
-            pattern?: string | undefined;
-            options?: string[] | undefined;
-          } | undefined;
-          referenceType?: string | undefined;
-          arrayItemType?: string | undefined;
+          defaultValue?: string | number | boolean | undefined;
         }[];
       };
       driverParam: unknown;
@@ -750,19 +744,13 @@ declare const contentType: drizzle_orm_pg_core0.PgTableWithColumns<{
     }, {}, {
       $type: {
         fields: {
+          id: string;
           name: string;
-          type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+          key: string;
+          type: "string" | "number" | "boolean";
           required: boolean;
           description?: string | undefined;
-          defaultValue?: unknown;
-          validation?: {
-            min?: number | undefined;
-            max?: number | undefined;
-            pattern?: string | undefined;
-            options?: string[] | undefined;
-          } | undefined;
-          referenceType?: string | undefined;
-          arrayItemType?: string | undefined;
+          defaultValue?: string | number | boolean | undefined;
         }[];
       };
     }>;
@@ -1219,64 +1207,63 @@ declare const media: drizzle_orm_pg_core0.PgTableWithColumns<{
   dialect: "pg";
 }>;
 /**
- * Schema for defining content type fields
+ * Basic field types for collections
+ * Starting with core types, will expand later
  */
-declare const contentFieldSchema: z.ZodObject<{
+declare const fieldTypeEnum: readonly ["string", "number", "boolean"];
+type FieldType = (typeof fieldTypeEnum)[number];
+/**
+ * Schema for defining a single field in a collection
+ */
+declare const collectionFieldSchema: z.ZodObject<{
+  id: z.ZodString;
   name: z.ZodString;
+  key: z.ZodString;
   type: z.ZodEnum<{
+    string: "string";
     number: "number";
     boolean: "boolean";
-    array: "array";
-    json: "json";
-    date: "date";
-    text: "text";
-    richtext: "richtext";
-    datetime: "datetime";
-    media: "media";
-    reference: "reference";
   }>;
   required: z.ZodDefault<z.ZodBoolean>;
   description: z.ZodOptional<z.ZodString>;
-  defaultValue: z.ZodOptional<z.ZodUnknown>;
-  validation: z.ZodOptional<z.ZodObject<{
-    min: z.ZodOptional<z.ZodNumber>;
-    max: z.ZodOptional<z.ZodNumber>;
-    pattern: z.ZodOptional<z.ZodString>;
-    options: z.ZodOptional<z.ZodArray<z.ZodString>>;
-  }, z.core.$strip>>;
-  referenceType: z.ZodOptional<z.ZodString>;
-  arrayItemType: z.ZodOptional<z.ZodString>;
+  defaultValue: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
 }, z.core.$strip>;
+/**
+ * Schema for the collection's field configuration
+ */
 declare const contentTypeSchemaValidator: z.ZodObject<{
   fields: z.ZodArray<z.ZodObject<{
+    id: z.ZodString;
     name: z.ZodString;
+    key: z.ZodString;
     type: z.ZodEnum<{
+      string: "string";
       number: "number";
       boolean: "boolean";
-      array: "array";
-      json: "json";
-      date: "date";
-      text: "text";
-      richtext: "richtext";
-      datetime: "datetime";
-      media: "media";
-      reference: "reference";
     }>;
     required: z.ZodDefault<z.ZodBoolean>;
     description: z.ZodOptional<z.ZodString>;
-    defaultValue: z.ZodOptional<z.ZodUnknown>;
-    validation: z.ZodOptional<z.ZodObject<{
-      min: z.ZodOptional<z.ZodNumber>;
-      max: z.ZodOptional<z.ZodNumber>;
-      pattern: z.ZodOptional<z.ZodString>;
-      options: z.ZodOptional<z.ZodArray<z.ZodString>>;
-    }, z.core.$strip>>;
-    referenceType: z.ZodOptional<z.ZodString>;
-    arrayItemType: z.ZodOptional<z.ZodString>;
+    defaultValue: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
   }, z.core.$strip>>;
 }, z.core.$strip>;
-type ContentField = z.infer<typeof contentFieldSchema>;
+type CollectionField = z.infer<typeof collectionFieldSchema>;
 type ContentTypeSchema = z.infer<typeof contentTypeSchemaValidator>;
+/**
+ * @deprecated Use collectionFieldSchema instead
+ */
+declare const contentFieldSchema: z.ZodObject<{
+  id: z.ZodString;
+  name: z.ZodString;
+  key: z.ZodString;
+  type: z.ZodEnum<{
+    string: "string";
+    number: "number";
+    boolean: "boolean";
+  }>;
+  required: z.ZodDefault<z.ZodBoolean>;
+  description: z.ZodOptional<z.ZodString>;
+  defaultValue: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+}, z.core.$strip>;
 type User = typeof user.$inferSelect;
 type NewUser = typeof user.$inferInsert;
 type Session = typeof session.$inferSelect;
@@ -1532,19 +1519,19 @@ interface TRPCContext {
 /**
  * Export reusable tRPC helpers
  */
-declare const createTRPCRouter: _trpc_server53.TRPCRouterBuilder<{
+declare const createTRPCRouter: _trpc_server111.TRPCRouterBuilder<{
   ctx: TRPCContext;
   meta: object;
   errorShape: {
     data: {
       zodError: string | undefined;
-      code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+      code: _trpc_server111.TRPC_ERROR_CODE_KEY;
       httpStatus: number;
       path?: string;
       stack?: string;
     };
     message: string;
-    code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+    code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
   };
   transformer: true;
 }>;
@@ -1552,12 +1539,12 @@ declare const createTRPCRouter: _trpc_server53.TRPCRouterBuilder<{
  * Public (unauthenticated) procedure
  * Can be used by anyone, no session required
  */
-declare const publicProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContext, object, object, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, false>;
+declare const publicProcedure: _trpc_server111.TRPCProcedureBuilder<TRPCContext, object, object, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, false>;
 /**
  * Protected (authenticated) procedure
  * Requires a valid session
  */
-declare const protectedProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContext, object, {
+declare const protectedProcedure: _trpc_server111.TRPCProcedureBuilder<TRPCContext, object, {
   user: {
     id: string;
     name: string;
@@ -1579,7 +1566,7 @@ declare const protectedProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContex
     userId: string;
   };
   req: Request;
-}, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, _trpc_server53.TRPCUnsetMarker, false>;
+}, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, _trpc_server111.TRPCUnsetMarker, false>;
 /**
  * Middleware for logging
  */
@@ -1588,42 +1575,42 @@ declare const protectedProcedure: _trpc_server53.TRPCProcedureBuilder<TRPCContex
 /**
  * Main CMS API Router
  */
-declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
+declare const appRouter: _trpc_server111.TRPCBuiltRouter<{
   ctx: TRPCContext;
   meta: object;
   errorShape: {
     data: {
       zodError: string | undefined;
-      code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+      code: _trpc_server111.TRPC_ERROR_CODE_KEY;
       httpStatus: number;
       path?: string;
       stack?: string;
     };
     message: string;
-    code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+    code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
   };
   transformer: true;
-}, _trpc_server53.TRPCDecorateCreateRouterOptions<{
+}, _trpc_server111.TRPCDecorateCreateRouterOptions<{
   /**
    * Setup and admin management
    */
-  setup: _trpc_server53.TRPCBuiltRouter<{
+  setup: _trpc_server111.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
-    getStatus: _trpc_server53.TRPCQueryProcedure<{
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    getStatus: _trpc_server111.TRPCQueryProcedure<{
       input: void;
       output: {
         isSetupComplete: boolean;
@@ -1636,7 +1623,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    createSuperadmin: _trpc_server53.TRPCMutationProcedure<{
+    createSuperadmin: _trpc_server111.TRPCMutationProcedure<{
       input: {
         name: string;
         email: string;
@@ -1653,7 +1640,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getMyRole: _trpc_server53.TRPCQueryProcedure<{
+    getMyRole: _trpc_server111.TRPCQueryProcedure<{
       input: void;
       output: {
         role: "superadmin" | "admin" | "editor";
@@ -1662,7 +1649,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    inviteAdmin: _trpc_server53.TRPCMutationProcedure<{
+    inviteAdmin: _trpc_server111.TRPCMutationProcedure<{
       input: {
         name: string;
         email: string;
@@ -1680,7 +1667,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    listAdmins: _trpc_server53.TRPCQueryProcedure<{
+    listAdmins: _trpc_server111.TRPCQueryProcedure<{
       input: void;
       output: {
         admins: {
@@ -1695,25 +1682,25 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
     }>;
   }>>;
   /**
-   * Content types (schemas)
+   * Collections (new API for schema + content management)
    */
-  contentType: _trpc_server53.TRPCBuiltRouter<{
+  collections: _trpc_server111.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server53.TRPCQueryProcedure<{
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server111.TRPCQueryProcedure<{
       input: void;
       output: {
         id: string;
@@ -1722,19 +1709,500 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
         description: string | null;
         schema: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required: boolean;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+      }[];
+      meta: object;
+    }>;
+    getById: _trpc_server111.TRPCQueryProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    getBySlug: _trpc_server111.TRPCQueryProcedure<{
+      input: {
+        slug: string;
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    create: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        name: string;
+        description?: string | undefined;
+      };
+      output: {
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        slug: string;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    update: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+        name?: string | undefined;
+        description?: string | undefined;
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    delete: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        success: boolean;
+      };
+      meta: object;
+    }>;
+    updateSchema: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required?: boolean | undefined;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    addField: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        collectionId: string;
+        field: {
+          name: string;
+          type: "string" | "number" | "boolean";
+          key: string;
+          required?: boolean | undefined;
+          defaultValue?: string | number | boolean | undefined;
+          description?: string | undefined;
+        };
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    updateField: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        collectionId: string;
+        fieldId: string;
+        updates: {
+          name?: string | undefined;
+          required?: boolean | undefined;
+          defaultValue?: string | number | boolean | undefined;
+          type?: "string" | "number" | "boolean" | undefined;
+          description?: string | undefined;
+          key?: string | undefined;
+        };
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    removeField: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        collectionId: string;
+        fieldId: string;
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+    reorderFields: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        collectionId: string;
+        fieldIds: string[];
+      };
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
+          }[];
+        };
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+      };
+      meta: object;
+    }>;
+  }>>;
+  /**
+   * Entries (new API for content entries)
+   */
+  entries: _trpc_server111.TRPCBuiltRouter<{
+    ctx: TRPCContext;
+    meta: object;
+    errorShape: {
+      data: {
+        zodError: string | undefined;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
+        httpStatus: number;
+        path?: string;
+        stack?: string;
+      };
+      message: string;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
+    };
+    transformer: true;
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server111.TRPCQueryProcedure<{
+      input: {
+        collectionId: string;
+        status?: "draft" | "published" | "archived" | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+        orderBy?: "createdAt" | "updatedAt" | undefined;
+        orderDir?: "asc" | "desc" | undefined;
+      };
+      output: {
+        entries: {
+          id: string;
+          data: Record<string, unknown>;
+          status: "draft" | "published" | "archived";
+          publishedAt: Date | null;
+          createdAt: Date;
+          updatedAt: Date;
+        }[];
+        total: number;
+        limit: number;
+        offset: number;
+      };
+      meta: object;
+    }>;
+    getById: _trpc_server111.TRPCQueryProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        id: string;
+        contentTypeId: string;
+        data: Record<string, unknown>;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    create: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        collectionId: string;
+        data: Record<string, unknown>;
+        status?: "draft" | "published" | undefined;
+      };
+      output: {
+        id: string;
+        data: Record<string, unknown>;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        contentTypeId: string;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    update: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+        data?: Record<string, unknown> | undefined;
+        status?: "draft" | "published" | "archived" | undefined;
+      };
+      output: {
+        id: string;
+        contentTypeId: string;
+        data: Record<string, unknown>;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    delete: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        success: boolean;
+      };
+      meta: object;
+    }>;
+    publish: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        id: string;
+        contentTypeId: string;
+        data: Record<string, unknown>;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    unpublish: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        id: string;
+        contentTypeId: string;
+        data: Record<string, unknown>;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    archive: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        id: string;
+      };
+      output: {
+        id: string;
+        contentTypeId: string;
+        data: Record<string, unknown>;
+        status: "draft" | "published" | "archived";
+        publishedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        createdById: string | null;
+        updatedById: string | null;
+      };
+      meta: object;
+    }>;
+    bulkDelete: _trpc_server111.TRPCMutationProcedure<{
+      input: {
+        ids: string[];
+      };
+      output: {
+        deletedCount: number;
+      };
+      meta: object;
+    }>;
+  }>>;
+  /**
+   * Content types (schemas) - legacy, use collections instead
+   */
+  contentType: _trpc_server111.TRPCBuiltRouter<{
+    ctx: TRPCContext;
+    meta: object;
+    errorShape: {
+      data: {
+        zodError: string | undefined;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
+        httpStatus: number;
+        path?: string;
+        stack?: string;
+      };
+      message: string;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
+    };
+    transformer: true;
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server111.TRPCQueryProcedure<{
+      input: void;
+      output: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string | null;
+        schema: {
+          fields: {
+            id: string;
+            name: string;
+            key: string;
+            type: "string" | "number" | "boolean";
+            required: boolean;
+            description?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         };
         createdAt: Date;
@@ -1743,7 +2211,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       }[];
       meta: object;
     }>;
-    getBySlug: _trpc_server53.TRPCQueryProcedure<{
+    getBySlug: _trpc_server111.TRPCQueryProcedure<{
       input: {
         slug: string;
       };
@@ -1754,19 +2222,13 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
         description: string | null;
         schema: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required: boolean;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         };
         createdAt: Date;
@@ -1775,25 +2237,19 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server53.TRPCMutationProcedure<{
+    create: _trpc_server111.TRPCMutationProcedure<{
       input: {
         name: string;
         slug: string;
         schema: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required?: boolean | undefined;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         };
         description?: string | undefined;
@@ -1807,45 +2263,33 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
         slug: string;
         schema: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required: boolean;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         };
         createdById: string | null;
       };
       meta: object;
     }>;
-    update: _trpc_server53.TRPCMutationProcedure<{
+    update: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
         name?: string | undefined;
         description?: string | undefined;
         schema?: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required?: boolean | undefined;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         } | undefined;
       };
@@ -1856,19 +2300,13 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
         description: string | null;
         schema: {
           fields: {
+            id: string;
             name: string;
-            type: "number" | "boolean" | "array" | "json" | "date" | "text" | "richtext" | "datetime" | "media" | "reference";
+            key: string;
+            type: "string" | "number" | "boolean";
             required: boolean;
             description?: string | undefined;
-            defaultValue?: unknown;
-            validation?: {
-              min?: number | undefined;
-              max?: number | undefined;
-              pattern?: string | undefined;
-              options?: string[] | undefined;
-            } | undefined;
-            referenceType?: string | undefined;
-            arrayItemType?: string | undefined;
+            defaultValue?: string | number | boolean | undefined;
           }[];
         };
         createdAt: Date;
@@ -1877,7 +2315,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server53.TRPCMutationProcedure<{
+    delete: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -1888,25 +2326,25 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
     }>;
   }>>;
   /**
-   * Content entries (actual data)
+   * Content entries (actual data) - legacy, use entries instead
    */
-  contentEntry: _trpc_server53.TRPCBuiltRouter<{
+  contentEntry: _trpc_server111.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server53.TRPCQueryProcedure<{
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server111.TRPCQueryProcedure<{
       input: {
         contentTypeSlug: string;
         status?: "draft" | "published" | "archived" | undefined;
@@ -1929,7 +2367,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getById: _trpc_server53.TRPCQueryProcedure<{
+    getById: _trpc_server111.TRPCQueryProcedure<{
       input: {
         id: string;
       };
@@ -1946,10 +2384,10 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server53.TRPCMutationProcedure<{
+    create: _trpc_server111.TRPCMutationProcedure<{
       input: {
         contentTypeId: string;
-        data: Record<string | number | symbol, unknown>;
+        data: Record<string, unknown>;
         status?: "draft" | "published" | "archived" | undefined;
       };
       output: {
@@ -1965,10 +2403,10 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    update: _trpc_server53.TRPCMutationProcedure<{
+    update: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
-        data?: Record<string | number | symbol, unknown> | undefined;
+        data?: Record<string, unknown> | undefined;
         status?: "draft" | "published" | "archived" | undefined;
       };
       output: {
@@ -1984,7 +2422,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server53.TRPCMutationProcedure<{
+    delete: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -1993,7 +2431,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    publish: _trpc_server53.TRPCMutationProcedure<{
+    publish: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2010,7 +2448,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    unpublish: _trpc_server53.TRPCMutationProcedure<{
+    unpublish: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2031,23 +2469,23 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
   /**
    * Media/file management
    */
-  media: _trpc_server53.TRPCBuiltRouter<{
+  media: _trpc_server111.TRPCBuiltRouter<{
     ctx: TRPCContext;
     meta: object;
     errorShape: {
       data: {
         zodError: string | undefined;
-        code: _trpc_server53.TRPC_ERROR_CODE_KEY;
+        code: _trpc_server111.TRPC_ERROR_CODE_KEY;
         httpStatus: number;
         path?: string;
         stack?: string;
       };
       message: string;
-      code: _trpc_server53.TRPC_ERROR_CODE_NUMBER;
+      code: _trpc_server111.TRPC_ERROR_CODE_NUMBER;
     };
     transformer: true;
-  }, _trpc_server53.TRPCDecorateCreateRouterOptions<{
-    list: _trpc_server53.TRPCQueryProcedure<{
+  }, _trpc_server111.TRPCDecorateCreateRouterOptions<{
+    list: _trpc_server111.TRPCQueryProcedure<{
       input: {
         limit?: number | undefined;
         offset?: number | undefined;
@@ -2073,7 +2511,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getById: _trpc_server53.TRPCQueryProcedure<{
+    getById: _trpc_server111.TRPCQueryProcedure<{
       input: {
         id: string;
       };
@@ -2094,7 +2532,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    create: _trpc_server53.TRPCMutationProcedure<{
+    create: _trpc_server111.TRPCMutationProcedure<{
       input: {
         filename: string;
         originalFilename: string;
@@ -2104,13 +2542,13 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
         bucketPath: string;
         alt?: string | undefined;
         caption?: string | undefined;
-        metadata?: Record<string | number | symbol, unknown> | undefined;
+        metadata?: Record<string, unknown> | undefined;
       };
       output: {
-        url: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        url: string;
         metadata: Record<string, unknown> | null;
         filename: string;
         originalFilename: string;
@@ -2123,12 +2561,12 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    update: _trpc_server53.TRPCMutationProcedure<{
+    update: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
         alt?: string | undefined;
         caption?: string | undefined;
-        metadata?: Record<string | number | symbol, unknown> | undefined;
+        metadata?: Record<string, unknown> | undefined;
       };
       output: {
         id: string;
@@ -2147,7 +2585,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    delete: _trpc_server53.TRPCMutationProcedure<{
+    delete: _trpc_server111.TRPCMutationProcedure<{
       input: {
         id: string;
       };
@@ -2160,7 +2598,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
       };
       meta: object;
     }>;
-    getSignedUrl: _trpc_server53.TRPCQueryProcedure<{
+    getSignedUrl: _trpc_server111.TRPCQueryProcedure<{
       input: {
         id: string;
         expiresIn?: number | undefined;
@@ -2174,7 +2612,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
   /**
    * Example public endpoint - health check
    */
-  health: _trpc_server53.TRPCQueryProcedure<{
+  health: _trpc_server111.TRPCQueryProcedure<{
     input: void;
     output: {
       status: string;
@@ -2186,7 +2624,7 @@ declare const appRouter: _trpc_server53.TRPCBuiltRouter<{
   /**
    * Example protected endpoint - get current user info
    */
-  me: _trpc_server53.TRPCQueryProcedure<{
+  me: _trpc_server111.TRPCQueryProcedure<{
     input: void;
     output: {
       user: {
@@ -2255,5 +2693,5 @@ type CMSHandlers = {
   POST: (req: Request) => Promise<Response>;
 };
 //#endregion
-export { session as $, createDatabase as A, NewContentType as B, UploadResult as C, setStorage as D, initStorage as E, ContentField as F, User as G, NewSession as H, ContentType as I, contentEntry as J, UserRole as K, ContentTypeSchema as L, runMigrations as M, setDatabase as N, DatabaseConfig as O, ContentEntry as P, media as Q, Media as R, StorageConfig as S, getStorage as T, NewUser as U, NewMedia as V, Session as W, contentType as X, contentFieldSchema as Y, contentTypeSchemaValidator as Z, createAuth as _, handleTRPCRequest as a, isAuthenticated as b, TRPCContext as c, publicProcedure as d, user as et, htmlTemplate as f, AuthConfig as g, Auth as h, createContext as i, getDatabase as j, DrizzleClient as k, createTRPCRouter as l, createCMS as m, CMSRequest as n, verification as nt, AppRouter as o, renderAdminPanel as p, account as q, CreateCMSOptions as r, appRouter as s, CMSHandlers as t, userRoleEnum as tt, protectedProcedure as u, getAuth as v, createStorageClient as w, StorageClient as x, getSession as y, NewContentEntry as z };
-//# sourceMappingURL=index-KeDVcsYz.d.ts.map
+export { contentTypeSchemaValidator as $, createDatabase as A, NewContentEntry as B, UploadResult as C, setStorage as D, initStorage as E, ContentEntry as F, Session as G, NewMedia as H, ContentType as I, account as J, User as K, ContentTypeSchema as L, runMigrations as M, setDatabase as N, DatabaseConfig as O, CollectionField as P, contentType as Q, FieldType as R, StorageConfig as S, getStorage as T, NewSession as U, NewContentType as V, NewUser as W, contentEntry as X, collectionFieldSchema as Y, contentFieldSchema as Z, createAuth as _, handleTRPCRequest as a, verification as at, isAuthenticated as b, TRPCContext as c, publicProcedure as d, fieldTypeEnum as et, htmlTemplate as f, AuthConfig as g, Auth as h, createContext as i, userRoleEnum as it, getDatabase as j, DrizzleClient as k, createTRPCRouter as l, createCMS as m, CMSRequest as n, session as nt, AppRouter as o, renderAdminPanel as p, UserRole as q, CreateCMSOptions as r, user as rt, appRouter as s, CMSHandlers as t, media as tt, protectedProcedure as u, getAuth as v, createStorageClient as w, StorageClient as x, getSession as y, Media as z };
+//# sourceMappingURL=index-BDhnZF4_.d.ts.map

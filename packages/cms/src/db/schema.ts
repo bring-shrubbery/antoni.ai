@@ -148,45 +148,49 @@ export const media = pgTable("cms_media", {
 // ============================================================================
 
 /**
- * Schema for defining content type fields
+ * Basic field types for collections
+ * Starting with core types, will expand later
  */
-export const contentFieldSchema = z.object({
-  name: z.string(),
-  type: z.enum([
-    "text",
-    "richtext",
-    "number",
-    "boolean",
-    "date",
-    "datetime",
-    "json",
-    "media",
-    "reference",
-    "array",
-  ]),
+export const fieldTypeEnum = ["string", "number", "boolean"] as const;
+export type FieldType = (typeof fieldTypeEnum)[number];
+
+/**
+ * Schema for defining a single field in a collection
+ */
+export const collectionFieldSchema = z.object({
+  /** Unique identifier for the field */
+  id: z.string(),
+  /** Display name for the field */
+  name: z.string().min(1),
+  /** Machine-readable key (used in data storage) */
+  key: z
+    .string()
+    .min(1)
+    .regex(/^[a-z][a-zA-Z0-9]*$/, "Must be camelCase"),
+  /** Field type */
+  type: z.enum(fieldTypeEnum),
+  /** Whether this field is required */
   required: z.boolean().default(false),
+  /** Description/help text for editors */
   description: z.string().optional(),
-  defaultValue: z.unknown().optional(),
-  validation: z
-    .object({
-      min: z.number().optional(),
-      max: z.number().optional(),
-      pattern: z.string().optional(),
-      options: z.array(z.string()).optional(), // For select/enum fields
-    })
-    .optional(),
-  // For reference type - which content type to reference
-  referenceType: z.string().optional(),
-  // For array type - the type of items in the array
-  arrayItemType: z.string().optional(),
+  /** Default value for the field */
+  defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
 });
 
+/**
+ * Schema for the collection's field configuration
+ */
 export const contentTypeSchemaValidator = z.object({
-  fields: z.array(contentFieldSchema),
+  fields: z.array(collectionFieldSchema),
 });
 
-export type ContentField = z.infer<typeof contentFieldSchema>;
+export type CollectionField = z.infer<typeof collectionFieldSchema>;
 export type ContentTypeSchema = z.infer<typeof contentTypeSchemaValidator>;
+
+/**
+ * @deprecated Use collectionFieldSchema instead
+ */
+export const contentFieldSchema = collectionFieldSchema;
 
 // ============================================================================
 // Type exports for Drizzle

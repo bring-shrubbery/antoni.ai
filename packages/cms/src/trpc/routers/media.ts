@@ -69,7 +69,7 @@ export const mediaRouter = createTRPCRouter({
         bucketPath: z.string(),
         alt: z.string().optional(),
         caption: z.string().optional(),
-        metadata: z.record(z.unknown()).optional(),
+        metadata: z.record(z.string(), z.unknown()).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -103,7 +103,7 @@ export const mediaRouter = createTRPCRouter({
         id: z.string().uuid(),
         alt: z.string().optional(),
         caption: z.string().optional(),
-        metadata: z.record(z.unknown()).optional(),
+        metadata: z.record(z.string(), z.unknown()).optional(),
       })
     )
     .mutation(async ({ input }) => {

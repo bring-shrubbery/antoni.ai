@@ -3,6 +3,8 @@ import { contentTypeRouter } from "./routers/content-type";
 import { contentEntryRouter } from "./routers/content-entry";
 import { mediaRouter } from "./routers/media";
 import { setupRouter } from "./routers/setup";
+import { collectionsRouter } from "./routers/collections";
+import { entriesRouter } from "./routers/entries";
 
 /**
  * Main CMS API Router
@@ -14,12 +16,22 @@ export const appRouter = createTRPCRouter({
   setup: setupRouter,
 
   /**
-   * Content types (schemas)
+   * Collections (new API for schema + content management)
+   */
+  collections: collectionsRouter,
+
+  /**
+   * Entries (new API for content entries)
+   */
+  entries: entriesRouter,
+
+  /**
+   * Content types (schemas) - legacy, use collections instead
    */
   contentType: contentTypeRouter,
 
   /**
-   * Content entries (actual data)
+   * Content entries (actual data) - legacy, use entries instead
    */
   contentEntry: contentEntryRouter,
 
