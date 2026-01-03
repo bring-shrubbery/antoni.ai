@@ -21,7 +21,3 @@ logs
 *.pid.lock
 ./packages/cms/dist
 .turbo
-dist
-dist-server
-routeTree.gen.ts
-.tanstack
