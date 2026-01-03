@@ -13,6 +13,9 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart({
+      deployment: {
+        preset: "vercel",
+      },
       prerender: {
         enabled: true,
         onSuccess: ({ page }) => {
