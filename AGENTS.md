@@ -37,8 +37,11 @@ pnpm install
 # Start all packages in dev mode (web + cms watch)
 pnpm dev
 
-# Start only the web app
-pnpm dev:web
+# Start only the web app (frontend only)
+pnpm --filter @apps/web dev
+
+# Start the API server (for /api and /admin routes)
+pnpm --filter @apps/web dev:server
 ```
 
 ### Building
@@ -60,8 +63,11 @@ pnpm --filter @turbulence/cms build:lib
 ### Production
 
 ```bash
-# Start the production Next.js server
-pnpm start
+# Build everything
+pnpm build
+
+# Start the production server (serves static files + API)
+pnpm --filter @apps/web start
 ```
 
 ### Linting
@@ -91,17 +97,25 @@ pnpm --filter @turbulence/cms db:studio
 
 ## 📁 Project Structure
 
-```
-antoni.cv/
-├── apps/
-│   └── web/                    # Next.js portfolio website
-│       ├── app/                # App Router pages and API routes
-│       │   ├── admin/          # CMS admin panel route
-│       │   ├── api/            # API routes
-│       │   ├── layout.tsx      # Root layout
-│       │   └── page.tsx        # Home page
+```Vite + React portfolio website
+│       ├── src/
+│       │   ├── routes/         # Tanstack Router routes
+│       │   │   ├── __root.tsx  # Root route with layout
+│       │   │   └── index.tsx   # Home page route
+│       │   ├── main.tsx        # App entry point
+│       │   ├── globals.css     # Global styles
+│       │   └── routeTree.gen.ts # Generated route tree
 │       ├── components/         # React components
 │       │   └── ui/             # shadcn/ui components
+│       ├── content/            # Static content (profileData.json)
+│       ├── lib/                # Utilities and helpers
+│       ├── api/                # Express API handlers
+│       │   ├── markdown.ts     # Markdown export route
+│       │   └── admin.ts        # CMS admin handler
+│       ├── public/             # Static assets
+│       ├── server.ts           # Express server for API/admin
+│       ├── index.html          # HTML entry point
+│       └── vite.config.ts      # Vite configurationponents
 │       ├── content/            # Static content (profileData.json)
 │       ├── lib/                # Utilities and helpers
 │       └── public/             # Static assets
@@ -164,9 +178,9 @@ import { cn } from "@/lib/utils";
 
 ## 📦 Package Details
 
-### `@apps/web` (Next.js Portfolio)
+### `@apps/web` (Portfolio)
 
-- **Framework**: Next.js 16 (App Router)
+- **Framework**: Vite + React + Tanstack Router
 - **Styling**: Tailwind CSS v4 with PostCSS
 - **Fonts**: Lexend (Google Fonts)
 - **Key Components**:
@@ -214,11 +228,14 @@ import { createCMS } from "@turbulence/cms/next";
 ### 1. Making Changes to the Web App
 
 ```bash
-# Start dev server
-pnpm dev:web
+# Start dev server (Vite)
+pnpm --filter @apps/web dev
 
 # The app runs at http://localhost:3000
-# Admin panel at http://localhost:3000/admin
+# Admin panel and API at http://localhost:3001 (when dev:server is running)
+
+# To also run API/admin routes locally:
+pnpm --filter @apps/web dev:server
 ```
 
 ### 2. Making Changes to the CMS Package
@@ -281,10 +298,12 @@ The `turbo.json` defines task dependencies:
 
 ### Adding a New Component to Web App
 
-1. Create component in `apps/web/components/`
-2. Use existing UI primitives from `components/ui/`
+1. Create component in `apps/web/src/components/`
+2. Use existing UI primitives from `src/components/ui/`
 3. Follow existing patterns (functional components, TypeScript)
 4. Use `cn()` utility for conditional classes
+5. Import using `@/` alias or relative paths from src
+6. No "use client" directives needed (we're using Vite, not Next.js)
 
 ### Modifying CV Content
 
@@ -300,11 +319,23 @@ Edit `apps/web/content/profileData.json` – the structure includes:
 
 ### Adding a New API Route
 
-Create in `apps/web/app/api/<name>/route.ts`:
+i/<name>.ts`:
 
 ```typescript
-export async function GET(request: Request) {
-  return Response.json({ data: "..." });
+import type { Request, Response } from "express";
+
+export const createMyRoute = () => {
+  return async (req: Request, res: Response): Promise<void> => {
+    res.json({ data: "..." });
+  };
+};
+```
+
+Then register it in `apps/web/server.ts`:
+
+```typescript
+import { createMyRoute } from "./api/my-route.js";
+app.get("/api/my-route", createMyRoute()); return Response.json({ data: "..." });
 }
 ```
 
@@ -324,15 +355,23 @@ export async function GET(request: Request) {
 
 ## 🚨 Important Notes
 
-1. **ES Modules**: All packages use `"type": "module"`. Use `.js` extensions in imports where needed.
+1. **ES Modules**vite
 
-2. **React 19**: This project uses React 19. Be aware of new features and potential breaking changes from React 18.
+   ```
 
-3. **Tailwind CSS v4**: Uses the new Tailwind v4 syntax and configuration style.
+   ```
 
-4. **Build Order**: Always build `@turbulence/cms` before `@apps/web` when making CMS changes.
+2. **CMS Style Isolation**: The CMS admin panel uses scoped styles that won't affect the host app.
 
-5. **Environment Variables**: The web app uses `dotenv-cli` to load `.env` files. The `with-env` script wraps commands:
+3. **Workspace Protocol**: Internal dependencies use `workspace:*`:
+
+   ```json
+   "@turbulence/cms": "workspace:*"
+   ```
+
+4. **Routing**: The app uses Tanstack Router. Routes are defined in `apps/web/src/routes/` and the route tree is auto-generated.
+
+5. **API Routes**: API and admin routes are handled by an Express server (`server.ts`) that runs separately from the Vite dev server (proxied in development).nvironment Variables\*\*: The web app uses `dotenv-cli` to load `.env` files. The `with-env` script wraps commands:
 
    ```bash
    pnpm with-env next dev
