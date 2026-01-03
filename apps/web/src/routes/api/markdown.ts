@@ -1,26 +1,43 @@
-export const GET = async (req: Request): Promise<Response> => {
-  const profileData = await fetch(
-    process.env.APP_HOST + "/content/profileData.json",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        // 1 hour cache
-        "Cache-Control": "public, max-age=3600",
-      },
-    }
-  );
-  const profile = await profileData.json();
+// routes/api/products/$productId.ts
+import { createFileRoute } from "@tanstack/react-router";
+import { createMiddleware } from "@tanstack/react-start";
 
-  return new Response(renderToString(profile), {
-    headers: {
-      // File encoding format to support empjis:
-      "Content-Type": "text/markdown; charset=utf-8",
-      // 1 hour cache
-      "Cache-Control": "public, max-age=3600",
+const cacheMiddleware = createMiddleware().server(async ({ next }) => {
+  const result = await next();
+
+  // Add cache headers to the response
+  result.response.headers.set(
+    "Cache-Control",
+    "public, max-age=3600, stale-while-revalidate=86400"
+  );
+  result.response.headers.set("Content-Type", "text/markdown; charset=utf-8");
+
+  return result;
+});
+
+export const Route = createFileRoute("/api/markdown")({
+  server: {
+    middleware: [cacheMiddleware],
+    handlers: {
+      GET: async () => {
+        const profileData = await fetch(
+          process.env.APP_HOST + "/content/profileData.json",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // 1 hour cache
+              "Cache-Control": "public, max-age=3600",
+            },
+          }
+        );
+        const profile = await profileData.json();
+
+        return new Response(renderToString(profile));
+      },
     },
-  });
-};
+  },
+});
 
 const renderToString = (profile: any) => {
   return [

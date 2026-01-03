@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import globalCSS from "../globals.css?url";
 
 function RootComponent() {
-  const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
+  const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "dark");
 
   useEffect(() => {
     const root = window.document.documentElement;
