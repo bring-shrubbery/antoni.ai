@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "preview": "vinxi preview",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "with-env": "dotenv -e .env --"
   },
