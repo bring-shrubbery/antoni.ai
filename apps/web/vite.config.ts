@@ -12,14 +12,7 @@ export default defineConfig({
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tanstackStart({
-      prerender: {
-        enabled: true,
-        onSuccess: ({ page }) => {
-          console.log(`Rendered ${page.path}!`);
-        },
-      },
-    }),
+    tanstackStart(),
     viteReact(),
     tailwindcss(),
   ],
