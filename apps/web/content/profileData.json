@@ -29,7 +29,7 @@
         "url": "https://cal.com/bring-shrubbery"
       }
     ],
-    "about": "Software Engineer / Product Engineer / Designer specialising in Next.js, React and TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: React Query, Zustand, XState\\\n\\- DBs: PostgreSQL, Neon, Upstash\\\n\\- APIs: tRPC, OpenAPI or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
+    "about": "Software Engineer / Product Engineer / Designer specialising in everything TypeScript. I build and continuously improve products by combining careful planning, continuous iteration and high-quality, maintainable code.\n\nHere are some of my favourite tech tools to work with:\\\n\\- Languages: TypeScript, Swift, Golang, Rust\\\n\\- UI Libraries: React.js, Svelte\\\n\\- Frameworks: Next.js, Remix, SvelteKit\\\n\\- State: React Query, Zustand, XState\\\n\\- DBs: PostgreSQL, Neon, Upstash\\\n\\- APIs: tRPC, OpenAPI or GraphQL\\\n\\- Other favs: Supabase, Kafka, EffectTS, Bevy"
   },
   "projects": {
     "name": "Projects",
@@ -52,12 +52,29 @@
         ]
       },
       {
+        "id": "J-cHKOlC_L3S6kAKU0tPs",
+        "fav": true,
+        "year": "2025",
+        "heading": "CompetiTaurus",
+        "url": "https://competitaurus.com/",
+        "collaborators": [],
+        "description": "CompetiTaurus is a competitive analysis tool that helps businesses stay ahead of their competition. It provides insights into competitors' strategies, strengths, and weaknesses, allowing businesses to make informed decisions and improve their own strategies. With CompetiTaurus, businesses can track competitors' pricing, marketing campaigns, product launches, and more. The tool also offers customizable reports and alerts, making it easy for businesses to stay up-to-date on their competitors' activities.",
+        "attachments": [
+          {
+            "type": "image",
+            "width": 1920,
+            "height": 1080,
+            "url": "/content/media/competitaurus.png"
+          }
+        ]
+      },
+      {
         "id": "UVul8MuPc1wMRKCjk7vwt",
         "year": "2025",
         "heading": "Panorama Stitcher",
         "url": "https://panorama.antoni.ai/",
         "collaborators": [],
-        "description": "This project was written on the day GPT 5 was released. It's 100% vibe-coded in about 5-6 hours. It allows you to upload a sequence of photos, and it will stitch them together into a panorama. It uses OpenCV for image processing and does complex masking to ensure that the panorama is seamless.",
+        "description": "This project was written on the day GPT 5 was released. It's 100% vibe-coded in about 5-6 hours. It allows you to upload a sequence of photos, and it will stitch them together into a panorama. It uses OpenCV for image processing and does complex masking to ensure that the panorama is seamless, while running everything in the browser using WebAssembly.",
         "attachments": [
           {
             "type": "image",
@@ -185,33 +202,32 @@
       }
     ]
   },
-  "design": {
-    "name": "Design",
-    "items": [
-      {
-        "id": "m500zGmx1mqtmAy3I2iV",
-        "year": "2022",
-        "heading": "Random Excuse Generator",
-        "url": "https://github.com/bring-shrubbery/excuse-generator",
-        "collaborators": [],
-        "description": "Inspired by a meme, I created this random excuse generator which generated an excuse for not attending something via 3 part structure. Try it out to get the reason for not attending that party you don't want to go to!",
-        "attachments": [
-          {
-            "type": "image",
-            "width": 1966,
-            "height": 1090,
-            "url": "/content/media/Random-Excuse-Generator.png"
-          }
-        ]
-      }
-    ]
-  },
   "workExperience": {
     "name": "Work Experience",
     "items": [
       {
+        "id": "LO4ktoRAiTweoKwmI4GCO",
+        "year": "2025 — Now",
+        "heading": "Founder at One Dollar Chatbot",
+        "url": "https://onedollarchatbot.com/",
+        "description": "- Building a simple, affordable customer support chatbot solution for small businesses.\n- Handling everything from product development to marketing and customer support.\n- Learning a lot about business, marketing, sales, and customer support along the way.",
+        "title": "Founder",
+        "company": "One Dollar Chatbot",
+        "location": "Vilnius, Lithuania"
+      },
+      {
+        "id": "swZfjfI__7AqtobgbtAc7",
+        "year": "2025 — Now",
+        "heading": "Growth Engineer at Fieldy",
+        "url": "https://fieldy.ai",
+        "description": "- Working closely with marketing team to optimize the sales pipeline\n- Building scalable systems together with the rest of the engineering team\n- Hating on Python",
+        "title": "Growth Engineer",
+        "company": "Fieldy",
+        "location": "Vilnius, Lithuania"
+      },
+      {
         "id": "Ntvx8EqgSJYOHX71U4KF",
-        "year": "2024 — Now",
+        "year": "2024 — 2025",
         "heading": "Head of Frontend at CoinGate",
         "url": "https://coingate.com",
         "description": "- Engineered the platform - Designed and scaled a TypeScript + Node.js monorepo (3 web apps + supporting packages) with automated CI/CD, testing, monitoring, tracing, etc.\n- Led a team of 4 front end engineers - Hired, mentored, and hands-on paired with 4 engineers; ran architecture spikes, code reviews, and 1:1s focused on clear, maintainable code and rapid, safe releases.\n- Partnered across the org - Worked daily with CEO, CTO, Product, Design, and Backend leads to turn strategy into working software; demoed directly to clients and internal stakeholders.",
@@ -357,6 +373,12 @@
         "platform": "Email",
         "handle": "antoni@quassum.com",
         "url": "mailto:antoni@quassum.com"
+      },
+      {
+        "id": "2",
+        "platform": "Github",
+        "handle": "bring-shrubbery",
+        "url": "https://github.com/bring-shrubbery"
       }
     ]
   }
