@@ -9,10 +9,7 @@ import { useScrollBoost } from "react-scrollbooster";
 import isMobile from "@/lib/isMobile";
 import useResizeObserver from "use-resize-observer";
 
-type AttachmentsProps = {
-  attachments: Array<any>;
-};
-const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
+const Attachments = ({ attachments }: { attachments: Array<any> }) => {
   const [lightboxState, setLightboxState] = useState({
     open: false,
     startingIndex: 0,
@@ -21,7 +18,7 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
   const innerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [viewport, scrollbooster] = useScrollBoost({
+  const [viewport, scrollBooster] = useScrollBoost({
     direction: "horizontal",
     friction: 0.05,
     scrollMode: "native",
@@ -36,6 +33,18 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
     },
   });
 
+  const updateScrollBooster = useCallback(() => {
+    if (!scrollBooster || !containerRef.current) {
+      return;
+    }
+    scrollBooster.updateMetrics();
+  }, [scrollBooster]);
+
+  const onResize = useCallback(() => {
+    updateScrollBooster();
+  }, [updateScrollBooster]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: resize in deps causes infinite loop
   const setRefs = useCallback<React.RefCallback<HTMLDivElement>>(
     (node) => {
       containerRef.current = node;
@@ -45,21 +54,10 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
     [viewport]
   );
 
-  const updateScrollbooster = () => {
-    if (!scrollbooster || !containerRef.current) {
-      return;
-    }
-    scrollbooster.updateMetrics();
-  };
-
-  const onResize = () => {
-    updateScrollbooster();
-  };
-
   useResizeObserver({ ref: containerRef as any, onResize });
   useResizeObserver({ ref: innerRef as any, onResize });
 
-  let lightbox;
+  let lightbox: React.ReactNode = null;
   if (lightboxState.open === true) {
     lightbox = (
       <Lightbox
@@ -125,7 +123,7 @@ const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
     }
   };
 
-  let item;
+  let item: React.ReactNode = null;
   if (media.type === "image") {
     item = (
       <Image
@@ -141,7 +139,8 @@ const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
       style={{
         aspectRatio: returnThumbnailAspectRatio(media.width / media.height),
       }}
@@ -149,7 +148,7 @@ const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
       className="cursor-pointer w-full h-full z-10 rounded-md overflow-hidden shadow"
     >
       {item}
-    </div>
+    </button>
   );
 };
 

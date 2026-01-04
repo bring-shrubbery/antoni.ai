@@ -58,7 +58,7 @@ const Profile = ({ cv, tab }: { cv: any; tab?: string }) => {
         className="my-2"
       >
         <TabsList className="mt-4 w-full">
-          <TabsTrigger value="cv" className="flex-[1]">
+          <TabsTrigger value="cv" className="flex-1">
             CV
           </TabsTrigger>
           <TabsTrigger value="projects" className="flex-[0.9]">
@@ -108,7 +108,7 @@ const StarToggle = ({
     <button
       type="button"
       className={cn(
-        "w-[28px] h-[28px] flex items-center justify-center text-border ml-[3px] mr-[0.25px] hover:bg-muted hover:text-orange-400 rounded-sm transition-all duration-75",
+        "size-7 min-w-7 flex items-center justify-center text-border ml-[3px] mr-[0.25px] hover:bg-muted hover:text-orange-400 rounded-sm transition-all duration-75",
         hidden && "opacity-0 pointer-events-none select-none",
         checked && "text-orange-400 bg-foreground/5"
       )}

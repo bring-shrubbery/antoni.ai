@@ -10,6 +10,7 @@ const DarkModeToggle = () => {
 
   return (
     <button
+      type="button"
       className="group py-1 pl-2 cursor-pointer"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >

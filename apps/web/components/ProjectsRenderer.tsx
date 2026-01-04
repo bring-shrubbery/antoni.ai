@@ -41,7 +41,7 @@ type ProjectItemProps = {
   experience: any;
 };
 const ProjectItem: React.FC<ProjectItemProps> = ({ experience }) => {
-  let title;
+  let title: React.ReactNode;
 
   if (experience.url) {
     title = (
