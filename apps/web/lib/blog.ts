@@ -72,7 +72,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
     const stats = readingTime(content);
 
     const published = data.published ?? true; // Default to true for backward compatibility
-    
+
     // Don't return unpublished posts
     if (!published) {
       return null;
