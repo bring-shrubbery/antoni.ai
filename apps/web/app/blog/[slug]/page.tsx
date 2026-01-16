@@ -45,7 +45,7 @@ export default async function BlogPostPage({
   }
 
   return (
-    <div className="w-full max-w-[680px] mx-auto py-12 px-6">
+    <div className="w-full max-w-[540px] mx-auto py-12 px-6">
       {/* Back link */}
       <Link
         href="/blog"

@@ -12,7 +12,7 @@ export default function BlogPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="w-full max-w-[680px] mx-auto py-12 px-6">
+    <div className="w-full max-w-[540px] mx-auto py-12 px-6">
       {/* Header with back link */}
       <div className="mb-8">
         <Link
@@ -31,7 +31,9 @@ export default function BlogPage() {
       {/* Blog posts list */}
       <div className="flex flex-col gap-8">
         {posts.length === 0 ? (
-          <p className="text-muted-foreground">No posts yet. Check back soon!</p>
+          <p className="text-muted-foreground">
+            No posts yet. Check back soon!
+          </p>
         ) : (
           posts.map((post) => (
             <article
