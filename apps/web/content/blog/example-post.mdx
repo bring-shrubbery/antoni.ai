@@ -1,0 +1,74 @@
+---
+title: "Building Scalable React Applications"
+date: "2026-01-10"
+excerpt: "Learn practical strategies for structuring and scaling React applications as your codebase grows."
+tags: ["react", "architecture", "javascript"]
+published: false
+---
+
+# Building Scalable React Applications
+
+As React applications grow in size and complexity, maintaining a clean and scalable codebase becomes increasingly important. In this post, I'll share some strategies I've found useful for building maintainable React applications.
+
+## Component Organization
+
+One of the first challenges in scaling a React app is deciding how to organize your components. Here's a structure that works well:
+
+```
+src/
+├── components/
+│   ├── ui/           # Reusable UI components
+│   ├── features/     # Feature-specific components
+│   └── layouts/      # Layout components
+├── hooks/            # Custom hooks
+├── lib/              # Utility functions
+└── app/              # Next.js app router
+```
+
+## Custom Hooks for Reusability
+
+Custom hooks are a powerful way to extract and reuse logic across components. Here's a `useLocalStorage` hook with full TypeScript support:
+
+```typescript
+import { useState } from "react";
+
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return [storedValue, setValue] as const;
+}
+
+// Usage example
+const [name, setName] = useLocalStorage<string>("name", "Antoni");
+```
+
+## Performance Optimization
+
+Consider these optimization techniques:
+
+- Use `React.memo()` for expensive components
+- Leverage `useMemo()` and `useCallback()` appropriately
+- Implement code splitting with dynamic imports
+- Optimize images and assets
+
+## Conclusion
+
+Building scalable React applications requires thoughtful planning and consistent patterns. Start with these fundamentals and adjust based on your specific needs.

@@ -41,11 +41,13 @@ export default function RootLayout({
           src="https://onedollarchatbot.com/script/g492j4c474wkzzcp5enj0"
           strategy="lazyOnload"
         />
-        <script
-          defer
-          src="https://analytics.quassum.com/script.js"
-          data-website-id="5c8cdbba-eb31-4b71-a459-5405bf845521"
-        ></script>
+        {process.env.NODE_ENV === "production" ? (
+          <script
+            defer
+            src="https://analytics.quassum.com/script.js"
+            data-website-id="5c8cdbba-eb31-4b71-a459-5405bf845521"
+          ></script>
+        ) : null}
       </body>
     </html>
   );

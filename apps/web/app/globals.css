@@ -148,4 +148,56 @@ a {
   body {
     @apply bg-background text-foreground antialiased text-base;
   }
+
+  /* Code block styles for rehype-pretty-code */
+  code {
+    counter-reset: line;
+  }
+
+  code > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1.5rem;
+    text-align: right;
+    color: oklch(0.552 0.016 285.938);
+  }
+
+  code[data-line-numbers-max-digits="2"] > [data-line]::before {
+    width: 1.5rem;
+  }
+
+  code[data-line-numbers-max-digits="3"] > [data-line]::before {
+    width: 2rem;
+  }
+
+  /* Highlighted lines */
+  code [data-highlighted-line] {
+    background-color: oklch(0.967 0.001 286.375 / 0.5);
+    border-left: 2px solid oklch(0.21 0.006 285.885);
+    padding-left: 0.75rem;
+    margin-left: -0.75rem;
+  }
+
+  .dark code [data-highlighted-line] {
+    background-color: oklch(0.274 0.006 286.033 / 0.5);
+    border-left-color: oklch(0.985 0 0);
+  }
+
+  /* Highlighted chars (for twoslash) */
+  code [data-highlighted-chars] {
+    background-color: oklch(0.705 0.015 286.067 / 0.2);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.25rem;
+  }
+
+  .dark code [data-highlighted-chars] {
+    background-color: oklch(0.442 0.017 285.786 / 0.3);
+  }
+
+  /* Line numbers in dark mode */
+  .dark code > [data-line]::before {
+    color: oklch(0.705 0.015 286.067);
+  }
 }

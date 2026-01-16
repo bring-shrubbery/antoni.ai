@@ -45,6 +45,11 @@ const Profile = ({ cv, tab }: { cv: any; tab?: string }) => {
                     </Link>
                   ))
                 : null}
+              <Link href="/blog">
+                <Badge variant="outline" className="mt-2">
+                  blog
+                </Badge>
+              </Link>
             </div>
           </div>
           <DarkModeToggleLazy />

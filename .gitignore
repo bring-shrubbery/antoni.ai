@@ -19,5 +19,6 @@ logs
 *.pid
 *.seed
 *.pid.lock
-./packages/cms/dist
+packages/cms/dist
+dist
 .turbo
