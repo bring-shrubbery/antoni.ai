@@ -1,0 +1,23 @@
+---
+title: "Fractal Prompts: Handling Unreasonably Complex Business Logic"
+date: "2026-01-18"
+excerpt: "Learn how to fit extremely complex business logic into smallest LLM prompts by storing prompts in the tools themselves."
+tags: ["react", "architecture", "javascript"]
+published: false
+---
+
+# Fractal Prompts: Handling Unreasonably Complex Business Logic
+
+When working with large language models (LLMs), we often encounter scenarios where the business logic we need to implement is too complex to fit into a single prompt. In this post, I'll share a technique I call "fractal prompts," which involves breaking down complex logic into smaller, manageable pieces that can be stored within the tools themselves.
+
+## The Challenge of Complex Prompts
+
+If you tried to push LLMs to the limit of their context windows, you might find that the quality of responses degrades as the context size approaches the limit. In my experience, I get the best results when not exceeding about 70-80% of the model's maximum context length. This means that, for example, for models with a 100k token limit, I aim to keep my prompts + context under 70-80k tokens.
+
+When dealing with complex business logic, it's easy to exceed this limit. For instance, consider a scenario where you need to handle a wide variety of user intents, each with its own set of rules and conditions. Trying to fit all of this into a single prompt can lead to LLM confusion and frequent hallucinations.
+
+Forgetting about context engineering for a second, you can compress context usage quite a lot, by just compressing your system prompt. So how do we compress our prompts, without sacrificing the complexity of the business logic we need to implement?
+
+## Fractal Prompts: A Modular Approach
+
+The idea behind fractal prompts is simple - don't rely on an LLM to handle all the business complexity of the application in a single prompt. Instead, implement the business logic in the tools, and
