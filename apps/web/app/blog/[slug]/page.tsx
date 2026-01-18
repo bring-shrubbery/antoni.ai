@@ -5,6 +5,7 @@ import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MDXComponents } from "@/components/MDXComponents";
+import { Giscus } from "@/components/Giscus";
 import rehypePrettyCode from "rehype-pretty-code";
 
 export async function generateStaticParams() {
@@ -110,6 +111,11 @@ export default async function BlogPostPage({
           />
         </div>
       </article>
+
+      {/* Comments Section */}
+      <div className="mt-12 pt-8 border-t border-border">
+        <Giscus />
+      </div>
 
       {/* Footer */}
       <footer className="mt-12 pt-8 border-t border-border">
