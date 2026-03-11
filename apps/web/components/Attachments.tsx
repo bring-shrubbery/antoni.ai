@@ -9,7 +9,13 @@ import { useScrollBoost } from "react-scrollbooster";
 import isMobile from "@/lib/isMobile";
 import useResizeObserver from "use-resize-observer";
 
-const Attachments = ({ attachments }: { attachments: Array<any> }) => {
+const Attachments = ({
+  attachments,
+  projectName,
+}: {
+  attachments: Array<any>;
+  projectName?: string;
+}) => {
   const [lightboxState, setLightboxState] = useState({
     open: false,
     startingIndex: 0,
@@ -89,6 +95,7 @@ const Attachments = ({ attachments }: { attachments: Array<any> }) => {
                     })
                   }
                   media={media}
+                  projectName={projectName}
                 />
               );
             })}
@@ -108,8 +115,9 @@ const Attachments = ({ attachments }: { attachments: Array<any> }) => {
 type AttachmentProps = {
   media: any;
   onClick: () => void;
+  projectName?: string;
 };
-const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
+const Attachment: React.FC<AttachmentProps> = ({ media, onClick, projectName }) => {
   const maxWidth = 21 / 9; // ultrawide monitor
   const minWidth = 19 / 5 / 9; // iPhone
 
@@ -127,7 +135,7 @@ const Attachment: React.FC<AttachmentProps> = ({ media, onClick }) => {
   if (media.type === "image") {
     item = (
       <Image
-        alt=""
+        alt={projectName ? `Screenshot of ${projectName}` : "Project screenshot"}
         src={media.url}
         height={400}
         width={800}

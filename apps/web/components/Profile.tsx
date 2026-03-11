@@ -25,7 +25,7 @@ const Profile = ({ cv, tab }: { cv: any; tab?: string }) => {
         <div className="size-24 rounded-full shrink-0 overflow-hidden">
           <Image
             src={cv.general.profilePhoto}
-            alt=""
+            alt={`${cv.general.displayName} profile photo`}
             width={96}
             height={96}
             className="object-cover size-full motion-preset-fade"
