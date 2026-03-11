@@ -22,9 +22,41 @@ const fontSans = Lexend({
 
 export async function generateMetadata(): Promise<Metadata> {
   const cv = await loadCV();
+  const title = cv.general.displayName;
+  const description = cv.general.byline || "";
+
   return {
-    title: cv.general.displayName,
-    description: cv.general.byline || "",
+    metadataBase: new URL("https://antoni.cv"),
+    title: {
+      default: title,
+      template: `%s | ${title}`,
+    },
+    description,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "https://antoni.cv",
+      siteName: title,
+      title,
+      description,
+      images: [
+        {
+          url: "/content/media/profilePhoto.jpg",
+          width: 400,
+          height: 400,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+      images: ["/content/media/profilePhoto.jpg"],
+    },
+    alternates: {
+      canonical: "https://antoni.cv",
+    },
   };
 }
 
