@@ -62,8 +62,27 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    url: `https://antoni.cv/blog/${slug}`,
+    author: {
+      "@type": "Person",
+      name: "Antoni Silvestrovic",
+      url: "https://antoni.cv",
+    },
+    keywords: post.tags,
+  };
+
   return (
     <div className="w-full max-w-[540px] mx-auto py-12 px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Back link */}
       <Link
         href="/blog"
