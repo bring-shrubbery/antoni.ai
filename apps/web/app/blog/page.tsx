@@ -4,8 +4,20 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata = {
-  title: "Blog - Antoni",
+  title: "Blog",
   description: "Personal programming blog by Antoni",
+  openGraph: {
+    title: "Blog",
+    description: "Personal programming blog by Antoni",
+    url: "https://antoni.cv/blog",
+  },
+  twitter: {
+    title: "Blog",
+    description: "Personal programming blog by Antoni",
+  },
+  alternates: {
+    canonical: "https://antoni.cv/blog",
+  },
 };
 
 export default function BlogPage() {

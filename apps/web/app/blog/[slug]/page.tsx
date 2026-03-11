@@ -27,9 +27,26 @@ export async function generateMetadata({
     };
   }
 
+  const url = `https://antoni.cv/blog/${slug}`;
+
   return {
-    title: `${post.title} - Antoni's Blog`,
+    title: post.title,
     description: post.excerpt,
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url,
+      publishedTime: post.date,
+      tags: post.tags,
+    },
+    twitter: {
+      title: post.title,
+      description: post.excerpt,
+    },
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
