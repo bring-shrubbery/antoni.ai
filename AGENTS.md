@@ -361,3 +361,13 @@ export async function GET(request: Request) {
 - [Drizzle ORM Docs](https://orm.drizzle.team/)
 - [tRPC Docs](https://trpc.io/docs)
 - [better-auth Docs](https://www.better-auth.com/)
+
+## Build Cleanup
+
+After running any build command (e.g. `pnpm build`), clean up orphaned Next.js compiler worker processes that may have been left behind if the build was interrupted:
+
+```bash
+pkill -9 -f "jest-worker/processChild" || true
+```
+
+This prevents zombie build workers from accumulating and consuming CPU in the background.
