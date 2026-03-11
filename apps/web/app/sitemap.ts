@@ -1,6 +1,16 @@
 import type { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getAllPosts();
+
+  const blogPostEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `https://antoni.cv/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "yearly",
+    priority: 0.6,
+  }));
+
   return [
     {
       url: "https://antoni.cv",
@@ -9,16 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: "https://antoni.cv/api/markdown",
+      url: "https://antoni.cv/blog",
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
-    {
-      url: "https://antoni.cv/?tab=projects",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
+    ...blogPostEntries,
   ];
 }
